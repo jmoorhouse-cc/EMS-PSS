@@ -19,9 +19,9 @@ namespace EMS_PSS
         protected void Page_Load(object sender, EventArgs e)
         {
             conString =
-                @"server=MISSY; " +
+                @"server=PORTABLEGLADOS; " +
                 @"initial catalog=dbEMS; " +
-                @"user id=sa; " +
+                @"user id=ems; " +
                 @"password=Conestoga1 ";
         }
 
