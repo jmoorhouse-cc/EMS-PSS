@@ -19,7 +19,7 @@ namespace EMS_PSS
         protected void Page_Load(object sender, EventArgs e)
         {
             conString =
-                @"server=JAY-PC; " +
+                @"server=MISSY; " +
                 @"initial catalog=dbEMS; " +
                 @"user id=sa; " +
                 @"password=Conestoga1 ";
@@ -67,9 +67,9 @@ namespace EMS_PSS
                         var reader = cmd.ExecuteReader();
                         while (reader.Read())
                         {
-                            dbUsername = reader.GetValue(1).ToString();
-                            dbPW = reader.GetValue(2).ToString();
-                            dbSecurityLevel = reader.GetInt32(5);
+                            dbUsername = reader.GetValue(0).ToString();
+                            dbPW = reader.GetValue(1).ToString();
+                            dbSecurityLevel = reader.GetInt32(4);
 
                             if (dbUsername == user && dbPW == pw)
                             {

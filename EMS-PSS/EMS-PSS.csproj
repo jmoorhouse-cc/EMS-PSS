@@ -59,6 +59,7 @@
   <ItemGroup>
     <Content Include="Admin.aspx" />
     <Content Include="AquaStyleSheet.css" />
+    <Content Include="Create.aspx" />
     <Content Include="EMS.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -70,8 +71,10 @@
   <ItemGroup>
     <Content Include="Home.aspx" />
     <Content Include="Maintenance.aspx" />
+    <Content Include="Modify.aspx" />
     <Content Include="Reports.aspx" />
     <Content Include="Search.aspx" />
+    <Content Include="TimeCard.aspx" />
     <Content Include="Web.config" />
     <Content Include="Login.aspx" />
   </ItemGroup>
@@ -82,6 +85,13 @@
     </Compile>
     <Compile Include="Admin.aspx.designer.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Create.aspx.cs">
+      <DependentUpon>Create.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Create.aspx.designer.cs">
+      <DependentUpon>Create.aspx</DependentUpon>
     </Compile>
     <Compile Include="EMS.Master.cs">
       <DependentUpon>EMS.Master</DependentUpon>
@@ -104,6 +114,13 @@
     <Compile Include="Maintenance.aspx.designer.cs">
       <DependentUpon>Maintenance.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Modify.aspx.cs">
+      <DependentUpon>Modify.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modify.aspx.designer.cs">
+      <DependentUpon>Modify.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -125,6 +142,13 @@
     </Compile>
     <Compile Include="Search.aspx.designer.cs">
       <DependentUpon>Search.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TimeCard.aspx.cs">
+      <DependentUpon>TimeCard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TimeCard.aspx.designer.cs">
+      <DependentUpon>TimeCard.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <PropertyGroup>
