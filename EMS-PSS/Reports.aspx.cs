@@ -11,7 +11,32 @@ namespace EMS_PSS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+        }
 
+        protected void btnReport_Click(object sender, EventArgs e)
+        {
+                
+            if (rblReports.SelectedItem.Value == "seniority")
+            {
+                // run seniority report
+            }
+            else if (rblReports.SelectedItem.Value == "whw")
+            {
+                // run whw report
+            }
+            else if (rblReports.SelectedItem.Value == "payroll")
+            {
+                // run payroll report
+            }
+            else if (rblReports.SelectedItem.Value == "active")
+            {
+                // run active report
+            }
+            else  if (rblReports.SelectedItem.Value == "inactive")
+            {
+                // run inactive report
+            }
         }
     }
 }

@@ -3,5 +3,15 @@
     <h3>Search</h3>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    Test search content
+    <table>
+        <tr>
+            <td>
+                <asp:RadioButtonList ID="rblSearch" runat="server" RepeatDirection="Horizontal">
+                    <asp:ListItem Text="First Name" Value="fName"></asp:ListItem>
+                    <asp:ListItem Text="Last Name" Value="lName"></asp:ListItem>
+                    <asp:ListItem Text="SIN" Value="sin"></asp:ListItem>
+                </asp:RadioButtonList>
+            </td>
+        </tr>
+    </table>
 </asp:Content>

@@ -11,7 +11,19 @@ namespace EMS_PSS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            string securityLevel = Session["securitylevel"].ToString();
+            string userName = Session["username"].ToString();
 
+            if (securityLevel == "1")
+            {
+                Menu1.Visible = true;
+                Menu2.Visible = false;
+            }
+            else if (securityLevel == "2")
+            {
+                Menu1.Visible = false;
+                Menu2.Visible = true;
+            }
         }
     }
 }

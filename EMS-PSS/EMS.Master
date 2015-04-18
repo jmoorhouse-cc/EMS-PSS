@@ -23,7 +23,7 @@
                 <td>
                     <asp:Menu ID="Menu1" runat="server" BackColor="#F7F6F3"
                         DynamicHorizontalOffset="2" Font-Names="Verdana" Font-Size="0.8em"
-                        ForeColor="#7C6F57" StaticSubMenuIndent="15px">
+                        ForeColor="#7C6F57" StaticSubMenuIndent="15px" Visible="false">
                         <DynamicHoverStyle BackColor="#7C6F57" ForeColor="White" />
                         <DynamicMenuItemStyle HorizontalPadding="10px" VerticalPadding="5px" />
                         <DynamicMenuStyle BackColor="#F7F6F3" />
@@ -41,6 +41,27 @@
                             </asp:MenuItem>
                             <asp:MenuItem NavigateUrl="~/Reports.aspx" Text="Reports" Value="Reports"></asp:MenuItem>
                             <asp:MenuItem NavigateUrl="~/Admin.aspx" Text="Admin" Value="Admin"></asp:MenuItem>
+                        </Items>
+                    </asp:Menu>
+                    <asp:Menu ID="Menu2" runat="server" BackColor="#F7F6F3"
+                        DynamicHorizontalOffset="2" Font-Names="Verdana" Font-Size="0.8em"
+                        ForeColor="#7C6F57" StaticSubMenuIndent="15px" Visible="false">
+                        <DynamicHoverStyle BackColor="#7C6F57" ForeColor="White" />
+                        <DynamicMenuItemStyle HorizontalPadding="10px" VerticalPadding="5px" />
+                        <DynamicMenuStyle BackColor="#F7F6F3" />
+                        <DynamicSelectedStyle BackColor="#3D3B9D" />
+                        <StaticHoverStyle BackColor="#7C6F57" ForeColor="White" />
+                        <StaticMenuItemStyle HorizontalPadding="10px" VerticalPadding="5px" />
+                        <StaticSelectedStyle BackColor="#3D3B9D" />
+                        <Items>
+                            <asp:MenuItem NavigateUrl="~/Home.aspx" Text="Home" ToolTip="Home" Value="Home"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Search.aspx" Text="Search" Value="Search"></asp:MenuItem>
+                            <asp:MenuItem Text="Maintenance">
+                                <asp:MenuItem NavigateUrl="~/Create.aspx" Text="Create Employee" ToolTip="Create" Value="Create" />
+                                <asp:MenuItem NavigateUrl="~/Modify.aspx" Text="Modify Employee" ToolTip="Modify" Value="Modfy" />
+                                <asp:MenuItem NavigateUrl="~/TimeCard.aspx" Text="TimeCard Employee" ToolTip="TimeCard" Value="TimeCard" />
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Reports.aspx" Text="Reports" Value="Reports"></asp:MenuItem>
                         </Items>
                     </asp:Menu>
                 </td>
