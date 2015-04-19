@@ -62,11 +62,33 @@ namespace EMS_PSS
                         }
 
                         var reader = cmd.ExecuteReader();
+                        
+                        ftCompany.DataSource = reader;
+                        ftCompany.DataValueField = "companyName";
+                        ftCompany.DataTextField = "companyName";
+                        ftCompany.DataBind();
+                        cmd.Dispose();
+                        reader.Close();
+                    }
+                    using (var cmd = new System.Data.SqlClient.SqlCommand("SELECT * FROM tb_Company", con))
+                    {
+                        try
+                        {
+                            con.Open();
+                        }
+                        catch (Exception e)
+                        {
+                            //lblErrorMsg.Text = e.Message;
+                        }
+
+                        var reader = cmd.ExecuteReader();
+
                         ctName.DataSource = reader;
                         ctName.DataValueField = "companyName";
                         ctName.DataTextField = "companyName";
                         ctName.DataBind();
-                       // reader.Close();
+                        cmd.Dispose();
+                        reader.Close();
                     }
                 }
             }
@@ -186,6 +208,14 @@ namespace EMS_PSS
             FulltimeEmployee ft = new FulltimeEmployee();
             bool isAllValid = true;
 
+            ftfNameError.Text = "";
+            ftlNameError.Text = "";
+            ftSinError.Text = "";
+            ftDOBError.Text = "";
+            ftDateHireError.Text = "";
+            ftDateTermError.Text = "";
+            ftSalaryError.Text = "";
+
             if (!ft.SetFirstName(ftfName.Text))
             {
                 ftfNameError.Text += "<b>First Name</b> can only contain the following characters: [A-Za-z. -]\n";
@@ -211,7 +241,7 @@ namespace EMS_PSS
                 ftDateHireError.Text += "<b>Date Of Birth</b> should have valid date format";
                 isAllValid = false;
             }
-            if (!ft.SetDateOfTermination(ftDateTerm.Text.Replace(" ", "")))
+            if (!ft.SetDateOfTermination(ftDateTerm.Text.Replace(" ", "")) && ftDateTerm.Text != "")
             {
                 ftDateTermError.Text += "<b>Date Of Termination</b> should have valid date format";
                 isAllValid = false;
