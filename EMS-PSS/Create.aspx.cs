@@ -21,9 +21,11 @@ namespace EMS_PSS
         bool isFname, isLname, isSin, isDate1, isDate2, isMoney;
 
         int selectedEmpType;
+        string conString, securityLevel;
         protected void Page_Load(object sender, EventArgs e)
         {
-            string securityLevel = Session["securitylevel"].ToString();
+            securityLevel = Session["securitylevel"].ToString();
+            conString = Session["conString"].ToString();
             if (securityLevel == "2")
             {
                 contractInput.Visible = false;
@@ -81,10 +83,52 @@ namespace EMS_PSS
         {
             
         }
-        public void addFTUser()
+        private void addEmp(string type, string cn, string fn, string ln, string sin, string dob)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(conString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandText =
+                            "INSERT INTO tb_Emp (empType, companyName, firstName, lastName, socialInsNumber, dateOfBirth)"
+                             + "Values ('" + type.ToUpper() + "', @cn, @fn, @ln, @sin, @dob)";
+                        cmd.Parameters.AddWithValue("@cn", cn);
+                        cmd.Parameters.AddWithValue("@fn", fn);
+                        cmd.Parameters.AddWithValue("@ln", ln);
+                        cmd.Parameters.AddWithValue("@sin", sin);
+                        cmd.Parameters.AddWithValue("@dob", dob);
+                        /*
+                        SqlParameter parameter = new SqlParameter();
+                        parameter.ParameterName = "@dob";
+                        parameter.SqlDbType = SqlDbType.Date;
+                        parameter.Value = "2007/12/1";
+                        */
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected == 1)
+                        {
+                            //Success notification
+                        }
+                        else
+                        {
+                            //Error notification
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+        public void addFtEmp()
         {
             FulltimeEmployee ft = new FulltimeEmployee();
-            bool isAllValid = false;
+            bool isAllValid = true;
 
             if (!ft.SetFirstName(ftfName.Text))
             {
@@ -101,11 +145,29 @@ namespace EMS_PSS
                 ftSinError.Text += "<b>SIN</b> should be 9-digit number";
                 isAllValid = false;
             }
-            
-
+            if (!ft.SetDOB(ftDOB.Text.Replace(" ", "")))
+            {
+                ftDOBError.Text += "<b>Date Of Hire</b> should have valid date format";
+                isAllValid = false;
+            }
+            if (!ft.SetDateOfHire(ftDateHire.Text.Replace(" ", "")))
+            {
+                ftDateHireError.Text += "<b>Date Of Birth</b> should have valid date format";
+                isAllValid = false;
+            }
+            if (!ft.SetDateOfTermination(ftDateTerm.Text.Replace(" ", "")))
+            {
+                ftDateTermError.Text += "<b>Date Of Termination</b> should have valid date format";
+                isAllValid = false;
+            }
+            if (!ft.SetSalary(ftSalary.Text.Replace(" ", "")))
+            {
+                ftSalaryError.Text += "<b>Salary</b> should be higher than 0";
+                isAllValid = false;
+            }
             if (isAllValid)
             {
-                SqlConnection conn = new SqlConnection();
+                addEmp("FT", ftCompany.Text, ftfName.Text, ftlName.Text, ftSin.Text, ftDOB.Text);
 
             }
         }

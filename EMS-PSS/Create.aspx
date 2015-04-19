@@ -27,6 +27,12 @@
                         <tr><td>SIN: </td><td><asp:TextBox ID="ftSin" runat="server"/></td>
                             <td><asp:Label ID="ftSinError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
+                        <tr><td>Date of Birth: </td><td><asp:TextBox ID="ftDOB" runat="server"/></td>
+                            <td><asp:Label ID="ftDOBError" ForeColor="Red" runat="server"></asp:Label></td>
+                        </tr
+                        <tr><td>Works at: </td><td><asp:TextBox ID="ftCompany" runat="server"/></td>
+                            <td><asp:Label ID="ftCompanyError" ForeColor="Red" runat="server"></asp:Label></td>
+                        </tr>
                         <tr><td>Date of Hire: </td><td><asp:TextBox ID="ftDateHire" runat="server"/></td>
                             <td><asp:Label ID="ftDateHireError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>

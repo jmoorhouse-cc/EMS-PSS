@@ -85,6 +85,42 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.Label ftSinError;
         
         /// <summary>
+        /// ftDOB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ftDOB;
+        
+        /// <summary>
+        /// ftDOBError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ftDOBError;
+        
+        /// <summary>
+        /// ftCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ftCompany;
+        
+        /// <summary>
+        /// ftCompanyError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ftCompanyError;
+        
+        /// <summary>
         /// ftDateHire control.
         /// </summary>
         /// <remarks>
