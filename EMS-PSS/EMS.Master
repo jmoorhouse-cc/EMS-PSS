@@ -11,11 +11,14 @@
         }
     </style>
     <h2>Employee Management System</h2>
-    <hr />
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 </head>
 <body>
+    <div><asp:Table HorizontalAlign="Right" runat="server" >
+        <asp:TableRow>
+            <asp:TableCell style="text-align:right;"><asp:Label ID="loginStatusLabel" runat="server" Text="" ForeColor="Blue" /></asp:TableCell>
+        </asp:TableRow>
+    </asp:Table></div>
     <form id="form1" runat="server">
     <div>
         <table>

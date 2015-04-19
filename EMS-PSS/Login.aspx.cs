@@ -39,6 +39,7 @@ namespace EMS_PSS
                 Session["username"] = userName;
                 Session["securitylevel"] = userLevel;
                 Session["conString"] = conString;
+                Session["loginTime"] = DateTime.Now.ToString();
                 Server.Transfer("Home.aspx", true);
             }
         }

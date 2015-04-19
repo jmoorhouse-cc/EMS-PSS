@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using System.Data;              // To connect to MSSql Server
+using System.Data.SqlClient;
 namespace EMS_PSS
 {
     public partial class Create : System.Web.UI.Page
@@ -63,7 +64,23 @@ namespace EMS_PSS
 
         protected void btnCreate_Click(object sender, EventArgs e)
         {
+            if(addUser())
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        public bool addUser()
+        {
+            bool addUserSuccessful = false;
             
+
+
+            
+            return addUserSuccessful;
         }
     }
 }

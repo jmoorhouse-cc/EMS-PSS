@@ -13,7 +13,6 @@ namespace EMS_PSS
         {
             string securityLevel = Session["securitylevel"].ToString();
             string userName = Session["username"].ToString();
-
             if (securityLevel == "1")
             {
                 Menu1.Visible = true;
@@ -23,6 +22,13 @@ namespace EMS_PSS
             {
                 Menu1.Visible = false;
                 Menu2.Visible = true;
+            }
+            if (loginStatusLabel.Text == "")
+            {
+                if(securityLevel == "1")
+                    loginStatusLabel.Text = "An admin user [" + userName + "] Last Login at " + Session["loginTime"];
+                else if(securityLevel == "2")
+                    loginStatusLabel.Text = "A general user [" + userName + "] Last Login at " + Session["loginTime"];
             }
         }
     }
