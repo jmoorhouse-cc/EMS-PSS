@@ -41,6 +41,43 @@ namespace EMS_PSS
             {
 
             }
+            populateCompList();
+        }
+
+        protected void populateCompList()
+        {
+            try
+            {
+                using (var con = new System.Data.SqlClient.SqlConnection(conString))
+                {
+                    using (var cmd = new System.Data.SqlClient.SqlCommand("SELECT * FROM tb_Company", con))
+                    {
+                        try
+                        {
+                            con.Open();
+                        }
+                        catch (Exception e)
+                        {
+                            //lblErrorMsg.Text = e.Message;
+                        }
+
+                        var reader = cmd.ExecuteReader();
+                        ctName.DataSource = reader;
+                        ctName.DataValueField = "companyName";
+                        ctName.DataTextField = "companyName";
+                        ctName.DataBind();
+                       // reader.Close();
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                //lblErrorMsg.Text = ex.Message;
+            }
+            catch (Exception exc)
+            {
+              //  lblErrorMsg.Text = exc.Message;
+            }
         }
 
         protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -81,8 +118,25 @@ namespace EMS_PSS
 
         protected void btnCreate_Click(object sender, EventArgs e)
         {
-            
+            if(this.RadioButtonList1.SelectedValue == "fulltime")
+            {
+                addFtEmp();
+            }
+            else if (this.RadioButtonList1.SelectedValue == "parttime")
+            {
+
+            }
+            else if(this.RadioButtonList1.SelectedValue == "seasonal")
+            {
+
+            }
+            else if(this.RadioButtonList1.SelectedValue == "contract")
+            {
+
+            }
         }
+
+
         private bool addEmpDB(string type, string cn, string fn, string ln, string sin, string dob)
         {
             bool success = false;
@@ -134,12 +188,12 @@ namespace EMS_PSS
 
             if (!ft.SetFirstName(ftfName.Text))
             {
-                ftfNameError.Text += "<b>First Name</b> can only contain the following characters: [A-Za-z. -]";
+                ftfNameError.Text += "<b>First Name</b> can only contain the following characters: [A-Za-z. -]\n";
                 isAllValid = false;
             }
             if (!ft.SetLastName(ftlName.Text))
             {
-                ftlNameError.Text += "<b>Last Name</b> can only contain the following characters: [A-Za-z. -]";
+                ftlNameError.Text += "<b>Last Name</b> can only contain the following characters: [A-Za-z. -]\n";
                 isAllValid = false;
             }
             if (!ft.SetSIN(ftSin.Text.Replace(" ", "")))

@@ -94,7 +94,7 @@
 
                 <div id="contractInput" runat="server" visible="false">
                     <table>
-                        <tr><td>Contract Company Name: </td><td><asp:TextBox ID="ctName" runat="server"/></td>
+                        <tr><td>Contract Company Name: </td><td><asp:DropDownList ID="ctName" runat="server"/></td>
                             <td><asp:Label ID="ctNameError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
                         <tr><td>BIN: </td><td><asp:TextBox ID="ctBin" runat="server"/></td>
