@@ -39,7 +39,14 @@ namespace EMS_PSS
             }
             else if (securityLevel == "1")
             {
-
+                contractInput.Visible = true;
+                RadioButtonList1.Items.Add(new ListItem("contract"));
+                ftDateTerm.Visible = true;
+                ftSalary.Visible = true;
+                ptDateTerm.Visible = true;
+                ptWage.Visible = true;
+                slPcPay.Visible = true;
+                ctAmt.Visible = true;
             }
             populateCompList();
         }
