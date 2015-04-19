@@ -19,7 +19,7 @@ namespace EMS_PSS
         protected void Page_Load(object sender, EventArgs e)
         {
             conString =
-                @"server=localhost; " +
+                @"server=RACH; " +
                 @"initial catalog=dbEMS; " +
                 @"user id=sa; " +
                 @"password=Conestoga1 ";
@@ -41,7 +41,14 @@ namespace EMS_PSS
                 Session["conString"] = conString;
                 Session["loginTime"] = DateTime.Now.ToString();
                 //Server.Transfer("Home.aspx", true);
-                Supporting.Audit.CreateAudit(conString, "admin", "1", "FirstName", "fred", "jay");
+                try
+                {
+                    Supporting.Audit.CreateAudit(conString, "admin", "1", "FirstName", "fred", "jay");
+                }
+                catch(Exception exp)
+                {
+                    lblErrorMsg.Text += exp.Message;
+                }
             }
         }
 
@@ -64,7 +71,7 @@ namespace EMS_PSS
                         }
                         catch (Exception e)
                         {
-                            lblErrorMsg.Text = e.Message;
+                            lblErrorMsg.Text += e.Message;
                         }
                         
                         var reader = cmd.ExecuteReader();
@@ -76,7 +83,7 @@ namespace EMS_PSS
 
                             if (dbUsername == user && dbPW == pw)
                             {
-                                lblErrorMsg.Text = "";
+                                lblErrorMsg.Text += "";
                                 userLevel = dbSecurityLevel;
                                 rtnValue = true;
                                 break;

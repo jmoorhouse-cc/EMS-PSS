@@ -21,8 +21,13 @@ namespace Supporting
             SqlConnection conn = new SqlConnection(conString);
             SqlCommand cmd = new SqlCommand("INSERT INTO dbo.tb_Audit VALUES (@userName, @timechanged, @empID, @oldEntry, @newEntry)", conn);
 
+            SqlParameter parameter = new SqlParameter();
+            parameter.ParameterName = "@timechanged";
+            parameter.SqlDbType = SqlDbType.DateTime2;
+            parameter.Value = DateTime.Parse(DateTime.Now.ToString());
+
             cmd.Parameters.AddWithValue("@userName", userName);
-            cmd.Parameters.AddWithValue("@timechanged", sqlTime);
+            cmd.Parameters.Add(parameter);
             cmd.Parameters.AddWithValue("@empID", empID);
             cmd.Parameters.AddWithValue("@oldEntry", oldVal);
             cmd.Parameters.AddWithValue("@newEntry", newVal);
