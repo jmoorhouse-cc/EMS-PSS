@@ -1,10 +1,19 @@
-﻿using System;
+﻿//
+// FILE: FIleIO.cs
+// PROJECT: Employee Management System Project
+// PROGRAMMERS: Jay Moorhouse, Jordan Poirier, Thom Taylor, Rachel Park
+// DATE: 11/13/2014
+// DESCRIPTION: Class contains methods to read and write from/to the database file.
+//   
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections;
+using System.Reflection;
+
 
 namespace Supporting
 {
@@ -13,52 +22,84 @@ namespace Supporting
     /// </summary>
     public class FileIO
     {
+        Logging log = new Logging();
+        string dbasePath = Directory.GetCurrentDirectory();
+        string dbFilePath = Path.Combine(Directory.GetCurrentDirectory(), "DBase", "DB.csv");
+
         /// <summary>
-        /// Opens a file for reading based on a path provided
+        /// Opens a file from the DBase folder of the application and read in each 
+        /// pipe-delimited value to a string array to return to caller until newline.
         /// </summary>
         /// <param name="path">A string containing the path of the file to open</param>
-        /// <returns>StreamReader pointing to an opened file based on the path given</returns>
-        public StreamReader dBaseOpen_R(string path)
+        public string[] dBaseOpen_R()
         {
-            //open the file for reading, making sure it exists TODO
-            StreamReader dataFile = new StreamReader(File.OpenRead(path));
-            return dataFile;
+            // if the file exists, open it
+            if (File.Exists(dbFilePath))
+            {
+                string[] fileLines;
+                char[] newLine = new char[2] {'\n','\r'};
+
+                // open the file for reading and
+                // extract dbase info 
+                using (StreamReader dBase_R = new StreamReader(File.OpenRead(dbFilePath)))
+                {
+                    fileLines = dBase_R.ReadToEnd().Split(newLine);
+                    dBase_R.Close();
+                }
+                return fileLines;
+
+            }
+            else
+            {
+                //file doesn't exist
+                log.writeLog("OPEN DBFile - FAILED : File not found");
+                return null;
+            }
         }
 
         /// <summary>
-        /// Opens a file for writing based on a path provided
+        /// Opens a file for writing in the DBase folder of the application directory, and write
+        /// the parameter string array elements to the file, delimited by pipes.
         /// </summary>
         /// <param name="path">A string containing the path of the file to open</param>
-        /// <returns>StreamWriter pointing to an opened file based on the path given</returns>
-        public StreamWriter dBaseOpen_W(string path)
+        public void dBaseOpen_W(string[] employeeData, bool overwrite)
         {
-            //open file for writing, creating it if it doesnt exist TODO
-            StreamWriter dataFile = new StreamWriter(File.OpenWrite(path));
-            return dataFile;
-        }
+            // create the DBase folder if it doesn't already exist
+            if (!Directory.Exists(Path.Combine(dbasePath, "DBase")))
+            {
+                Directory.CreateDirectory(Path.Combine(dbasePath, "DBase"));
+            }
 
-        /// <summary>
-        /// Read the database into an arraylist of strings
-        /// </summary>
-        /// <param name="file">file to read from</param>
-        /// <returns>returns arrayList of entries to the database class</returns>
-        public ArrayList readDBase(StreamReader file)
-        {
-            //TODO - incorporate with dbase class, and make an arraylist of the employee object
-            ArrayList dBase = new ArrayList();
-            return dBase;
-        }
+            if (System.IO.File.Exists(dbFilePath) || overwrite == true)
+            {
+                System.IO.File.Delete(dbFilePath); //try/catch exception handling needs to be implemented
+            }
 
-        /// <summary>
-        /// Writes the given database to a file
-        /// </summary>
-        /// <param name="dBase">ArrayList of the database to write</param>
-        /// <param name="file">file to write the database to</param>
-        /// <returns>bool indicating success</returns>
-        public bool writeDbase(ArrayList dBase, StreamWriter file)
+            // write to dbase file (formatted)
+            using (StreamWriter dBase_W = File.AppendText(dbFilePath))
+            {
+                // write each string in the array to the file, separated by pipes
+                foreach (string s in employeeData)
+                {
+                    dBase_W.Write(s + "|");
+                }
+                dBase_W.Write("\n"); // end of current entry, add new line
+                dBase_W.Close();
+            }
+        }
+        public void dBaseEmpty()
         {
-            //TODO write the arraylist to a file in a way where it can be read later :)
-            return true;
+            // create the DBase folder if it doesn't already exist
+            if (!Directory.Exists(Path.Combine(dbasePath, "DBase")))
+            {
+                Directory.CreateDirectory(Path.Combine(dbasePath, "DBase"));
+            }
+
+            if (System.IO.File.Exists(dbFilePath))
+            {
+                System.IO.File.Delete(dbFilePath); //try/catch exception handling needs to be implemented
+                System.IO.File.Create(dbFilePath);
+            }
         }
     }
 }

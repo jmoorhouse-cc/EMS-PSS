@@ -43,6 +43,10 @@
     <Compile Include="UIMenu.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AllEmployees\AllEmployees.csproj">
+      <Project>{e5767958-f714-47d9-9f49-021c386f8488}</Project>
+      <Name>AllEmployees</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Supporting\Supporting.csproj">
       <Project>{2b4c2858-77bf-4d9a-b059-3dfee0d4d0d4}</Project>
       <Name>Supporting</Name>
