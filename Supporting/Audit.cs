@@ -14,20 +14,16 @@ namespace Supporting
 {
     public class Audit
     {
-        public static void CreateAudit(string conString, string changedElement, string oldVal, string newVal, string uID, string empID)
+        public static void CreateAudit(string conString, string userName, string empID, string changedElement, string oldVal, string newVal)
         {
-            //DateTime time = DateTime.Now;
-            //string format = "yyyy-MM-d" + "T" + "HH:mm:ss";
-            //string sqlTime = time.ToString(format);
-            //string goodSqlTime = "'" + sqlTime + "'";
-            //SqlDateTime sqlTime = (SqlDateTime)DateTime.Now;
+            SqlDateTime sqlTime = (SqlDateTime)DateTime.Now;
 
             SqlConnection conn = new SqlConnection(conString);
-            SqlCommand cmd = new SqlCommand("INSERT INTO dbo.tb_Audit VALUES (@timechanged, @empID, @userID, @oldEntry, @newEntry)", conn);
+            SqlCommand cmd = new SqlCommand("INSERT INTO dbo.tb_Audit VALUES (@userName, @timechanged, @empID, @oldEntry, @newEntry)", conn);
 
-            cmd.Parameters.AddWithValue("@timechanged", SqlDbType.DateTime);
+            cmd.Parameters.AddWithValue("@userName", userName);
+            cmd.Parameters.AddWithValue("@timechanged", sqlTime);
             cmd.Parameters.AddWithValue("@empID", empID);
-            cmd.Parameters.AddWithValue("@userID", uID);
             cmd.Parameters.AddWithValue("@oldEntry", oldVal);
             cmd.Parameters.AddWithValue("@newEntry", newVal);
             try

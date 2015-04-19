@@ -19,6 +19,7 @@ namespace EMS_PSS
         protected void Page_Load(object sender, EventArgs e)
         {
             conString =
+                @"server=localhost; " +
                 @"initial catalog=dbEMS; " +
                 @"user id=sa; " +
                 @"password=Conestoga1 ";
@@ -40,7 +41,7 @@ namespace EMS_PSS
                 Session["conString"] = conString;
                 Session["loginTime"] = DateTime.Now.ToString();
                 //Server.Transfer("Home.aspx", true);
-                Supporting.Audit.CreateAudit(conString, "First Name", "Josh", "Jay", "1", "1");
+                Supporting.Audit.CreateAudit(conString, "admin", "1", "FirstName", "fred", "jay");
             }
         }
 
