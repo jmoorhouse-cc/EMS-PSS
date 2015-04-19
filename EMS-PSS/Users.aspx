@@ -4,51 +4,23 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <table>
-        <tr>
-            <td>
-                Add new user
-            </td>
+        <tr><td><asp:Label runat="server" Text="Add New User" Font-Size="30px"></asp:Label></td></tr>
+        <tr><td>User Name:</td>
+            <td style="width: 217px"><asp:TextBox ID="tbxUserName" runat="server" Width="200px" /></td>
         </tr>
-        <tr>
-            <td>
-                User Name:
-            </td>
-            <td>
-                <asp:TextBox ID="tbxUserName" runat="server"></asp:TextBox>
-            </td>
+        <tr><td style="height: 29px">User Password:</td>
+            <td style="width: 217px; height: 29px;"><asp:TextBox ID="tbxUserPw" runat="server" Width="200px" /></td>
         </tr>
-        <tr>
-            <td>
-                User Password:
-            </td>
-            <td>
-                <asp:TextBox ID="tbxUserPw" runat="server"></asp:TextBox>
-            </td>
+        <tr><td>First Name:</td>
+            <td style="width: 217px"><asp:TextBox ID="tbxUserfName" runat="server" Width="200px" /></td>
         </tr>
-        <tr>
-            <td>
-                First Name:
-            </td>
-            <td>
-                <asp:TextBox ID="tbxUserfName" runat="server"></asp:TextBox>
-            </td>
+        <tr><td>Last Name:</td>
+            <td style="width: 217px"><asp:TextBox ID="tbxUserlName" runat="server" Width="200px" /></td>
         </tr>
-        <tr>
-            <td>
-                Last Name:
-            </td>
-            <td>
-                <asp:TextBox ID="tbxUserlName" runat="server"></asp:TextBox>
-            </td>
+        <tr><td>Security Level:</td>
+            <td style="width: 217px"><asp:TextBox ID="tbxUsersLevel" runat="server" Width="200px" /></td>
         </tr>
-        <tr>
-            <td>
-                Security Level:
-            </td>
-            <td>
-                <asp:TextBox ID="tbxUsersLevel" runat="server"></asp:TextBox>
-            </td>
-        </tr>
+        <tr><asp:Button ID="btnAddUser" runat="server" Text="Add User" OnClick="btnAddUser_Click" /></tr>
+        <tr><asp:Label ID="userAdditionResultLabel" runat="server" Text="" ForeColor="Red" /></tr>
     </table>
-    <asp:Button ID="btnAddUser" runat="server" Text="Add User" OnClick="btnAddUser_Click" />
 </asp:Content>

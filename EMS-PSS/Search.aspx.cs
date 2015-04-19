@@ -4,23 +4,156 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using System.Data;              // To connect to MSSql Server
+using System.Data.SqlClient;
 namespace EMS_PSS
 {
     public partial class Search : System.Web.UI.Page
     {
+        string securityLevel;
+        string userName;
+        string conString;
+        DataTable dt, dt2;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            securityLevel = Session["securitylevel"].ToString();
+            userName = Session["username"].ToString();
+            conString = Session["conString"].ToString();
         }
 
         protected void searchSubmit_Click(object sender, EventArgs e)
         {
-            string fName = tbxSearchfName.Text;
-            string lName = tbxSearchlName.Text;
-            string sNum = tbxSearchsNum.Text;
 
-            // search
+            string fn = fnameSearch.Text;
+            string ln = lnameSearch.Text;
+            string sin = sinSearch.Text;
+
+            SqlConnection conn = new SqlConnection(conString);
+            string cmdstring = "";
+            if (securityLevel == "1") cmdstring = "SELECT * FROM dbo.A_SearchEmp(@fName, @lName, @sin)";
+            else if (securityLevel == "2") cmdstring = "SELECT * FROM dbo.G_SearchEmp(@fName, @lName, @sin)";
+
+            SqlCommand cmd = new SqlCommand(cmdstring, conn);
+            cmd.CommandType = CommandType.Text;
+
+            cmd.Parameters.Add("@fName", SqlDbType.VarChar).Value = fn;
+            cmd.Parameters.Add("@lName", SqlDbType.VarChar).Value = ln;
+            cmd.Parameters.Add("@sin", SqlDbType.VarChar).Value = sin;
+            dt = new DataTable();
+
+            try
+            {
+                conn.Open();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                Response.Write(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            searchResultGrid.Visible = true;
+            searchFullResultGrid.Visible = false;
+            searchResultGrid.DataSource = dt;
+            searchResultGrid.DataBind();
+
+            if(dt.Rows.Count == 0) selectResultLabel.Text = "No Result to Display";
+            else selectResultLabel.Text = "";
+        }
+
+        protected void GridView_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Select")
+            {
+                // Retrieve the CommandArgument property
+                int index = Convert.ToInt32(e.CommandArgument); // or convert to other datatype
+                GridViewRow row = searchResultGrid.Rows[index];
+                string sin = row.Cells[1].Text;
+                string fname = row.Cells[2].Text;
+                string lname = row.Cells[3].Text;
+                string company = row.Cells[4].Text;
+                string type = row.Cells[5].Text;
+
+                SqlConnection conn = new SqlConnection(conString);
+                SqlCommand cmd = new SqlCommand(getCmdString(type), conn);
+                cmd.CommandType = CommandType.Text;
+
+                cmd.Parameters.Add("@fn", SqlDbType.VarChar).Value = fname;
+                cmd.Parameters.Add("@ln", SqlDbType.VarChar).Value = lname;
+                cmd.Parameters.Add("@sin", SqlDbType.VarChar).Value = sin;
+                cmd.Parameters.Add("@cn", SqlDbType.VarChar).Value = company;
+                dt2 = new DataTable();
+
+                try
+                {
+                    conn.Open();
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt2);
+                }
+                catch (Exception ex)
+                {
+                    Response.Write(ex.Message);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                
+                if (dt2.Rows.Count == 0) selectResultLabel.Text = "No Result to Display";
+                else selectResultLabel.Text = "";
+
+                searchFullResultGrid.DataSource = dt2;
+                searchFullResultGrid.DataBind();
+                searchResultGrid.Visible = false;
+                searchFullResultGrid.Visible = true;
+            }
+        }
+        private string getCmdString(string type)
+        {
+            string cmdstring = "";
+            switch (type)
+            {
+                case "FT":
+                    if (securityLevel == "1")
+                    {
+                        cmdstring = "SELECT * FROM dbo.A_DisplayFTEmp(@fn, @ln, @sin, @cn)";
+                    }
+                    else if (securityLevel == "2")
+                    {
+                        cmdstring = "SELECT * FROM dbo.G_DisplayFTEmp(@fn, @ln, @sin, @cn)";
+                    }
+                    break;
+                case "PT":
+                    if (securityLevel == "1")
+                    {
+                        cmdstring = "SELECT * FROM dbo.A_DisplayPTEmp(@fn, @ln, @sin, @cn)";
+                    }
+                    else if (securityLevel == "2")
+                    {
+                        cmdstring = "SELECT * FROM dbo.G_DisplayPTEmp(@fn, @ln, @sin, @cn)";
+                    }
+                    break;
+                case "CT":
+                    if (securityLevel == "1")
+                    {
+                        cmdstring = "SELECT * FROM dbo.A_DisplayCTEmp(@fn, @ln, @sin, @cn)";
+                    }
+                    break;
+                case "SL":
+                    if (securityLevel == "1")
+                    {
+                        cmdstring = "SELECT * FROM dbo.A_DisplaySLEmp(@fn, @ln, @sin, @cn)";
+                    }
+                    else if (securityLevel == "2")
+                    {
+                        cmdstring = "SELECT * FROM dbo.G_DisplaySLPTEmp(@fn, @ln, @sin, @cn)";
+                    }
+                    break;
+            }
+            return cmdstring;
         }
     }
 }

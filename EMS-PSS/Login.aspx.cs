@@ -19,7 +19,7 @@ namespace EMS_PSS
         protected void Page_Load(object sender, EventArgs e)
         {
             conString =
-                @"server=JAY-PC; " +
+                @"server=RACH; " +
                 @"initial catalog=dbEMS; " +
                 @"user id=sa; " +
                 @"password=Conestoga1 ";
@@ -38,6 +38,7 @@ namespace EMS_PSS
             {
                 Session["username"] = userName;
                 Session["securitylevel"] = userLevel;
+                Session["conString"] = conString;
                 Server.Transfer("Home.aspx", true);
             }
         }
@@ -86,6 +87,10 @@ namespace EMS_PSS
             catch (SqlException ex)
             {
                 lblErrorMsg.Text = ex.Message;
+            }
+            catch (Exception exc)
+            {
+                lblErrorMsg.Text = exc.Message;
             }
             return rtnValue;
         }

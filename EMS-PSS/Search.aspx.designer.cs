@@ -13,31 +13,31 @@ namespace EMS_PSS {
     public partial class Search {
         
         /// <summary>
-        /// tbxSearchfName control.
+        /// fnameSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbxSearchfName;
+        protected global::System.Web.UI.WebControls.TextBox fnameSearch;
         
         /// <summary>
-        /// tbxSearchlName control.
+        /// lnameSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbxSearchlName;
+        protected global::System.Web.UI.WebControls.TextBox lnameSearch;
         
         /// <summary>
-        /// tbxSearchsNum control.
+        /// sinSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbxSearchsNum;
+        protected global::System.Web.UI.WebControls.TextBox sinSearch;
         
         /// <summary>
         /// btnSearch control.
@@ -47,5 +47,32 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearch;
+        
+        /// <summary>
+        /// searchResultGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView searchResultGrid;
+        
+        /// <summary>
+        /// selectResultLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label selectResultLabel;
+        
+        /// <summary>
+        /// searchFullResultGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView searchFullResultGrid;
     }
 }
