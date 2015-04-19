@@ -13,5 +13,16 @@ namespace EMS_PSS
         {
 
         }
+
+        protected void btnAddUser_Click(object sender, EventArgs e)
+        {
+            string userName = tbxUserName.Text; // username
+            string userPw = tbxUserPw.Text; // pw
+            string firstName = tbxUserfName.Text; // first name
+            string lastName = tbxUserlName.Text; // last name
+            string secLevel = tbxUsersLevel.Text; // security level -- 1 = Admin; 2 = General
+
+            // add user
+        }
     }
 }
