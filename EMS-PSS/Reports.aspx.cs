@@ -38,24 +38,49 @@ namespace EMS_PSS
                 
             if (rblReports.SelectedItem.Value == "seniority")
             {
-                // run seniority report
+                RunSeniorityReport();
             }
             else if (rblReports.SelectedItem.Value == "whw")
             {
-                // run whw report
+                RunWhwReport();
             }
             else if (rblReports.SelectedItem.Value == "payroll")
             {
-                // run payroll report
+                RunPayrollReport();
             }
             else if (rblReports.SelectedItem.Value == "active")
             {
-                // run active report
+                RunActiveReport();
             }
             else  if (rblReports.SelectedItem.Value == "inactive")
             {
-                // run inactive report
+                RunInactiveReport();
             }
+        }
+
+        protected void RunSeniorityReport()
+        {
+
+        }
+
+        protected void RunWhwReport()
+        {
+
+        }
+
+        protected void RunPayrollReport()
+        {
+
+        }
+
+        protected void RunActiveReport()
+        {
+
+        }
+
+        protected void RunInactiveReport()
+        {
+
         }
     }
 }
