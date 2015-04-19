@@ -65,16 +65,16 @@ namespace EMS_PSS
             userPw = tbxUserPw.Text;         // pw
             firstName = tbxUserfName.Text;   // first name
             lastName = tbxUserlName.Text;    // last name
-            secLevel = 0;
+            int.TryParse(tbxUsersLevel.SelectedValue, out secLevel);
             
-            if ((tbxUsersLevel.Text == "admin") || (tbxUsersLevel.Text == "a") || (tbxUsersLevel.Text == "administrator"))
-            {
-                secLevel = 1;
-            }
-            else if ((tbxUsersLevel.Text == "general") || (tbxUsersLevel.Text == "g") || (tbxUsersLevel.Text == "gen"))
-            {
-                secLevel = 2;
-            } 
+            //if ((tbxUsersLevel.Text == "admin") || (tbxUsersLevel.Text == "a") || (tbxUsersLevel.Text == "administrator"))
+            //{
+            //    secLevel = 1;
+            //}
+            //else if ((tbxUsersLevel.Text == "general") || (tbxUsersLevel.Text == "g") || (tbxUsersLevel.Text == "gen"))
+            //{
+            //    secLevel = 2;
+            //} 
 
             // add user
             SqlConnection conn = new SqlConnection(conString);

@@ -30,7 +30,7 @@
                         <tr><td>Date of Birth: </td><td><asp:TextBox ID="ftDOB" runat="server"/></td>
                             <td><asp:Label ID="ftDOBError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr
-                        <tr><td>Works at: </td><td><asp:TextBox ID="ftCompany" runat="server"/></td>
+                        <tr><td>Works at: </td><td><asp:DropDownList ID="ftCompany" runat="server"/></td>
                             <td><asp:Label ID="ftCompanyError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
                         <tr><td>Date of Hire: </td><td><asp:TextBox ID="ftDateHire" runat="server"/></td>
@@ -70,7 +70,6 @@
 
                 <div id="seasonalInput" runat="server" visible="false">
                     <table>
-                        <tr></tr>
                         <tr><td>First Name: </td><td><asp:TextBox ID="slfName" runat="server"/></td>
                             <td><asp:Label ID="slfNameError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
@@ -94,7 +93,7 @@
 
                 <div id="contractInput" runat="server" visible="false">
                     <table>
-                        <tr><td>Contract Company Name: </td><td><asp:TextBox ID="ctName" runat="server"/></td>
+                        <tr><td>Contract Company Name: </td><td><asp:DropDownList ID="ctName" runat="server"/></td>
                             <td><asp:Label ID="ctNameError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
                         <tr><td>BIN: </td><td><asp:TextBox ID="ctBin" runat="server"/></td>

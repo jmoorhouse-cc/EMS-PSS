@@ -18,7 +18,11 @@
             <td style="width: 217px"><asp:TextBox ID="tbxUserlName" runat="server" Width="200px" /></td>
         </tr>
         <tr><td>Security Level:</td>
-            <td style="width: 217px"><asp:TextBox ID="tbxUsersLevel" runat="server" Width="200px" /></td>
+            <td style="width: 217px"><asp:DropDownList ID="tbxUsersLevel" runat="server" Width="200px" >
+                <asp:ListItem Value="2">General</asp:ListItem>
+                <asp:ListItem Value="1">Admin</asp:ListItem>
+                </asp:DropDownList>
+            </td>
         </tr>
         <tr><asp:Button ID="btnAddUser" runat="server" Text="Add User" OnClick="btnAddUser_Click" /></tr>
         <tr><asp:Label ID="userAdditionResultLabel" runat="server" Text="" ForeColor="Red" /></tr>
