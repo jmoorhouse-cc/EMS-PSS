@@ -13,5 +13,23 @@ namespace EMS_PSS
         {
 
         }
+
+        protected void searchSubmit_Click(object sender, EventArgs e)
+        {
+            string parameter = tbxSearch.Text;
+
+            if (rblSearch.SelectedValue == "fname")
+            {
+                // search by First Name : parameter
+            }
+            else if (rblSearch.SelectedValue == "lname")
+            {
+                // search by Last Name : parameter
+            }
+            else if (rblSearch.SelectedValue == "sin")
+            {
+                // search by SIN Number : parameter
+            }
+        }
     }
 }

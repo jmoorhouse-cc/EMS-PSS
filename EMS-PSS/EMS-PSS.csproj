@@ -58,7 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin.aspx" />
-    <Content Include="AquaStyleSheet.css" />
     <Content Include="Create.aspx" />
     <Content Include="EMS.Master" />
     <None Include="Web.Debug.config">
