@@ -13,22 +13,31 @@ namespace EMS_PSS {
     public partial class Search {
         
         /// <summary>
-        /// rblSearch control.
+        /// tbxSearchfName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblSearch;
+        protected global::System.Web.UI.WebControls.TextBox tbxSearchfName;
         
         /// <summary>
-        /// tbxSearch control.
+        /// tbxSearchlName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbxSearch;
+        protected global::System.Web.UI.WebControls.TextBox tbxSearchlName;
+        
+        /// <summary>
+        /// tbxSearchsNum control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbxSearchsNum;
         
         /// <summary>
         /// btnSearch control.

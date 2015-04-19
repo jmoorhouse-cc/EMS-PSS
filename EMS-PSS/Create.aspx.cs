@@ -16,6 +16,16 @@ namespace EMS_PSS
             {
                 contractInput.Visible = false;
                 RadioButtonList1.Items.Remove(RadioButtonList1.Items.FindByValue("contract"));
+                ftDateTerm.Visible = false;
+                ftSalary.Visible = false;
+                ptDateTerm.Visible = false;
+                ptWage.Visible = false;
+                slPcPay.Visible = false;
+                ctAmt.Visible = false;
+            }
+            else if (securityLevel == "1")
+            {
+
             }
         }
 
