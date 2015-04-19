@@ -83,8 +83,9 @@ namespace EMS_PSS
         {
             
         }
-        private void addEmp(string type, string cn, string fn, string ln, string sin, string dob)
+        private bool addEmpDB(string type, string cn, string fn, string ln, string sin, string dob)
         {
+            bool success = false;
             try
             {
                 using (SqlConnection conn = new SqlConnection(conString))
@@ -111,19 +112,20 @@ namespace EMS_PSS
                         int rowsAffected = cmd.ExecuteNonQuery();
                         if (rowsAffected == 1)
                         {
-                            //Success notification
+                            success = true;
                         }
                         else
                         {
-                            //Error notification
+                            success = false;
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                
+                success = false;
             }
+            return success;
         }
         public void addFtEmp()
         {
@@ -167,9 +169,16 @@ namespace EMS_PSS
             }
             if (isAllValid)
             {
-                addEmp("FT", ftCompany.Text, ftfName.Text, ftlName.Text, ftSin.Text, ftDOB.Text);
+                if(addEmpDB("FT", ftCompany.Text, ftfName.Text, ftlName.Text, ftSin.Text, ftDOB.Text))
+                {
+                    addFtEmpDB();
+                }
 
             }
+        }
+        private void addFtEmpDB()
+        {
+
         }
     }
 }
