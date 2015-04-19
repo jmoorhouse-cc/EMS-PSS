@@ -52,6 +52,10 @@ namespace EMS_PSS
                 cmd.CommandText = cmdstring;
                 queryStatus = cmd.ExecuteNonQuery();
             }
+            catch(SqlException exp)
+            {
+                userAdditionResultLabel.Text = "Duplicate User Name; ";
+            }
             catch (Exception ex)
             {
                 Response.Write(ex.Message);
@@ -66,7 +70,7 @@ namespace EMS_PSS
             }
             else
             {
-                userAdditionResultLabel.Text = "User Addition Failed";
+                userAdditionResultLabel.Text += "User Addition Failed";
             }
         }
 
