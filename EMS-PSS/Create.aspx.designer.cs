@@ -40,6 +40,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.TextBox ftfName;
         
         /// <summary>
+        /// ftfNameError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ftfNameError;
+        
+        /// <summary>
         /// ftlName control.
         /// </summary>
         /// <remarks>
@@ -47,6 +56,15 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ftlName;
+        
+        /// <summary>
+        /// ftlNameError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ftlNameError;
         
         /// <summary>
         /// ftSin control.
@@ -58,6 +76,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.TextBox ftSin;
         
         /// <summary>
+        /// ftSinError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ftSinError;
+        
+        /// <summary>
         /// ftDateHire control.
         /// </summary>
         /// <remarks>
@@ -65,6 +92,15 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ftDateHire;
+        
+        /// <summary>
+        /// ftDateHireError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ftDateHireError;
         
         /// <summary>
         /// ftDateTerm control.
@@ -76,6 +112,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.TextBox ftDateTerm;
         
         /// <summary>
+        /// ftDateTermError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ftDateTermError;
+        
+        /// <summary>
         /// ftSalary control.
         /// </summary>
         /// <remarks>
@@ -83,6 +128,15 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ftSalary;
+        
+        /// <summary>
+        /// ftSalaryError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ftSalaryError;
         
         /// <summary>
         /// parttimeInput control.
@@ -103,13 +157,31 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.TextBox ptfName;
         
         /// <summary>
-        /// ptLname control.
+        /// ptfNameError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ptLname;
+        protected global::System.Web.UI.WebControls.Label ptfNameError;
+        
+        /// <summary>
+        /// ptlName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ptlName;
+        
+        /// <summary>
+        /// ptlNameError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ptlNameError;
         
         /// <summary>
         /// ptSin control.
@@ -121,6 +193,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.TextBox ptSin;
         
         /// <summary>
+        /// ptSinError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ptSinError;
+        
+        /// <summary>
         /// ptDateHire control.
         /// </summary>
         /// <remarks>
@@ -128,6 +209,15 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ptDateHire;
+        
+        /// <summary>
+        /// ptDateHireError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ptDateHireError;
         
         /// <summary>
         /// ptDateTerm control.
@@ -139,6 +229,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.TextBox ptDateTerm;
         
         /// <summary>
+        /// ptDateTermError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ptDateTermError;
+        
+        /// <summary>
         /// ptWage control.
         /// </summary>
         /// <remarks>
@@ -146,6 +245,15 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ptWage;
+        
+        /// <summary>
+        /// ptWageError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ptWageError;
         
         /// <summary>
         /// seasonalInput control.
@@ -166,13 +274,31 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.TextBox slfName;
         
         /// <summary>
-        /// slLname control.
+        /// slfNameError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox slLname;
+        protected global::System.Web.UI.WebControls.Label slfNameError;
+        
+        /// <summary>
+        /// sllName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox sllName;
+        
+        /// <summary>
+        /// sllNameError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label sllNameError;
         
         /// <summary>
         /// slSin control.
@@ -184,6 +310,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.TextBox slSin;
         
         /// <summary>
+        /// slSinError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label slSinError;
+        
+        /// <summary>
         /// slSeason control.
         /// </summary>
         /// <remarks>
@@ -191,6 +326,15 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox slSeason;
+        
+        /// <summary>
+        /// slSeasonError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label slSeasonError;
         
         /// <summary>
         /// slYear control.
@@ -202,6 +346,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.TextBox slYear;
         
         /// <summary>
+        /// slYearError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label slYearError;
+        
+        /// <summary>
         /// slPcPay control.
         /// </summary>
         /// <remarks>
@@ -209,6 +362,15 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox slPcPay;
+        
+        /// <summary>
+        /// slPcPayError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label slPcPayError;
         
         /// <summary>
         /// contractInput control.
@@ -229,6 +391,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.TextBox ctName;
         
         /// <summary>
+        /// ctNameError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ctNameError;
+        
+        /// <summary>
         /// ctBin control.
         /// </summary>
         /// <remarks>
@@ -236,6 +407,15 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ctBin;
+        
+        /// <summary>
+        /// ctBinError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ctBinError;
         
         /// <summary>
         /// ctStart control.
@@ -247,6 +427,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.TextBox ctStart;
         
         /// <summary>
+        /// ctStartError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ctStartError;
+        
+        /// <summary>
         /// ctEnd control.
         /// </summary>
         /// <remarks>
@@ -256,6 +445,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.TextBox ctEnd;
         
         /// <summary>
+        /// ctEndError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ctEndError;
+        
+        /// <summary>
         /// ctAmt control.
         /// </summary>
         /// <remarks>
@@ -263,6 +461,15 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ctAmt;
+        
+        /// <summary>
+        /// ctAmtError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ctAmtError;
         
         /// <summary>
         /// btnCreate control.
