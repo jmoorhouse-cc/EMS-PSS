@@ -20,10 +20,10 @@
         </asp:TableRow>
     </asp:Table></div>
     <form id="form1" runat="server">
-    <div>
+    <div style="vertical-align:top;">
         <table>
             <tr>
-                <td>
+                <td style="vertical-align:top;">
                     <asp:Menu ID="Menu1" runat="server" BackColor="#F7F6F3"
                         DynamicHorizontalOffset="2" Font-Names="Verdana" Font-Size="0.8em"
                         ForeColor="#7C6F57" StaticSubMenuIndent="15px" Visible="false">
