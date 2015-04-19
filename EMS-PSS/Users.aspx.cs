@@ -66,15 +66,6 @@ namespace EMS_PSS
             firstName = tbxUserfName.Text;   // first name
             lastName = tbxUserlName.Text;    // last name
             int.TryParse(tbxUsersLevel.SelectedValue, out secLevel);
-            
-            //if ((tbxUsersLevel.Text == "admin") || (tbxUsersLevel.Text == "a") || (tbxUsersLevel.Text == "administrator"))
-            //{
-            //    secLevel = 1;
-            //}
-            //else if ((tbxUsersLevel.Text == "general") || (tbxUsersLevel.Text == "g") || (tbxUsersLevel.Text == "gen"))
-            //{
-            //    secLevel = 2;
-            //} 
 
             // add user
             SqlConnection conn = new SqlConnection(conString);
@@ -105,9 +96,7 @@ namespace EMS_PSS
             }
             if (queryStatus > 0)
             {
-                userAdditionResultLabel.Text = 
-                    "User [userName:" + uName + "|userPassword:" + userPw + "|firstName:" + firstName + 
-                    "|lastName:" + lastName + "|secLevel:" + tbxUsersLevel.Text + "] Addition Successful";
+                userAdditionResultLabel.Text = "User Addition Successful";
                 tbxUserName.Text = "";     // username
                 tbxUserPw.Text = "";         // pw
                 tbxUserfName.Text = "";   // first name
@@ -118,6 +107,7 @@ namespace EMS_PSS
             {
                 userAdditionResultLabel.Text += "User Addition Failed";
             }
+            displayUsers();
         }
 
     }

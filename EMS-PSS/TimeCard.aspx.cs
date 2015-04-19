@@ -14,16 +14,24 @@ namespace EMS_PSS
         string userName;
         string conString;
         DataTable dt, dt2;
+        string selectedEmpType;
         protected void Page_Load(object sender, EventArgs e)
         {
             securityLevel = Session["securitylevel"].ToString();
             userName = Session["username"].ToString();
             conString = Session["conString"].ToString();
+            searchFullResultGrid.Visible = false;
+            tcDateInputTable.Visible = false;
+            hourInputTable.Visible = false;
+            pieceInputTable.Visible = false;
         }
 
         protected void searchSubmit_Click(object sender, EventArgs e)
         {
-
+            searchFullResultGrid.Visible = false;
+            tcDateInputTable.Visible = false;
+            hourInputTable.Visible = false;
+            pieceInputTable.Visible = false;
             string fn = fnameSearch.Text;
             string ln = lnameSearch.Text;
             string sin = sinSearch.Text;
@@ -75,10 +83,10 @@ namespace EMS_PSS
                 string fname = row.Cells[2].Text;
                 string lname = row.Cells[3].Text;
                 string company = row.Cells[4].Text;
-                string type = row.Cells[5].Text;
-
+                selectedEmpType = row.Cells[5].Text;
+                
                 SqlConnection conn = new SqlConnection(conString);
-                SqlCommand cmd = new SqlCommand(getCmdString(type), conn);
+                SqlCommand cmd = new SqlCommand(getCmdString(selectedEmpType), conn);
                 cmd.CommandType = CommandType.Text;
 
                 cmd.Parameters.Add("@fn", SqlDbType.VarChar).Value = fname;
@@ -113,6 +121,10 @@ namespace EMS_PSS
                 searchFullResultGrid.DataBind();
                 searchResultGrid.Visible = false;
                 searchFullResultGrid.Visible = true;
+                tcDateInputTable.Visible = true;
+                hourInputTable.Visible = true;
+                if (selectedEmpType.ToUpper() == "SL") pieceInputTable.Visible = true;
+                else pieceInputTable.Visible = false;
             }
         }
         private string getCmdString(string type)
