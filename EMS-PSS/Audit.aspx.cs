@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace EMS_PSS
 {
-    public partial class Admin : System.Web.UI.Page
+    public partial class Audit : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

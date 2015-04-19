@@ -57,7 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin.aspx" />
+    <Content Include="Audit.aspx" />
     <Content Include="Create.aspx" />
     <Content Include="EMS.Master" />
     <None Include="Web.Debug.config">
@@ -69,21 +69,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Home.aspx" />
-    <Content Include="Maintenance.aspx" />
+    <Content Include="Companies.aspx" />
     <Content Include="Modify.aspx" />
     <Content Include="Reports.aspx" />
     <Content Include="Search.aspx" />
     <Content Include="TimeCard.aspx" />
+    <Content Include="Users.aspx" />
     <Content Include="Web.config" />
     <Content Include="Login.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin.aspx.cs">
-      <DependentUpon>Admin.aspx</DependentUpon>
+    <Compile Include="Audit.aspx.cs">
+      <DependentUpon>Audit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admin.aspx.designer.cs">
-      <DependentUpon>Admin.aspx</DependentUpon>
+    <Compile Include="Audit.aspx.designer.cs">
+      <DependentUpon>Audit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Create.aspx.cs">
       <DependentUpon>Create.aspx</DependentUpon>
@@ -106,12 +107,12 @@
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Maintenance.aspx.cs">
-      <DependentUpon>Maintenance.aspx</DependentUpon>
+    <Compile Include="Companies.aspx.cs">
+      <DependentUpon>Companies.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Maintenance.aspx.designer.cs">
-      <DependentUpon>Maintenance.aspx</DependentUpon>
+    <Compile Include="Companies.aspx.designer.cs">
+      <DependentUpon>Companies.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modify.aspx.cs">
       <DependentUpon>Modify.aspx</DependentUpon>
@@ -148,6 +149,13 @@
     </Compile>
     <Compile Include="TimeCard.aspx.designer.cs">
       <DependentUpon>TimeCard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Users.aspx.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Users.aspx.designer.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <PropertyGroup>

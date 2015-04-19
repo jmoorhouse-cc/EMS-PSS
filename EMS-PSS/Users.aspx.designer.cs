@@ -11,7 +11,7 @@ namespace EMS_PSS
 {
 
 
-    public partial class Admin
+    public partial class Users
     {
     }
 }
