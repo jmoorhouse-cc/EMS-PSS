@@ -93,6 +93,10 @@ namespace EMS_PSS
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     da.Fill(dt2);
                 }
+                catch (SqlException exp)
+                {
+                    selectResultLabel.Text = "ERROR: " + exp.Message;
+                }
                 catch (Exception ex)
                 {
                     Response.Write(ex.Message);
@@ -102,7 +106,7 @@ namespace EMS_PSS
                     conn.Close();
                 }
                 
-                if (dt2.Rows.Count == 0) selectResultLabel.Text = "No Result to Display";
+                if (dt2.Rows.Count == 0) selectResultLabel.Text += "No Result to Display";
                 else selectResultLabel.Text = "";
 
                 searchFullResultGrid.DataSource = dt2;

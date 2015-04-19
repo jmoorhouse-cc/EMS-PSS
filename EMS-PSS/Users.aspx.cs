@@ -13,21 +13,60 @@ namespace EMS_PSS
         string securityLevel;
         string userName;
         string conString;
-        
+        string uName = "";     // username
+        string userPw = "";        // pw
+        string firstName = "";  // first name
+        string lastName = "";   // last name
+        int secLevel = 0;
+        DataTable dt;
         protected void Page_Load(object sender, EventArgs e)
         {
             securityLevel = Session["securitylevel"].ToString();
             userName = Session["username"].ToString();
             conString = Session["conString"].ToString();
+            displayUsers();
+        }
+
+        private void displayUsers()
+        {
+            SqlConnection conn = new SqlConnection(conString);
+            string cmdString = "SELECT * FROM dbo.tb_User";
+            SqlCommand cmd = new SqlCommand(cmdString, conn);
+            cmd.CommandType = CommandType.Text;
+            dt = new DataTable();
+            try
+            {
+                conn.Open();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (SqlException exp)
+            {
+                userDisplayResultLabel.Text = "ERROR: " +exp.Message;
+            }
+            catch(Exception ex)
+            {
+                Response.Write(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            if (dt.Rows.Count == 0) userDisplayResultLabel.Text += "No Result to Display";
+            else userDisplayResultLabel.Text = "";
+
+            userDisplayGrid.DataSource = dt;
+            userDisplayGrid.DataBind();
         }
 
         protected void btnAddUser_Click(object sender, EventArgs e)
         {
-            string userName = tbxUserName.Text;     // username
-            string userPw = tbxUserPw.Text;         // pw
-            string firstName = tbxUserfName.Text;   // first name
-            string lastName = tbxUserlName.Text;    // last name
-            int secLevel = 0;
+            uName = tbxUserName.Text;     // username
+            userPw = tbxUserPw.Text;         // pw
+            firstName = tbxUserfName.Text;   // first name
+            lastName = tbxUserlName.Text;    // last name
+            secLevel = 0;
+            
             if ((tbxUsersLevel.Text == "admin") || (tbxUsersLevel.Text == "a") || (tbxUsersLevel.Text == "administrator"))
             {
                 secLevel = 1;
@@ -42,7 +81,7 @@ namespace EMS_PSS
             int queryStatus = 0;
             string cmdstring = "";
             if (securityLevel == "1") cmdstring = 
-                "INSERT INTO tb_User VALUES ('" + userName + "', '" + userPw + "', '" + firstName + "', '" + lastName + "', " + secLevel + ");";
+                "INSERT INTO tb_User VALUES ('" + uName + "', '" + userPw + "', '" + firstName + "', '" + lastName + "', " + secLevel + ");";
 
             SqlCommand cmd = new SqlCommand(cmdstring, conn);
             cmd.CommandType = CommandType.Text;
@@ -52,7 +91,7 @@ namespace EMS_PSS
                 cmd.CommandText = cmdstring;
                 queryStatus = cmd.ExecuteNonQuery();
             }
-            catch(SqlException exp)
+            catch(SqlException)
             {
                 userAdditionResultLabel.Text = "Duplicate User Name; ";
             }
@@ -66,7 +105,14 @@ namespace EMS_PSS
             }
             if (queryStatus > 0)
             {
-                userAdditionResultLabel.Text = "User Addition Successful";
+                userAdditionResultLabel.Text = 
+                    "User [userName:" + uName + "|userPassword:" + userPw + "|firstName:" + firstName + 
+                    "|lastName:" + lastName + "|secLevel:" + tbxUsersLevel.Text + "] Addition Successful";
+                tbxUserName.Text = "";     // username
+                tbxUserPw.Text = "";         // pw
+                tbxUserfName.Text = "";   // first name
+                tbxUserlName.Text = "";    // last name
+                tbxUsersLevel.Text = "";    // sec level
             }
             else
             {

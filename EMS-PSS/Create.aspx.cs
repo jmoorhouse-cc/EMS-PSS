@@ -63,7 +63,7 @@ namespace EMS_PSS
 
         protected void btnCreate_Click(object sender, EventArgs e)
         {
-            // create employee
+            
         }
     }
 }

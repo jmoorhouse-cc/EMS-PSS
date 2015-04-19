@@ -23,4 +23,10 @@
         <tr><asp:Button ID="btnAddUser" runat="server" Text="Add User" OnClick="btnAddUser_Click" /></tr>
         <tr><asp:Label ID="userAdditionResultLabel" runat="server" Text="" ForeColor="Red" /></tr>
     </table>
+    <table>
+        <tr>
+            <asp:GridView ID="userDisplayGrid" runat="server" ShowHeader="True" />
+        </tr>
+    </table>
+    <asp:Label ID="userDisplayResultLabel" runat="server" Text="" ForeColor="Red" ></asp:Label>
 </asp:Content>
