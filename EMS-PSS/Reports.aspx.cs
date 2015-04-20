@@ -88,12 +88,12 @@ namespace EMS_PSS
                     reader.Close();
                 }
             }
-    }
+        }
 
         protected void RunSeniorityReport()
         {
             SqlConnection conn = new SqlConnection(conString);
-            string cmdstring = "select * from dbo.SeniorityReport('" + company + "')";
+            string cmdstring = "select * from dbo.SeniorityReport('" + ftCompany.SelectedValue + "')";
             SqlCommand cmd = new SqlCommand(cmdstring, conn);
             cmd.CommandType = CommandType.Text;
 
