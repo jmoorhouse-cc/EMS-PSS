@@ -35,7 +35,6 @@ namespace EMS_PSS
                 rblReports.Items.Remove(rblReports.Items.FindByValue("active"));
                 rblReports.Items.Remove(rblReports.Items.FindByValue("inactive"));
             }
-
         }
 
         protected void btnReport_Click(object sender, EventArgs e)
@@ -94,18 +93,37 @@ namespace EMS_PSS
         {
             SqlConnection conn = new SqlConnection(conString);
             string cmdString = "";
+            string cmdString2 = "";
+            string cmdString3 = "";
 
             if (whichReport == "seniority")
             {
                 cmdString = "select * from dbo.SeniorityReport('" + ftCompany.SelectedValue + "')";
+                FillGrid(cmdString, ref searchFullResultGrid);
+                GridView1.Visible = false;
+                GridView2.Visible = false;
             }
             else if (whichReport == "whw")
             {
                 cmdString = "select * from dbo.WeeklyHoursReport_FT('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
+                cmdString2 = "select * from dbo.WeeklyHoursReport_PT('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
+                cmdString3 = "select * from dbo.WeeklyHoursReport_SL('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
+                FillGrid(cmdString, ref searchFullResultGrid);
+                FillGrid(cmdString2, ref GridView1);
+                FillGrid(cmdString3, ref GridView2);
+                GridView1.Visible = true;
+                GridView2.Visible = true;
             }
             else if (whichReport == "payroll")
             {
-                cmdString = "select * from dbo.SeniorityReport('" + ftCompany.SelectedValue + "')";
+                cmdString = "select * from dbo.PayrollReport_FT('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
+                cmdString2 = "select * from dbo.PayrollReport_PT('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
+                cmdString3 = "select * from dbo.PayrollReport_SL('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
+                FillGrid(cmdString, ref searchFullResultGrid);
+                FillGrid(cmdString2, ref GridView1);
+                FillGrid(cmdString3, ref GridView2);
+                GridView1.Visible = true;
+                GridView2.Visible = true;
             }
             else if (whichReport == "active")
             {
@@ -116,6 +134,24 @@ namespace EMS_PSS
                 cmdString = "select * from dbo.SeniorityReport('" + ftCompany.SelectedValue + "')";
             }
 
+            
+        }
+
+        protected void rblReports_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (rblReports.SelectedValue == "whw" || rblReports.SelectedValue == "payroll")
+            {
+                specifiedWeek.Visible = true;
+            }
+            else
+            {
+                specifiedWeek.Visible = false;
+            }
+        }
+
+        protected void FillGrid(string cmdString, ref GridView dataGrid)
+        {
+            SqlConnection conn = new SqlConnection(conString);
             SqlCommand cmd = new SqlCommand(cmdString, conn);
             cmd.CommandType = CommandType.Text;
             try
@@ -131,30 +167,19 @@ namespace EMS_PSS
             {
                 conn.Close();
             }
-            searchFullResultGrid.DataSource = dt;
-            searchFullResultGrid.DataBind();
+            
+            dataGrid.DataSource = dt;
+            dataGrid.DataBind();
 
             if (dt.Rows.Count == 0)
             {
                 selectResultLabel.Text = "No Result to Display";
-                searchFullResultGrid.Visible = false;
+                dataGrid.Visible = false;
             }
             else
             {
                 selectResultLabel.Text = "";
-                searchFullResultGrid.Visible = true;
-            }
-        }
-
-        protected void rblReports_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (rblReports.SelectedValue == "whw" || rblReports.SelectedValue == "payroll")
-            {
-                specifiedWeek.Visible = true;
-            }
-            else
-            {
-                specifiedWeek.Visible = false;
+                dataGrid.Visible = true;
             }
         }
     }
