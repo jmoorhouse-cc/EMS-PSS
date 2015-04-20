@@ -22,8 +22,17 @@
                 </td>
             </tr>
             <tr>
+                <td><asp:DropDownList ID="ftCompany" runat="server" OnSelectedIndexChanged="ftCompany_SelectedIndexChanged"/></td>  
+            </tr>
+            <tr>    
                 <td>
                     <asp:Button ID="btnReport" runat="server" Text="Run Report" OnClick="btnReport_Click" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Label ID="selectResultLabel" runat="server" Text="Label" Visible="false"></asp:Label>
+                    <asp:GridView ID="searchFullResultGrid" runat="server" ShowHeader="True" Visible="False" />
                 </td>
             </tr>
         </table>

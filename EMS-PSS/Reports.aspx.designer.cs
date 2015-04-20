@@ -31,6 +31,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.RadioButtonList rblReports;
         
         /// <summary>
+        /// ftCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ftCompany;
+        
+        /// <summary>
         /// btnReport control.
         /// </summary>
         /// <remarks>
@@ -38,6 +47,24 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnReport;
+        
+        /// <summary>
+        /// selectResultLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label selectResultLabel;
+        
+        /// <summary>
+        /// searchFullResultGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView searchFullResultGrid;
         
         /// <summary>
         /// divReport control.
