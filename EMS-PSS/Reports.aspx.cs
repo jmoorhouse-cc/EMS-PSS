@@ -22,20 +22,20 @@ namespace EMS_PSS
             securityLevel = Session["securitylevel"].ToString();
             userName = Session["username"].ToString();
             conString = Session["conString"].ToString();
-            rblReports.SelectedIndex = 0;
+
+            if (!IsPostBack)
+            {
+                rblReports.SelectedIndex = 0;
+                populateCompList();
+            }
+            
             if (securityLevel == "2")
             {
                 rblReports.Items.Remove(rblReports.Items.FindByValue("payroll"));
                 rblReports.Items.Remove(rblReports.Items.FindByValue("active"));
                 rblReports.Items.Remove(rblReports.Items.FindByValue("inactive"));
             }
-            else if (securityLevel == "1")
-            {
-                //rblReports.Items.Add(new ListItem("payroll"));
-                //rblReports.Items.Add(new ListItem("active"));
-                //rblReports.Items.Add(new ListItem("inactive"));
-            }
-            populateCompList();
+
         }
 
         protected void btnReport_Click(object sender, EventArgs e)
@@ -43,23 +43,23 @@ namespace EMS_PSS
                 
             if (rblReports.SelectedItem.Value == "seniority")
             {
-                RunSeniorityReport();
+                RunReport("seniority");
             }
             else if (rblReports.SelectedItem.Value == "whw")
             {
-                RunWhwReport();
+                RunReport("whw");
             }
             else if (rblReports.SelectedItem.Value == "payroll")
             {
-                RunPayrollReport();
+                RunReport("payroll");
             }
             else if (rblReports.SelectedItem.Value == "active")
             {
-                RunActiveReport();
+                RunReport("active");
             }
             else  if (rblReports.SelectedItem.Value == "inactive")
             {
-                RunInactiveReport();
+                RunReport("inactive");
             }
         }
 
@@ -90,13 +90,39 @@ namespace EMS_PSS
             }
         }
 
-        protected void RunSeniorityReport()
+        protected void RunReport(string whichReport)
         {
             SqlConnection conn = new SqlConnection(conString);
-            string cmdstring = "select * from dbo.SeniorityReport('" + ftCompany.SelectedValue + "')";
-            SqlCommand cmd = new SqlCommand(cmdstring, conn);
-            cmd.CommandType = CommandType.Text;
+            string cmdString = "";
+            string cmdString2 = "";
+            string cmdString3 = "";
 
+            if (whichReport == "seniority")
+            {
+                cmdString = "select * from dbo.SeniorityReport('" + ftCompany.SelectedValue + "')";
+            }
+            else if (whichReport == "whw")
+            {
+                cmdString = "select * from dbo.WeeklyHoursReport_FT('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
+                cmdString2 = "select * from dbo.WeeklyHoursReport_PT('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
+                cmdString3 = "select * from dbo.WeeklyHoursReport_SL('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
+            }
+            else if (whichReport == "payroll")
+            {
+                cmdString = "select * from dbo.SeniorityReport('" + ftCompany.SelectedValue + "')";
+            }
+            else if (whichReport == "active")
+            {
+                cmdString = "select * from dbo.SeniorityReport('" + ftCompany.SelectedValue + "')";
+            }
+            else if (whichReport == "inactive")
+            {
+                cmdString = "select * from dbo.SeniorityReport('" + ftCompany.SelectedValue + "')";
+            }
+
+            // cmdString 1
+            SqlCommand cmd = new SqlCommand(cmdString, conn);
+            cmd.CommandType = CommandType.Text;
             try
             {
                 conn.Open();
@@ -110,7 +136,6 @@ namespace EMS_PSS
             {
                 conn.Close();
             }
-
             searchFullResultGrid.DataSource = dt;
             searchFullResultGrid.DataBind();
 
@@ -124,31 +149,85 @@ namespace EMS_PSS
                 selectResultLabel.Text = "";
                 searchFullResultGrid.Visible = true;
             }
+
+
+            // cmdString 2
+            if (whichReport == "whw")
+            {
+                cmd = new SqlCommand(cmdString, conn);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conn.Open();
+                    dt.Load(cmd.ExecuteReader());
+                }
+                catch (Exception ex)
+                {
+                    Response.Write(ex.Message);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                GridView1.DataSource = dt;
+                GridView1.DataBind();
+
+                if (dt.Rows.Count == 0)
+                {
+                    selectResultLabel.Text = "No Result to Display";
+                    GridView1.Visible = false;
+                }
+                else
+                {
+                    selectResultLabel.Text = "";
+                    GridView1.Visible = true;
+                }
+            }
+
+             //cmdString 3
+            if (whichReport == "whw")
+            {
+                cmd = new SqlCommand(cmdString, conn);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conn.Open();
+                    dt.Load(cmd.ExecuteReader());
+                }
+                catch (Exception ex)
+                {
+                    Response.Write(ex.Message);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                GridView2.DataSource = dt;
+                GridView2.DataBind();
+
+                if (dt.Rows.Count == 0)
+                {
+                    selectResultLabel.Text = "No Result to Display";
+                    GridView2.Visible = false;
+                }
+                else
+                {
+                    selectResultLabel.Text = "";
+                    GridView2.Visible = true;
+                }
+            }
         }
 
-        protected void RunWhwReport()
+        protected void rblReports_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-        }
-
-        protected void RunPayrollReport()
-        {
-
-        }
-
-        protected void RunActiveReport()
-        {
-
-        }
-
-        protected void RunInactiveReport()
-        {
-
-        }
-
-        protected void ftCompany_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            company = ftCompany.SelectedValue;
+            if (rblReports.SelectedValue == "whw")
+            {
+                specifiedWeek.Visible = true;
+            }
+            else
+            {
+                specifiedWeek.Visible = false;
+            }
         }
     }
 }
