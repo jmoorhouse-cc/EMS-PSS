@@ -21,7 +21,7 @@ namespace EMS_PSS
             conString =
                 @"server=localhost; " +
                 @"initial catalog=dbEMS; " +
-                @"user id=sa; " +
+                @"user id=ems; " +
                 @"password=Conestoga1 ";
         }
 
