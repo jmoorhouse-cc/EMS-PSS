@@ -76,7 +76,7 @@ namespace EMS_PSS
 
         protected void tcInsert_Click(object sender, EventArgs e)
         {
-            DateTime temp = new DateTime;
+            DateTime temp = new DateTime();
             TimeCardManager tcm;
             try
             {

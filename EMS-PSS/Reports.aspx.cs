@@ -18,7 +18,7 @@ namespace EMS_PSS
             securityLevel = Session["securitylevel"].ToString();
             userName = Session["username"].ToString();
             conString = Session["conString"].ToString();
-
+            rblReports.SelectedIndex = 0;
             if (securityLevel == "2")
             {
                 rblReports.Items.Remove(rblReports.Items.FindByValue("payroll"));
@@ -27,9 +27,9 @@ namespace EMS_PSS
             }
             else if (securityLevel == "1")
             {
-                rblReports.Items.Add(new ListItem("payroll"));
-                rblReports.Items.Add(new ListItem("active"));
-                rblReports.Items.Add(new ListItem("inactive"));
+                //rblReports.Items.Add(new ListItem("payroll"));
+                //rblReports.Items.Add(new ListItem("active"));
+                //rblReports.Items.Add(new ListItem("inactive"));
             }
         }
 

@@ -19,7 +19,7 @@ namespace EMS_PSS
         //Seasonal: firstName, lastName, SIN, season, seasonYr, piecePay
         //Contract: <NULL>, contract companyName, BIN, StartDate, EndDate, contractAmt
         bool isFname, isLname, isSin, isDate1, isDate2, isMoney;
-
+        int returnID = 0; 
         int selectedEmpType;
         string conString, securityLevel;
         protected void Page_Load(object sender, EventArgs e)
@@ -39,8 +39,8 @@ namespace EMS_PSS
             }
             else if (securityLevel == "1")
             {
-                contractInput.Visible = true;
-                RadioButtonList1.Items.Add(new ListItem("contract"));
+                //contractInput.Visible = true;
+              // RadioButtonList1.Items.Add(new ListItem("contract"));
                 ftDateTerm.Visible = true;
                 ftSalary.Visible = true;
                 ptDateTerm.Visible = true;
@@ -173,6 +173,7 @@ namespace EMS_PSS
             {
                 using (SqlConnection conn = new SqlConnection(conString))
                 {
+                    returnID = -1;
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand())
                     {
@@ -180,7 +181,7 @@ namespace EMS_PSS
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandText =
                             "INSERT INTO tb_Emp (empType, companyName, firstName, lastName, socialInsNumber, dateOfBirth)"
-                             + "Values ('" + type.ToUpper() + "', @cn, @fn, @ln, @sin, @dob)";
+                             + "OUTPUT INSERTED.empID Values ('" + type.ToUpper() + "', @cn, @fn, @ln, @sin, @dob)";
                         cmd.Parameters.AddWithValue("@cn", cn);
                         cmd.Parameters.AddWithValue("@fn", fn);
                         cmd.Parameters.AddWithValue("@ln", ln);
@@ -192,8 +193,8 @@ namespace EMS_PSS
                         parameter.SqlDbType = SqlDbType.Date;
                         parameter.Value = "2007/12/1";
                         */
-                        int rowsAffected = cmd.ExecuteNonQuery();
-                        if (rowsAffected == 1)
+                        returnID = (Int32)cmd.ExecuteScalar();
+                        if (returnID != -1)
                         {
                             success = true;
                         }
@@ -262,14 +263,43 @@ namespace EMS_PSS
             {
                 if(addEmpDB("FT", ftCompany.Text, ftfName.Text, ftlName.Text, ftSin.Text, ftDOB.Text))
                 {
-                    addFtEmpDB();
+                    addFtEmpDB(returnID, ftDateHire.Text, ftDateTerm.Text, ftSalary.Text);
                 }
-
+                
             }
         }
-        private void addFtEmpDB()
+        private void addFtEmpDB(int empId, string dateOfHire, string dateOfTermination, string salary)
         {
-
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(conString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandText =
+                            "INSERT INTO tb_ftEmp (empID, dateOfHire, dateOfTermination, salary)"
+                             + "Values (" + empId + ", @dh, @dt, " + salary + ")";
+                        //cmd.Parameters.AddWithValue("@id", empId);
+                        cmd.Parameters.AddWithValue("@dh", dateOfHire);
+                        cmd.Parameters.AddWithValue("@dt", dateOfTermination);
+                        //cmd.Parameters.AddWithValue("@s", salary);
+                        /*
+                        SqlParameter parameter = new SqlParameter();
+                        parameter.ParameterName = "@dob";
+                        parameter.SqlDbType = SqlDbType.Date;
+                        parameter.Value = "2007/12/1";
+                        */
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //success = false;
+            }
         }
     }
 }
