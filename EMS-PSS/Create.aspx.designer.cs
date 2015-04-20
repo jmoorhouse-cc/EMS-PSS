@@ -400,13 +400,31 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.Label slSinError;
         
         /// <summary>
+        /// slDOB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox slDOB;
+        
+        /// <summary>
+        /// slDOBError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label slDOBError;
+        
+        /// <summary>
         /// slSeason control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox slSeason;
+        protected global::System.Web.UI.WebControls.DropDownList slSeason;
         
         /// <summary>
         /// slSeasonError control.
@@ -416,6 +434,42 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label slSeasonError;
+        
+        /// <summary>
+        /// slCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList slCompany;
+        
+        /// <summary>
+        /// slCompanyError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label slCompanyError;
+        
+        /// <summary>
+        /// sldateStart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox sldateStart;
+        
+        /// <summary>
+        /// slDateStartError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label slDateStartError;
         
         /// <summary>
         /// slYear control.

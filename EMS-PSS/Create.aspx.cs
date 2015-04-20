@@ -19,10 +19,10 @@ namespace EMS_PSS
         //Seasonal: firstName, lastName, SIN, season, seasonYr, piecePay
         //Contract: <NULL>, contract companyName, BIN, StartDate, EndDate, contractAmt
         bool isFname, isLname, isSin, isDate1, isDate2, isMoney;
-        int returnID = 0; 
+        int returnID = 0;
         int selectedEmpType;
         string conString, securityLevel;
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             securityLevel = Session["securitylevel"].ToString();
@@ -74,7 +74,7 @@ namespace EMS_PSS
                         }
 
                         var reader = cmd.ExecuteReader();
-                        
+
                         ftCompany.DataSource = reader;
                         ftCompany.DataValueField = "companyName";
                         ftCompany.DataTextField = "companyName";
@@ -122,6 +122,26 @@ namespace EMS_PSS
                         cmd.Dispose();
                         reader.Close();
                     }
+                    using (var cmd = new System.Data.SqlClient.SqlCommand("SELECT * FROM tb_Company", con))
+                    {
+                        try
+                        {
+                            con.Open();
+                        }
+                        catch (Exception e)
+                        {
+                            //lblErrorMsg.Text = e.Message;
+                        }
+
+                        var reader = cmd.ExecuteReader();
+
+                        slCompany.DataSource = reader;
+                        slCompany.DataValueField = "companyName";
+                        slCompany.DataTextField = "companyName";
+                        slCompany.DataBind();
+                        cmd.Dispose();
+                        reader.Close();
+                    }
                 }
             }
             catch (SqlException ex)
@@ -130,7 +150,7 @@ namespace EMS_PSS
             }
             catch (Exception exc)
             {
-              //  lblErrorMsg.Text = exc.Message;
+                //  lblErrorMsg.Text = exc.Message;
             }
         }
 
@@ -172,7 +192,7 @@ namespace EMS_PSS
 
         protected void btnCreate_Click(object sender, EventArgs e)
         {
-            if(this.RadioButtonList1.SelectedValue == "fulltime")
+            if (this.RadioButtonList1.SelectedValue == "fulltime")
             {
                 addFtEmp();
             }
@@ -180,11 +200,11 @@ namespace EMS_PSS
             {
                 addPtEmp();
             }
-            else if(this.RadioButtonList1.SelectedValue == "seasonal")
+            else if (this.RadioButtonList1.SelectedValue == "seasonal")
             {
-
+                addSlEmp();
             }
-            else if(this.RadioButtonList1.SelectedValue == "contract")
+            else if (this.RadioButtonList1.SelectedValue == "contract")
             {
 
             }
@@ -442,7 +462,7 @@ namespace EMS_PSS
                                 cmd.CommandText =
                                     "INSERT INTO tb_ptEmp (empID, dateOfHire, dateOfTermination, hourlyRate)"
                                      + "Values (" + empId + ", @dh, @dt, " + wage + ")";
-                                
+
                             }
                             else
                             {
@@ -476,6 +496,124 @@ namespace EMS_PSS
                         parameter.SqlDbType = SqlDbType.Date;
                         parameter.Value = "2007/12/1";
                         */
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //success = false;
+            }
+
+        }
+
+        public void addSlEmp()
+        {
+            SeasonalEmployee sl = new SeasonalEmployee();
+            bool isAllValid = true;
+
+            slfNameError.Text = "";
+            sllNameError.Text = "";
+            slSinError.Text = "";
+            slSeasonError.Text = "";
+            slYearError.Text = "";
+            slPcPayError.Text = "";
+
+            if (!sl.SetFirstName(slfName.Text) || slfName.Text == "")
+            {
+                slfNameError.Text += "<b>First Name</b> can only contain the following characters: [A-Za-z. -]\n";
+                isAllValid = false;
+            }
+            if (!sl.SetLastName(sllName.Text) || sllName.Text == "")
+            {
+                sllNameError.Text += "<b>Last Name</b> can only contain the following characters: [A-Za-z. -]\n";
+                isAllValid = false;
+            }
+            if (!sl.SetSIN(slSin.Text.Replace(" ", "")))
+            {
+                slSinError.Text += "<b>SIN</b> should be 9-digit number";
+                isAllValid = false;
+            }
+            if (!sl.SetDOB(slDOB.Text.Replace(" ", "")))
+            {
+                slDOBError.Text += "<b>Date Of Hire</b> should have valid date format";
+                isAllValid = false;
+            }
+            if (!sl.SetSeason(slSeason.Text.Replace(" ", "")) && slSeason.Text != "")
+            {
+                slSeasonError.Text += "<b>Date Of Birth</b> should have valid date format";
+                isAllValid = false;
+            }
+            //if (!sl.SetYear(slSeason.Text.Replace(" ", "")))
+            //{
+            //    slSeasonError.Text += "<b>Date Of Birth</b> should have valid date format";
+            //    isAllValid = false;
+            //}
+            if (!sl.SetPiecePay(slPcPay.Text.Replace(" ", "")) && slPcPay.Text != "")
+            {
+                slPcPayError.Text += "<b>Salary</b> should be a number higher than 0";
+                isAllValid = false;
+            }
+            if (isAllValid)
+            {
+                string activity = "0";
+                if (slSeason.Text != "" && slPcPay.Text != "" && slDOB.Text != "" && slSin.Text != "" && slYear.Text != "")
+                {
+                    activity = "1";
+                }
+                if (addEmpDB("SL", slCompany.Text, slfName.Text, sllName.Text, slSin.Text, slDOB.Text, activity))
+                {
+                    addSlEmpDB(returnID, slSeason.Text, slYear.Text, sldateStart.Text, slPcPay.Text);
+                    sucessLbl.Text = slfName.Text + " Has been succesfully added";
+                }
+            }
+        }
+
+        private void addSlEmpDB(int empId, string season, string seasonYear, string dateStart, string piecePay)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(conString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandType = CommandType.Text;
+                        if (season != "")
+                        {
+                            if (piecePay != "")
+                            {
+                                cmd.CommandText =
+                                    "INSERT INTO tb_slEmp (empID, season, seasonYear, dateStart, piecePay)"
+                                     + "Values (" + empId + ", @sn, @sy, @ds, " + piecePay + ")";
+                                //cmd.Parameters.AddWithValue("@sn", piecePay);
+                            }
+                            else
+                            {
+                                cmd.CommandText =
+                                    "INSERT INTO tb_slEmp (empID, season, seasonYear, dateStart)"
+                                     + "Values (" + empId + ", @sn, @sy, @ds" + ")";
+                            }
+                            cmd.Parameters.AddWithValue("@sn", season);
+                        }
+                        else
+                        {
+                            if (piecePay != "")
+                            {
+                                cmd.CommandText =
+                                    "INSERT INTO tb_slEmp (empID, seasonYear, dateStart, piecePay)"
+                                     + "Values (" + empId + ", @sy, @ds, " + piecePay + ")";
+                            }
+                            else
+                            {
+                                cmd.CommandText =
+                                    "INSERT INTO tb_slEmp (empID, seasonYear, dateStart)"
+                                     + "Values (" + empId + ", @sy, @ds" + ")";
+                            }
+                        }
+                        cmd.Parameters.AddWithValue("@sy", seasonYear);
+                        cmd.Parameters.AddWithValue("@ds", dateStart);
                         cmd.ExecuteNonQuery();
                     }
                 }

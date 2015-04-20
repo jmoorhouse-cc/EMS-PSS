@@ -13,7 +13,7 @@
                     <asp:ListItem Text="Contract" Value="contract"></asp:ListItem>
                 </asp:RadioButtonList>
             </td>
-            <td><asp:Label ID="sucessLbl" ForeColor="Red" runat="server"></asp:Label></td>
+            <td><asp:Label ID="sucessLbl" ForeColor="Green" runat="server"></asp:Label></td>
         </tr>
         <tr>
             <td>
@@ -86,11 +86,29 @@
                         <tr><td>SIN: </td><td><asp:TextBox ID="slSin" runat="server"/></td>
                             <td><asp:Label ID="slSinError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
-                        <tr><td>Season: </td><td><asp:TextBox ID="slSeason" runat="server"/></td>
+                        <tr><td>Date of Birth: </td><td><asp:TextBox ID="slDOB" runat="server"/></td>
+                            <td><asp:Label ID="slDOBError" ForeColor="Red" runat="server"></asp:Label></td>
+                            </tr>
+                        <tr><td>Season: </td><td><asp:DropDownList ID="slSeason" runat="server">
+                            <asp:ListItem Value="FALL">Fall</asp:ListItem>
+                            <asp:ListItem Value="WINTER">Winter</asp:ListItem>
+                            <asp:ListItem Value="SPRING">Spring</asp:ListItem>
+                            <asp:ListItem Value="SUMMER">Summer</asp:ListItem>
+                            </asp:DropDownList>
+                            </td>
                             <td><asp:Label ID="slSeasonError" ForeColor="Red" runat="server"></asp:Label></td>
+                        </tr>
+                            
+                        <tr><td>Works at: </td><td><asp:DropDownList ID="slCompany" runat="server"/></td>
+                            <td><asp:Label ID="slCompanyError" ForeColor="Red" runat="server"></asp:Label></td>
+                            </tr>
+                        <tr><td>Date Start: </td><td><asp:TextBox ID="sldateStart" runat="server"/></td>
+                            <td><asp:Label ID="slDateStartError" ForeColor="Red" runat="server"></asp:Label></td>
+                            
                         </tr>
                         <tr><td>Season Year: </td><td><asp:TextBox ID="slYear" runat="server"/></td>
                             <td><asp:Label ID="slYearError" ForeColor="Red" runat="server"></asp:Label></td>
+                            
                         </tr>
                         <tr><td>Piece Pay: </td><td><asp:TextBox ID="slPcPay" runat="server"/></td>
                             <td><asp:Label ID="slPcPayError" ForeColor="Red" runat="server"></asp:Label></td>
