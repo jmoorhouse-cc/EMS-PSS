@@ -13,6 +13,7 @@
                     <asp:ListItem Text="Contract" Value="contract"></asp:ListItem>
                 </asp:RadioButtonList>
             </td>
+            <td><asp:Label ID="sucessLbl" ForeColor="Red" runat="server"></asp:Label></td>
         </tr>
         <tr>
             <td>
