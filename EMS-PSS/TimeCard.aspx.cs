@@ -21,17 +21,13 @@ namespace EMS_PSS
             userName = Session["username"].ToString();
             conString = Session["conString"].ToString();
             searchFullResultGrid.Visible = false;
-            tcDateInputTable.Visible = false;
-            hourInputTable.Visible = false;
-            pieceInputTable.Visible = false;
+            hideTimeCardField();
         }
 
         protected void searchSubmit_Click(object sender, EventArgs e)
         {
             searchFullResultGrid.Visible = false;
-            tcDateInputTable.Visible = false;
-            hourInputTable.Visible = false;
-            pieceInputTable.Visible = false;
+            hideTimeCardField();
             string fn = fnameSearch.Text;
             string ln = lnameSearch.Text;
             string sin = sinSearch.Text;
@@ -68,10 +64,18 @@ namespace EMS_PSS
             searchResultGrid.DataSource = dt;
             searchResultGrid.DataBind();
 
-            if (dt.Rows.Count == 0) selectResultLabel.Text = "No Result to Display";
+            if (dt.Rows.Count == 0)
+            {
+                selectResultLabel.Text = "No Result to Display";
+                hideTimeCardField();
+            }
             else selectResultLabel.Text = "";
         }
 
+        protected void tcInsert_Click(object sender, EventArgs e)
+        {
+
+        }
         protected void GridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Select")
@@ -121,10 +125,8 @@ namespace EMS_PSS
                 searchFullResultGrid.DataBind();
                 searchResultGrid.Visible = false;
                 searchFullResultGrid.Visible = true;
-                tcDateInputTable.Visible = true;
-                hourInputTable.Visible = true;
-                if (selectedEmpType.ToUpper() == "SL") pieceInputTable.Visible = true;
-                else pieceInputTable.Visible = false;
+                showTimeCardField();
+
             }
         }
         private string getCmdString(string type)
@@ -170,6 +172,19 @@ namespace EMS_PSS
                     break;
             }
             return cmdstring;
+        }
+        private void showTimeCardField()
+        {
+            tcDateInputTable.Visible = true;
+            hourInputTable.Visible = true;
+            if (selectedEmpType.ToUpper() == "SL") pieceInputTable.Visible = true;
+            else pieceInputTable.Visible = false;
+        }
+        private void hideTimeCardField()
+        {
+            tcDateInputTable.Visible = false;
+            hourInputTable.Visible = false;
+            pieceInputTable.Visible = false;
         }
     }
 }

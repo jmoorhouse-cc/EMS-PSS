@@ -53,8 +53,6 @@
                 <td><asp:TextBox ID="tcWeekDate" runat="server"/></td>
             </table>
             </asp:PlaceHolder>
-        </tr>
-        <tr>
             <asp:PlaceHolder ID="hourInputTable" Visible="false" runat="server">
             <table style="border-color:gray;">
                 <tr>
@@ -88,6 +86,7 @@
             </table>
             </asp:PlaceHolder>
         </tr>
+        <tr><asp:Button ID="insertTimeCardBtn" runat="server" Text="Insert Time Card" OnClick="tcInsert_Click" /></tr>
     </table>
 
 </asp:Content>
