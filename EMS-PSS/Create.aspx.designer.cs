@@ -247,24 +247,6 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.Label ptSinError;
         
         /// <summary>
-        /// ptDOB control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ptDOB;
-        
-        /// <summary>
-        /// ptDOBError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ptDOBError;
-        
-        /// <summary>
         /// ptDateHire control.
         /// </summary>
         /// <remarks>
@@ -281,24 +263,6 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ptDateHireError;
-        
-        /// <summary>
-        /// ptCompany control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ptCompany;
-        
-        /// <summary>
-        /// ptCompanyError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ptCompanyError;
         
         /// <summary>
         /// ptDateTerm control.

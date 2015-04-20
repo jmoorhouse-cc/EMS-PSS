@@ -30,7 +30,7 @@
                         </tr>
                         <tr><td>Date of Birth: </td><td><asp:TextBox ID="ftDOB" runat="server"/></td>
                             <td><asp:Label ID="ftDOBError" ForeColor="Red" runat="server"></asp:Label></td>
-                        </tr>
+                        </tr
                         <tr><td>Works at: </td><td><asp:DropDownList ID="ftCompany" runat="server"/></td>
                             <td><asp:Label ID="ftCompanyError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
@@ -57,15 +57,9 @@
                         <tr><td>SIN: </td><td><asp:TextBox ID="ptSin" runat="server"/></td>
                             <td><asp:Label ID="ptSinError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
-                        <tr><td>Date of Birth: </td><td><asp:TextBox ID="ptDOB" runat="server"/></td>
-                            <td><asp:Label ID="ptDOBError" ForeColor="Red" runat="server"></asp:Label></td>
-                            </tr>
                         <tr><td>Date of Hire: </td><td><asp:TextBox ID="ptDateHire" runat="server"/></td>
                             <td><asp:Label ID="ptDateHireError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
-                        <tr><td>Works at: </td><td><asp:DropDownList ID="ptCompany" runat="server"/></td>
-                            <td><asp:Label ID="ptCompanyError" ForeColor="Red" runat="server"></asp:Label></td>
-                            </tr>
                         <tr><td>Date of Termination: </td><td><asp:TextBox ID="ptDateTerm" runat="server"/></td>
                             <td><asp:Label ID="ptDateTermError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
