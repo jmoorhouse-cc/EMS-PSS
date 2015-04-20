@@ -102,6 +102,26 @@ namespace EMS_PSS
                         cmd.Dispose();
                         reader.Close();
                     }
+                    using (var cmd = new System.Data.SqlClient.SqlCommand("SELECT * FROM tb_Company", con))
+                    {
+                        try
+                        {
+                            con.Open();
+                        }
+                        catch (Exception e)
+                        {
+                            //lblErrorMsg.Text = e.Message;
+                        }
+
+                        var reader = cmd.ExecuteReader();
+
+                        ptCompany.DataSource = reader;
+                        ptCompany.DataValueField = "companyName";
+                        ptCompany.DataTextField = "companyName";
+                        ptCompany.DataBind();
+                        cmd.Dispose();
+                        reader.Close();
+                    }
                 }
             }
             catch (SqlException ex)
@@ -158,7 +178,7 @@ namespace EMS_PSS
             }
             else if (this.RadioButtonList1.SelectedValue == "parttime")
             {
-
+                addPtEmp();
             }
             else if(this.RadioButtonList1.SelectedValue == "seasonal")
             {
@@ -217,6 +237,7 @@ namespace EMS_PSS
             }
             return success;
         }
+
         public void addFtEmp()
         {
             FulltimeEmployee ft = new FulltimeEmployee();
@@ -279,6 +300,7 @@ namespace EMS_PSS
                 }
             }
         }
+
         private void addFtEmpDB(int empId, string dateOfHire, string dateOfTermination, string salary)
         {
             try
@@ -290,12 +312,163 @@ namespace EMS_PSS
                     {
                         cmd.Connection = conn;
                         cmd.CommandType = CommandType.Text;
-                        cmd.CommandText =
-                            "INSERT INTO tb_ftEmp (empID, dateOfHire, dateOfTermination, salary)"
-                             + "Values (" + empId + ", @dh, @dt, " + salary + ")";
+                        if (dateOfTermination != "")
+                        {
+                            if (salary != "")
+                            {
+                                cmd.CommandText =
+                                    "INSERT INTO tb_ftEmp (empID, dateOfHire, dateOfTermination, salary)"
+                                     + "Values (" + empId + ", @dh, @dt, " + salary + ")";
+                            }
+                            else
+                            {
+                                cmd.CommandText =
+                                    "INSERT INTO tb_ftEmp (empID, dateOfHire, dateOfTermination)"
+                                     + "Values (" + empId + ", @dh, @dt" + ")";
+                            }
+                            cmd.Parameters.AddWithValue("@dt", dateOfTermination);
+                        }
+                        else
+                        {
+                            if (salary != "")
+                            {
+                                cmd.CommandText =
+                                    "INSERT INTO tb_ftEmp (empID, dateOfHire, salary)"
+                                     + "Values (" + empId + ", @dh, " + salary + ")";
+                            }
+                            else
+                            {
+                                cmd.CommandText =
+                                    "INSERT INTO tb_ftEmp (empID, dateOfHire)"
+                                     + "Values (" + empId + ", @dh" + ")";
+                            }
+                        }
                         //cmd.Parameters.AddWithValue("@id", empId);
                         cmd.Parameters.AddWithValue("@dh", dateOfHire);
-                        cmd.Parameters.AddWithValue("@dt", dateOfTermination);
+                        //cmd.Parameters.AddWithValue("@s", salary);
+                        /*
+                        SqlParameter parameter = new SqlParameter();
+                        parameter.ParameterName = "@dob";
+                        parameter.SqlDbType = SqlDbType.Date;
+                        parameter.Value = "2007/12/1";
+                        */
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //success = false;
+            }
+        }
+
+        public void addPtEmp()
+        {
+            ParttimeEmployee pt = new ParttimeEmployee();
+            bool isAllValid = true;
+
+            ptfNameError.Text = "";
+            ptlNameError.Text = "";
+            ptSinError.Text = "";
+            ptDateHireError.Text = "";
+            ptDateTermError.Text = "";
+            ptWageError.Text = "";
+
+            if (!pt.SetFirstName(ptfName.Text) || ptfName.Text == "")
+            {
+                ptfNameError.Text += "<b>First Name</b> can only contain the following characters: [A-Za-z. -]\n";
+                isAllValid = false;
+            }
+            if (!pt.SetLastName(ptlName.Text) || ptlName.Text == "")
+            {
+                ptlNameError.Text += "<b>Last Name</b> can only contain the following characters: [A-Za-z. -]\n";
+                isAllValid = false;
+            }
+            if (!pt.SetSIN(ptSin.Text.Replace(" ", "")))
+            {
+                ptSinError.Text += "<b>SIN</b> should be 9-digit number";
+                isAllValid = false;
+            }
+            if (!pt.SetDOB(ptDOB.Text.Replace(" ", "")))
+            {
+                ptDOBError.Text += "<b>Date Of Hire</b> should have valid date format";
+                isAllValid = false;
+            }
+            if (!pt.SetDateOfHire(ptDateHire.Text.Replace(" ", "")))
+            {
+                ptDateHireError.Text += "<b>Date Of Birth</b> should have valid date format";
+                isAllValid = false;
+            }
+            if (!pt.SetDateOfTermination(ptDateTerm.Text.Replace(" ", "")) && ptDateTerm.Text != "")
+            {
+                ptDateTermError.Text += "<b>Date Of Termination</b> should have valid date format";
+                isAllValid = false;
+            }
+            if (!pt.SetHourlyRate(ptWage.Text.Replace(" ", "")) && ptWage.Text != "")
+            {
+                ptWageError.Text += "<b>Salary</b> should be a number higher than 0";
+                isAllValid = false;
+            }
+            if (isAllValid)
+            {
+                string activity = "0";
+                if (ptDateHire.Text != "" && ptWage.Text != "" && ptDOB.Text != "" && ptSin.Text != "")
+                {
+                    activity = "1";
+                }
+                if (addEmpDB("PT", ptCompany.Text, ptfName.Text, ptlName.Text, ptSin.Text, ptDOB.Text, activity))
+                {
+                    addPtEmpDB(returnID, ptDateHire.Text, ptDateTerm.Text, ptWage.Text);
+                    sucessLbl.Text = ptfName.Text + " Has been succesfully added";
+                }
+            }
+        }
+
+        private void addPtEmpDB(int empId, string dateOfHire, string dateOfTermination, string wage)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(conString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandType = CommandType.Text;
+                        if (dateOfTermination != "")
+                        {
+                            if (wage != "")
+                            {
+                                cmd.CommandText =
+                                    "INSERT INTO tb_ptEmp (empID, dateOfHire, dateOfTermination, hourlyRate)"
+                                     + "Values (" + empId + ", @dh, @dt, " + wage + ")";
+                                
+                            }
+                            else
+                            {
+                                cmd.CommandText =
+                                    "INSERT INTO tb_ptEmp (empID, dateOfHire, dateOfTermination)"
+                                     + "Values (" + empId + ", @dh, @dt" + ")";
+                            }
+                            cmd.Parameters.AddWithValue("@dt", dateOfTermination);
+                        }
+                        else
+                        {
+                            if (wage != "")
+                            {
+                                cmd.CommandText =
+                                    "INSERT INTO tb_ptEmp (empID, dateOfHire, hourlyRate)"
+                                     + "Values (" + empId + ", @dh, " + wage + ")";
+                            }
+                            else
+                            {
+                                cmd.CommandText =
+                                    "INSERT INTO tb_ptEmp (empID, dateOfHire)"
+                                     + "Values (" + empId + ", @dh" + ")";
+                            }
+                        }
+                        //cmd.Parameters.AddWithValue("@id", empId);
+                        cmd.Parameters.AddWithValue("@dh", dateOfHire);
                         //cmd.Parameters.AddWithValue("@s", salary);
                         /*
                         SqlParameter parameter = new SqlParameter();
