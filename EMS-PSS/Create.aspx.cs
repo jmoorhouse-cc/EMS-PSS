@@ -27,29 +27,32 @@ namespace EMS_PSS
         {
             securityLevel = Session["securitylevel"].ToString();
             conString = Session["conString"].ToString();
-            if (securityLevel == "2")
+            if (!IsPostBack)
             {
-                contractInput.Visible = false;
-                RadioButtonList1.Items.Remove(RadioButtonList1.Items.FindByValue("contract"));
-                ftDateTerm.Visible = false;
-                ftSalary.Visible = false;
-                ptDateTerm.Visible = false;
-                ptWage.Visible = false;
-                slPcPay.Visible = false;
-                ctAmt.Visible = false;
+                if (securityLevel == "2")
+                {
+                    contractInput.Visible = false;
+                    RadioButtonList1.Items.Remove(RadioButtonList1.Items.FindByValue("contract"));
+                    ftDateTerm.Visible = false;
+                    ftSalary.Visible = false;
+                    ptDateTerm.Visible = false;
+                    ptWage.Visible = false;
+                    slPcPay.Visible = false;
+                    ctAmt.Visible = false;
+                }
+                else if (securityLevel == "1")
+                {
+                    //contractInput.Visible = true;
+                    // RadioButtonList1.Items.Add(new ListItem("contract"));
+                    ftDateTerm.Visible = true;
+                    ftSalary.Visible = true;
+                    ptDateTerm.Visible = true;
+                    ptWage.Visible = true;
+                    slPcPay.Visible = true;
+                    ctAmt.Visible = true;
+                }
+                populateCompList();
             }
-            else if (securityLevel == "1")
-            {
-                //contractInput.Visible = true;
-              // RadioButtonList1.Items.Add(new ListItem("contract"));
-                ftDateTerm.Visible = true;
-                ftSalary.Visible = true;
-                ptDateTerm.Visible = true;
-                ptWage.Visible = true;
-                slPcPay.Visible = true;
-                ctAmt.Visible = true;
-            }
-            populateCompList();
             sucessLbl.Text = "";
         }
 
