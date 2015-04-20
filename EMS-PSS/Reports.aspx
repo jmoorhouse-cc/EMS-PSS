@@ -12,9 +12,9 @@
             </tr>
             <tr>
                 <td>
-                    <asp:RadioButtonList ID="rblReports" runat="server">
+                    <asp:RadioButtonList ID="rblReports" runat="server" RepeatDirection="Horizontal">
                         <asp:ListItem Text="Seniority" Value="seniority"></asp:ListItem>
-                        <asp:ListItem Text="WHW" Value="whw"></asp:ListItem>
+                        <asp:ListItem Text="Weekly Hours Worked" Value="whw"></asp:ListItem>
                         <asp:ListItem Text="Payroll" Value="payroll"></asp:ListItem>
                         <asp:ListItem Text="Active Employee" Value="active"></asp:ListItem>
                         <asp:ListItem Text="Inactive Employee" Value="inactive"></asp:ListItem>
@@ -27,5 +27,8 @@
                 </td>
             </tr>
         </table>
+    </div>
+    <div id="divReport" runat="server">
+            
     </div>
 </asp:Content>
