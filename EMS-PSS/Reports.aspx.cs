@@ -94,8 +94,6 @@ namespace EMS_PSS
         {
             SqlConnection conn = new SqlConnection(conString);
             string cmdString = "";
-            string cmdString2 = "";
-            string cmdString3 = "";
 
             if (whichReport == "seniority")
             {
@@ -104,8 +102,6 @@ namespace EMS_PSS
             else if (whichReport == "whw")
             {
                 cmdString = "select * from dbo.WeeklyHoursReport_FT('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
-                cmdString2 = "select * from dbo.WeeklyHoursReport_PT('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
-                cmdString3 = "select * from dbo.WeeklyHoursReport_SL('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
             }
             else if (whichReport == "payroll")
             {
@@ -120,7 +116,6 @@ namespace EMS_PSS
                 cmdString = "select * from dbo.SeniorityReport('" + ftCompany.SelectedValue + "')";
             }
 
-            // cmdString 1
             SqlCommand cmd = new SqlCommand(cmdString, conn);
             cmd.CommandType = CommandType.Text;
             try
@@ -149,78 +144,11 @@ namespace EMS_PSS
                 selectResultLabel.Text = "";
                 searchFullResultGrid.Visible = true;
             }
-
-
-            // cmdString 2
-            if (whichReport == "whw")
-            {
-                cmd = new SqlCommand(cmdString, conn);
-                cmd.CommandType = CommandType.Text;
-                try
-                {
-                    conn.Open();
-                    dt.Load(cmd.ExecuteReader());
-                }
-                catch (Exception ex)
-                {
-                    Response.Write(ex.Message);
-                }
-                finally
-                {
-                    conn.Close();
-                }
-                GridView1.DataSource = dt;
-                GridView1.DataBind();
-
-                if (dt.Rows.Count == 0)
-                {
-                    selectResultLabel.Text = "No Result to Display";
-                    GridView1.Visible = false;
-                }
-                else
-                {
-                    selectResultLabel.Text = "";
-                    GridView1.Visible = true;
-                }
-            }
-
-             //cmdString 3
-            if (whichReport == "whw")
-            {
-                cmd = new SqlCommand(cmdString, conn);
-                cmd.CommandType = CommandType.Text;
-                try
-                {
-                    conn.Open();
-                    dt.Load(cmd.ExecuteReader());
-                }
-                catch (Exception ex)
-                {
-                    Response.Write(ex.Message);
-                }
-                finally
-                {
-                    conn.Close();
-                }
-                GridView2.DataSource = dt;
-                GridView2.DataBind();
-
-                if (dt.Rows.Count == 0)
-                {
-                    selectResultLabel.Text = "No Result to Display";
-                    GridView2.Visible = false;
-                }
-                else
-                {
-                    selectResultLabel.Text = "";
-                    GridView2.Visible = true;
-                }
-            }
         }
 
         protected void rblReports_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (rblReports.SelectedValue == "whw")
+            if (rblReports.SelectedValue == "whw" || rblReports.SelectedValue == "payroll")
             {
                 specifiedWeek.Visible = true;
             }

@@ -47,7 +47,7 @@
                                 <asp:MenuItem NavigateUrl="~/Audit.aspx" Text="Audit" Value="Audit"></asp:MenuItem>
                                 <asp:MenuItem NavigateUrl="~/Companies.aspx" Text="Companies" Value="Companies"></asp:MenuItem>
                             </asp:MenuItem>
-
+                            <asp:MenuItem NavigateUrl="~/Login.aspx" Text="Logout" Value="Logout"></asp:MenuItem>
                         </Items>
                     </asp:Menu>
                     <asp:Menu ID="Menu2" runat="server" BackColor="#F7F6F3"
@@ -69,6 +69,7 @@
                                 <asp:MenuItem NavigateUrl="~/TimeCard.aspx" Text="TimeCard Employee" ToolTip="TimeCard" Value="TimeCard" />
                             </asp:MenuItem>
                             <asp:MenuItem NavigateUrl="~/Reports.aspx" Text="Reports" Value="Reports"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Login.aspx" Text="Logout" Value="Logout"></asp:MenuItem>
                         </Items>
                     </asp:Menu>
                 </td>
