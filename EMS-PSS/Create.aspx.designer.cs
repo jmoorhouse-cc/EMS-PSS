@@ -22,6 +22,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList1;
         
         /// <summary>
+        /// sucessLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label sucessLbl;
+        
+        /// <summary>
         /// fulltimeInput control.
         /// </summary>
         /// <remarks>

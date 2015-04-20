@@ -22,6 +22,7 @@ namespace EMS_PSS
         int returnID = 0; 
         int selectedEmpType;
         string conString, securityLevel;
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             securityLevel = Session["securitylevel"].ToString();
@@ -49,6 +50,7 @@ namespace EMS_PSS
                 ctAmt.Visible = true;
             }
             populateCompList();
+            sucessLbl.Text = "";
         }
 
         protected void populateCompList()
@@ -166,7 +168,7 @@ namespace EMS_PSS
         }
 
 
-        private bool addEmpDB(string type, string cn, string fn, string ln, string sin, string dob)
+        private bool addEmpDB(string type, string cn, string fn, string ln, string sin, string dob, string activity)
         {
             bool success = false;
             try
@@ -180,13 +182,14 @@ namespace EMS_PSS
                         cmd.Connection = conn;
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandText =
-                            "INSERT INTO tb_Emp (empType, companyName, firstName, lastName, socialInsNumber, dateOfBirth)"
-                             + "OUTPUT INSERTED.empID Values ('" + type.ToUpper() + "', @cn, @fn, @ln, @sin, @dob)";
+                            "INSERT INTO tb_Emp (empType, companyName, firstName, lastName, socialInsNumber, dateOfBirth, activityStatus)"
+                             + "OUTPUT INSERTED.empID Values ('" + type.ToUpper() + "', @cn, @fn, @ln, @sin, @dob, @as)";
                         cmd.Parameters.AddWithValue("@cn", cn);
                         cmd.Parameters.AddWithValue("@fn", fn);
                         cmd.Parameters.AddWithValue("@ln", ln);
                         cmd.Parameters.AddWithValue("@sin", sin);
                         cmd.Parameters.AddWithValue("@dob", dob);
+                        cmd.Parameters.AddWithValue("@as", activity);
                         /*
                         SqlParameter parameter = new SqlParameter();
                         parameter.ParameterName = "@dob";
@@ -224,12 +227,12 @@ namespace EMS_PSS
             ftDateTermError.Text = "";
             ftSalaryError.Text = "";
 
-            if (!ft.SetFirstName(ftfName.Text))
+            if (!ft.SetFirstName(ftfName.Text) || ftfName.Text == "")
             {
                 ftfNameError.Text += "<b>First Name</b> can only contain the following characters: [A-Za-z. -]\n";
                 isAllValid = false;
             }
-            if (!ft.SetLastName(ftlName.Text))
+            if (!ft.SetLastName(ftlName.Text) || ftlName.Text == "")
             {
                 ftlNameError.Text += "<b>Last Name</b> can only contain the following characters: [A-Za-z. -]\n";
                 isAllValid = false;
@@ -254,18 +257,23 @@ namespace EMS_PSS
                 ftDateTermError.Text += "<b>Date Of Termination</b> should have valid date format";
                 isAllValid = false;
             }
-            if (!ft.SetSalary(ftSalary.Text.Replace(" ", "")))
+            if (!ft.SetSalary(ftSalary.Text.Replace(" ", "")) && ftSalary.Text != "")
             {
-                ftSalaryError.Text += "<b>Salary</b> should be higher than 0";
+                ftSalaryError.Text += "<b>Salary</b> should be a number higher than 0";
                 isAllValid = false;
             }
             if (isAllValid)
             {
-                if(addEmpDB("FT", ftCompany.Text, ftfName.Text, ftlName.Text, ftSin.Text, ftDOB.Text))
+                string activity = "0";
+                if (ftDateHire.Text != "" && ftSalary.Text != "" && ftDOB.Text != "" && ftSin.Text != "")
+                {
+                    activity = "1";
+                }
+                if (addEmpDB("FT", ftCompany.Text, ftfName.Text, ftlName.Text, ftSin.Text, ftDOB.Text, activity))
                 {
                     addFtEmpDB(returnID, ftDateHire.Text, ftDateTerm.Text, ftSalary.Text);
+                    sucessLbl.Text = ftfName.Text + " Has been succesfully added";
                 }
-                
             }
         }
         private void addFtEmpDB(int empId, string dateOfHire, string dateOfTermination, string salary)
