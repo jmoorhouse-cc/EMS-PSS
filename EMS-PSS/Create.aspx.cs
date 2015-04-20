@@ -391,6 +391,7 @@ namespace EMS_PSS
             ptlNameError.Text = "";
             ptSinError.Text = "";
             ptDateHireError.Text = "";
+            ptDOBError.Text = "";
             ptDateTermError.Text = "";
             ptWageError.Text = "";
 
@@ -411,12 +412,12 @@ namespace EMS_PSS
             }
             if (!pt.SetDOB(ptDOB.Text.Replace(" ", "")))
             {
-                ptDOBError.Text += "<b>Date Of Hire</b> should have valid date format";
+                ptDOBError.Text += "<b>Date Of Birth</b> should have valid date format";
                 isAllValid = false;
             }
             if (!pt.SetDateOfHire(ptDateHire.Text.Replace(" ", "")))
             {
-                ptDateHireError.Text += "<b>Date Of Birth</b> should have valid date format";
+                ptDateHireError.Text += "<b>Date Of Hire</b> should have valid date format";
                 isAllValid = false;
             }
             if (!pt.SetDateOfTermination(ptDateTerm.Text.Replace(" ", "")) && ptDateTerm.Text != "")
@@ -515,6 +516,7 @@ namespace EMS_PSS
             slfNameError.Text = "";
             sllNameError.Text = "";
             slSinError.Text = "";
+            slDOBError.Text = "";
             slSeasonError.Text = "";
             slYearError.Text = "";
             slPcPayError.Text = "";
@@ -536,12 +538,12 @@ namespace EMS_PSS
             }
             if (!sl.SetDOB(slDOB.Text.Replace(" ", "")))
             {
-                slDOBError.Text += "<b>Date Of Hire</b> should have valid date format";
+                slDOBError.Text += "<b>Date Of Birth</b> should have valid date format";
                 isAllValid = false;
             }
             if (!sl.SetSeason(slSeason.Text.Replace(" ", "")) && slSeason.Text != "")
             {
-                slSeasonError.Text += "<b>Date Of Birth</b> should have valid date format";
+                slSeasonError.Text += "<b>Season</b> must be valid. It should not be possible to get this error. Look at you, you little hacker";
                 isAllValid = false;
             }
             //if (!sl.SetYear(slSeason.Text.Replace(" ", "")))
