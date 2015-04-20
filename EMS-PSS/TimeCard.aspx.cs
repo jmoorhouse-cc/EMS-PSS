@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;              // To connect to MSSql Server
 using System.Data.SqlClient;
+using Supporting;
+
 namespace EMS_PSS
 {
     public partial class TimeCard : System.Web.UI.Page
@@ -74,7 +76,18 @@ namespace EMS_PSS
 
         protected void tcInsert_Click(object sender, EventArgs e)
         {
-
+            DateTime temp = new DateTime;
+            TimeCardManager tcm;
+            try
+            {
+                temp = Convert.ToDateTime(tcWeekDate.Text);
+                tcm = new TimeCardManager(temp);
+            }
+            catch
+            {
+                errorMsg.Text = "Invalid date or format";
+            }
+            //
         }
         protected void GridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {

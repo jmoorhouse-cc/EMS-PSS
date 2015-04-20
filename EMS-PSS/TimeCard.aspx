@@ -47,6 +47,7 @@
         <hr /><hr /><hr />
         <table>
         <tr>
+            <asp:Label ID="errorMsg" runat="server"></asp:Label>
             <asp:PlaceHolder ID="tcDateInputTable" Visible="false" runat="server">
             <table style="border-color:gray;">
                 <td>Week Of Time Card: </td>

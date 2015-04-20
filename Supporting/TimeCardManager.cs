@@ -89,7 +89,7 @@ namespace Supporting
             return validPieces;
         }
 
-        static public DateTime CalcMonDate(DateTime dateData)
+        private DateTime CalcMonDate(DateTime dateData)
         {
             DateTime dateMonday = dateData;
 

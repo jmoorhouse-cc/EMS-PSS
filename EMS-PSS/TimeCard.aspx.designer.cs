@@ -76,6 +76,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.GridView searchFullResultGrid;
         
         /// <summary>
+        /// errorMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label errorMsg;
+        
+        /// <summary>
         /// tcDateInputTable control.
         /// </summary>
         /// <remarks>
