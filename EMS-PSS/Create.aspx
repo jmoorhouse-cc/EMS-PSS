@@ -90,6 +90,7 @@
                             <td><asp:Label ID="slDOBError" ForeColor="Red" runat="server"></asp:Label></td>
                             </tr>
                         <tr><td>Season: </td><td><asp:DropDownList ID="slSeason" runat="server">
+                            <asp:ListItem Value="NONE"></asp:ListItem>
                             <asp:ListItem Value="FALL">Fall</asp:ListItem>
                             <asp:ListItem Value="WINTER">Winter</asp:ListItem>
                             <asp:ListItem Value="SPRING">Spring</asp:ListItem>

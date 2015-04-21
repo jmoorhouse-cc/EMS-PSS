@@ -216,54 +216,64 @@ namespace EMS_PSS
         private bool addEmpDB(string type, string cn, string fn, string ln, string sin, string dob, string activity)
         {
             bool success = false;
-            try
+            if (!(cn == "" && fn == "" && ln == "" && sin == "" && dob == ""))
             {
-                using (SqlConnection conn = new SqlConnection(conString))
+                try
                 {
-                    returnID = -1;
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand())
+                    using (SqlConnection conn = new SqlConnection(conString))
                     {
-                        cmd.Connection = conn;
-                        cmd.CommandType = CommandType.Text;
-                        cmd.CommandText =
-                            "INSERT INTO tb_Emp (empType, companyName, firstName, lastName, socialInsNumber, dateOfBirth, activityStatus)"
-                             + "OUTPUT INSERTED.empID Values ('" + type.ToUpper() + "', @cn, @fn, @ln, @sin, @dob, @as)";
-                        cmd.Parameters.AddWithValue("@cn", cn);
-                        cmd.Parameters.AddWithValue("@fn", fn);
-                        cmd.Parameters.AddWithValue("@ln", ln);
-                        cmd.Parameters.AddWithValue("@sin", sin);
-                        cmd.Parameters.AddWithValue("@dob", dob);
-                        cmd.Parameters.AddWithValue("@as", activity);
-                        /*
-                        SqlParameter parameter = new SqlParameter();
-                        parameter.ParameterName = "@dob";
-                        parameter.SqlDbType = SqlDbType.Date;
-                        parameter.Value = "2007/12/1";
-                        */
-                        returnID = (Int32)cmd.ExecuteScalar();
-                        if (returnID != -1)
+                        returnID = -1;
+                        conn.Open();
+                        using (SqlCommand cmd = new SqlCommand())
                         {
-                            success = true;
+                            cmd.Connection = conn;
+                            cmd.CommandType = CommandType.Text;
+
+                            cmd.CommandText =
+                                "INSERT INTO tb_Emp (empType, companyName, firstName, lastName, socialInsNumber, dateOfBirth, activityStatus)"
+                                 + "OUTPUT INSERTED.empID Values ('" + type.ToUpper() + "', @cn, @fn, @ln, @sin, @dob, @as)";
+                            cmd.Parameters.AddWithValue("@cn", cn);
+
+
+                            cmd.Parameters.AddWithValue("@fn", fn);
+                            cmd.Parameters.AddWithValue("@ln", ln);
+                            cmd.Parameters.AddWithValue("@sin", sin);
+                            cmd.Parameters.AddWithValue("@dob", dob);
+                            cmd.Parameters.AddWithValue("@as", activity);
+                            /*
+                            SqlParameter parameter = new SqlParameter();
+                            parameter.ParameterName = "@dob";
+                            parameter.SqlDbType = SqlDbType.Date;
+                            parameter.Value = "2007/12/1";
+                            */
+                            returnID = (Int32)cmd.ExecuteScalar();
+                            if (returnID != -1)
+                            {
+                                success = true;
+                            }
+                            else
+                            {
+                                success = false;
+                            }
                         }
-                        else
+                        Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "empType", "N/A", type.ToUpper());
+                        if (cn != "")
                         {
-                            success = false;
+                            Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "companyName", "N/A", cn);
                         }
+                        Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "firstName", "N/A", fn);
+                        Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "lastName", "N/A", ln);
+                        Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "socialInsuranceNumber", "N/A", sin);
+                        Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "dateOfBirth", "N/A", dob);
                     }
-                    Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "empType", "N/A", type.ToUpper());
-                    Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "companyName", "N/A", cn);
-                    Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "firstName", "N/A", fn);
-                    Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "lastName", "N/A", ln);
-                    Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "socialInsuranceNumber", "N/A", sin);
-                    Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "dateOfBirth", "N/A", dob);
+                }
+                catch (Exception ex)
+                {
+                    success = false;
                 }
             }
-            catch (Exception ex)
-            {
-                success = false;
-            }
-            return success;
+                return success;
+
         }
 
         public void addFtEmp()
@@ -279,27 +289,27 @@ namespace EMS_PSS
             ftDateTermError.Text = "";
             ftSalaryError.Text = "";
 
-            if (!ft.SetFirstName(ftfName.Text) || ftfName.Text == "")
+            if (!ft.SetFirstName(ftfName.Text) && ftfName.Text != "")
             {
                 ftfNameError.Text += "<b>First Name</b> can only contain the following characters: [A-Za-z. -]\n";
                 isAllValid = false;
             }
-            if (!ft.SetLastName(ftlName.Text) || ftlName.Text == "")
+            if (!ft.SetLastName(ftlName.Text) && ftlName.Text != "")
             {
                 ftlNameError.Text += "<b>Last Name</b> can only contain the following characters: [A-Za-z. -]\n";
                 isAllValid = false;
             }
-            if (!ft.SetSIN(ftSin.Text.Replace(" ", "")))
+            if (!ft.SetSIN(ftSin.Text.Replace(" ", "")) && ftSin.Text != "")
             {
                 ftSinError.Text += "<b>SIN</b> should be 9-digit number";
                 isAllValid = false;
             }
-            if (!ft.SetDOB(ftDOB.Text.Replace(" ", "")))
+            if (!ft.SetDOB(ftDOB.Text.Replace(" ", "")) && ftDOB.Text != "")
             {
                 ftDOBError.Text += "<b>Date Of Hire</b> should have valid date format";
                 isAllValid = false;
             }
-            if (!ft.SetDateOfHire(ftDateHire.Text.Replace(" ", "")))
+            if (!ft.SetDateOfHire(ftDateHire.Text.Replace(" ", "")) && ftDateHire.Text != "")
             {
                 ftDateHireError.Text += "<b>Date Of Birth</b> should have valid date format";
                 isAllValid = false;
@@ -408,27 +418,27 @@ namespace EMS_PSS
             ptDateTermError.Text = "";
             ptWageError.Text = "";
 
-            if (!pt.SetFirstName(ptfName.Text) || ptfName.Text == "")
+            if (!pt.SetFirstName(ptfName.Text) && ptfName.Text != "")
             {
                 ptfNameError.Text += "<b>First Name</b> can only contain the following characters: [A-Za-z. -]\n";
                 isAllValid = false;
             }
-            if (!pt.SetLastName(ptlName.Text) || ptlName.Text == "")
+            if (!pt.SetLastName(ptlName.Text) && ptlName.Text != "")
             {
                 ptlNameError.Text += "<b>Last Name</b> can only contain the following characters: [A-Za-z. -]\n";
                 isAllValid = false;
             }
-            if (!pt.SetSIN(ptSin.Text.Replace(" ", "")))
+            if (!pt.SetSIN(ptSin.Text.Replace(" ", "")) && ptSin.Text != "")
             {
                 ptSinError.Text += "<b>SIN</b> should be 9-digit number";
                 isAllValid = false;
             }
-            if (!pt.SetDOB(ptDOB.Text.Replace(" ", "")))
+            if (!pt.SetDOB(ptDOB.Text.Replace(" ", "")) && ptDOB.Text != "")
             {
                 ptDOBError.Text += "<b>Date Of Birth</b> should have valid date format";
                 isAllValid = false;
             }
-            if (!pt.SetDateOfHire(ptDateHire.Text.Replace(" ", "")))
+            if (!pt.SetDateOfHire(ptDateHire.Text.Replace(" ", "")) && ptDateHire.Text != "")
             {
                 ptDateHireError.Text += "<b>Date Of Hire</b> should have valid date format";
                 isAllValid = false;
@@ -539,27 +549,27 @@ namespace EMS_PSS
             slYearError.Text = "";
             slPcPayError.Text = "";
 
-            if (!sl.SetFirstName(slfName.Text) || slfName.Text == "")
+            if (!sl.SetFirstName(slfName.Text) && slfName.Text != "")
             {
                 slfNameError.Text += "<b>First Name</b> can only contain the following characters: [A-Za-z. -]\n";
                 isAllValid = false;
             }
-            if (!sl.SetLastName(sllName.Text) || sllName.Text == "")
+            if (!sl.SetLastName(sllName.Text) && sllName.Text != "")
             {
                 sllNameError.Text += "<b>Last Name</b> can only contain the following characters: [A-Za-z. -]\n";
                 isAllValid = false;
             }
-            if (!sl.SetSIN(slSin.Text.Replace(" ", "")))
+            if (!sl.SetSIN(slSin.Text.Replace(" ", "")) && slSin.Text != "")
             {
                 slSinError.Text += "<b>SIN</b> should be 9-digit number";
                 isAllValid = false;
             }
-            if (!sl.SetDOB(slDOB.Text.Replace(" ", "")))
+            if (!sl.SetDOB(slDOB.Text.Replace(" ", "")) && slDOB.Text != "")
             {
                 slDOBError.Text += "<b>Date Of Birth</b> should have valid date format";
                 isAllValid = false;
             }
-            if (!sl.SetSeason(slSeason.Text.Replace(" ", "")) && slSeason.Text != "")
+            if (!sl.SetSeason(slSeason.Text.Replace(" ", "")) && slSeason.SelectedIndex.ToString() != "0")
             {
                 slSeasonError.Text += "<b>Season</b> must be valid. It should not be possible to get this error. Look at you, you little hacker";
                 isAllValid = false;
@@ -663,17 +673,17 @@ namespace EMS_PSS
             ctEndError.Text = "";
             ctAmtError.Text = "";
 
-            if (!ct.SetLastName(ctName.Text) || ctName.Text == "")
+            if (!ct.SetLastName(ctName.Text) && ctName.Text != "")
             {
                 ctNameError.Text += "<b>Company Name</b> can only contain the following characters: [A-Za-z. -]\n";
                 isAllValid = false;
             }
-            if (!ct.SetSIN(ctBin.Text.Replace(" ", "")))
+            if (!ct.SetSIN(ctBin.Text.Replace(" ", "")) && ctBin.Text != "")
             {
                 ctBinError.Text += "<b>BIN</b> should be 9-digit number";
                 isAllValid = false;
             }
-            if (!ct.SetDOB(ctDOI.Text.Replace(" ", "")))
+            if (!ct.SetDOB(ctDOI.Text.Replace(" ", "")) && ctDOI.Text != "")
             {
                 ctDOIError.Text += "<b>Date Of Incorporation</b> should have valid date format";
                 isAllValid = false;
@@ -683,7 +693,7 @@ namespace EMS_PSS
                 ctStartError.Text += "<b>Contract Start Date</b> must be valid. It should not be possible to get this error. Look at you, you little hacker";
                 isAllValid = false;
             }
-            if (!ct.SetContractEndDate(ctEnd.Text.Replace(" ", "")))
+            if (!ct.SetContractEndDate(ctEnd.Text.Replace(" ", "")) && ctEnd.Text != "")
             {
                 ctEndError.Text += "<b>Contract End Date</b> should have valid date format";
                 isAllValid = false;
