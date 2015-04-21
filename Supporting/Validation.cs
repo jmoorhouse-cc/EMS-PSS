@@ -32,7 +32,7 @@ namespace Supporting
         public bool name(string inName)
         {
             bool returnVal = false;
-            if(inName.Any(c => char.IsDigit(c) || char.IsSymbol(c)))
+            if(inName.Any(c => char.IsDigit(c)))
             {
                 errorMsg = "A name cannot contain any numbers or symbols";
             }

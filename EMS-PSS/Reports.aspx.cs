@@ -136,7 +136,7 @@ namespace EMS_PSS
             genDate.Text = "Date Generated: " + DateTime.Now.ToString();
             runUser.Text = "Run By: " + userName;
             genDate.Visible = true;
-            genDate.Visible = true;
+            runUser.Visible = true;
         }
 
         protected void rblReports_SelectedIndexChanged(object sender, EventArgs e)
