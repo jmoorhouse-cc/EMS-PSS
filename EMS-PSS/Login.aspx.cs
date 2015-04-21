@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;              // To connect to MSSql Server
 using System.Data.SqlClient;
+using Supporting;
 
 namespace EMS_PSS
 {
@@ -15,6 +16,7 @@ namespace EMS_PSS
         string userPw;
         string conString;
         int userLevel;
+        Supporting.Audit sup = new Supporting.Audit();
 
         protected void Page_Load(object sender, EventArgs e)
         {

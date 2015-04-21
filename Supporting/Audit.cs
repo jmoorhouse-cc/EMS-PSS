@@ -14,7 +14,7 @@ namespace Supporting
 {
     public class Audit
     {
-        public static void CreateAudit(string conString, string userName, string empID, string changedElement, string oldVal, string newVal)
+        public void CreateAudit(string conString, string userName, string empID, string changedElement, string oldVal, string newVal)
         {
             SqlDateTime sqlTime = (SqlDateTime)DateTime.Now;
 
@@ -50,7 +50,7 @@ namespace Supporting
         public string GetPreviousValue(string conString, int empID, string column, string empType)
         {
             int index = column.IndexOf('=');
-            string fieldValue = column.Substring(0, index);
+            string fieldValue = column.Substring(0, column.IndexOf('='));
             string result;
 
             // empID, string "test='value'"

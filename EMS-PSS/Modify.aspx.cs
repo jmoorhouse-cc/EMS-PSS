@@ -14,6 +14,7 @@ namespace EMS_PSS
 {
     public partial class Modify : System.Web.UI.Page
     {
+        Supporting.Audit sup = new Supporting.Audit();
         //Decleration of variables
         string securityLevel;
         string userName;
@@ -412,6 +413,8 @@ namespace EMS_PSS
             }
             if (isAllValid)
             {
+                int emp = 0;
+                int.TryParse(Session["empID"].ToString(), out emp);
                 bool first = true;
                 if (normalUpdates.Count < 1)
                 {
@@ -428,8 +431,14 @@ namespace EMS_PSS
                     {
                         updateString += ", " + s;
                     }
+                    string fieldValue = s.Substring(0, s.IndexOf('='));
+                    string oldVal = sup.GetPreviousValue(conString, emp, @s, "");
+                    string newVal = s;
+                    newVal = newVal.Replace(fieldValue + @"='", "");
+                    sup.CreateAudit(conString, userName, emp.ToString(), fieldValue, oldVal, newVal);
                 }
                 updateString += endUpdate;
+                
                 first = true;
                 foreach (string s in specificUpdates)
                 {
@@ -442,6 +451,7 @@ namespace EMS_PSS
                     {
                         updateSpecific += ", " + s;
                     }
+                    string oldVal = sup.GetPreviousValue(conString, emp, @s, empID.ToString());
                 }
                 
                 
@@ -490,6 +500,7 @@ namespace EMS_PSS
                 company = row.Cells[5].Text;
                 type = row.Cells[6].Text;
 
+                Session["empId"] = empId;
                 Session["sin"] = sin;
                 Session["fname"] = fname;
                 Session["lname"] = lname;
