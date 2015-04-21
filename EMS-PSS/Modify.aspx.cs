@@ -296,7 +296,7 @@ namespace EMS_PSS
                     ptWageError.Text += "<b>Salary</b> should be a number higher than 0";
                     isAllValid = false;
                 }
-                specificUpdates.Add("hourlyRate='" + ptWage.Text + "'");
+                specificUpdates.Add("hourlyRate=" + ptWage.Text);
             }
 
             //for seasonal
@@ -336,7 +336,7 @@ namespace EMS_PSS
                 }
                 normalUpdates.Add("dateOfBirth='" + slDOB.Text + "'");
             }
-            if (slSeason.Text != "")
+            if (slSeason.Text != "" && Session["type"].ToString() == "SL")
             {
                 if (!sl.SetSeason(slSeason.Text.Replace(" ", "")) && slSeason.Text != "")
                 {
@@ -415,7 +415,7 @@ namespace EMS_PSS
                 bool first = true;
                 if (normalUpdates.Count < 1)
                 {
-                    normalUpdates.Add("firstName='" + Session["fname"] + "'");
+                    normalUpdates.Add("lastName='" + Session["lname"] + "'");
                 }
                 foreach (string s in normalUpdates)
                 {
