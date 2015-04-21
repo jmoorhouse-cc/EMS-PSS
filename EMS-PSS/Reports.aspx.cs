@@ -23,7 +23,9 @@ namespace EMS_PSS
             userName = Session["username"].ToString();
             conString = Session["conString"].ToString();
 
-
+            ftHeader.Visible = false;
+            ptHeader.Visible = false;
+            slHeader.Visible = false;
 
             if (!IsPostBack)
             {
@@ -231,16 +233,19 @@ namespace EMS_PSS
             {
                 if (dataGrid.ID == "resultGrid1")
                 {
+                    ftHeader.Visible = true;
                     resultLabel1.Visible = false;
                     resultGrid1.Visible = true;
                 }
                 else if (dataGrid.ID == "resultGrid2")
                 {
+                    ptHeader.Visible = true;
                     resultLabel2.Visible = false;
                     resultGrid2.Visible = true;
                 }
                 else if (dataGrid.ID == "resultGrid3")
                 {
+                    slHeader.Visible = true;
                     resultLabel3.Visible = false;
                     resultGrid3.Visible = true;
                 }

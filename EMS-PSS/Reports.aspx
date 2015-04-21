@@ -33,7 +33,7 @@
             <tr><td><asp:PlaceHolder ID="ftHeader" runat="server"><b>Full-Time Employee</b></asp:PlaceHolder></td></tr>
             <tr>
                 <td>
-                    <asp:Label ID="resultLabel1" runat="server" Text="Label"></asp:Label>
+                    <asp:Label ID="resultLabel1" runat="server"></asp:Label>
                 </td>
             </tr>
             <tr>
@@ -49,7 +49,7 @@
             </tr>
             <tr>
                 <td>
-                    <asp:Label ID="resultLabel2" runat="server" Text="Label"></asp:Label>
+                    <asp:Label ID="resultLabel2" runat="server"></asp:Label>
                 </td>
             </tr>
             <tr>
