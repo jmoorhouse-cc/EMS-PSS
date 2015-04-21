@@ -21,16 +21,17 @@ namespace EMS_PSS
         static string selectedEmpId;
         TimeCardManager tcm;
         static DateTime maxDate, minDate;
-        static GridView searchFullResult, searchResult;
         protected void Page_Load(object sender, EventArgs e)
         {
+            dt = new DataTable();
+            dt2 = new DataTable();
+            selectedEmpType = "";
+            selectedEmpId = "";
             securityLevel = Session["securitylevel"].ToString();
             userName = Session["username"].ToString();
             conString = Session["conString"].ToString();
             searchFullResultGrid.Visible = false;
             hideTimeCardField();
-            searchResult = new GridView();
-            searchFullResult = new GridView();
         }
 
         protected void searchSubmit_Click(object sender, EventArgs e)
@@ -71,8 +72,6 @@ namespace EMS_PSS
             searchResultGrid.Visible = true;
             searchResultGrid.DataSource = dt;
             searchResultGrid.DataBind();
-            searchResult.DataSource = dt;
-            searchResult.DataBind();
             if (dt.Rows.Count == 0)
             {
                 selectResultLabel.Text = "No Result to Display";
@@ -253,9 +252,8 @@ namespace EMS_PSS
                 else selectResultLabel.Text = "";
 
                 searchFullResultGrid.DataSource = dt2;
-                searchFullResult.DataSource = dt2;
                 searchFullResultGrid.DataBind();
-                searchFullResult.DataBind();
+                
                 searchResultGrid.Visible = false;
                 searchFullResultGrid.Visible = true;
                 showTimeCardField();

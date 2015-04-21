@@ -58,6 +58,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.Button btnReport;
         
         /// <summary>
+        /// ftHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder ftHeader;
+        
+        /// <summary>
         /// resultLabel1 control.
         /// </summary>
         /// <remarks>
@@ -76,6 +85,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.GridView resultGrid1;
         
         /// <summary>
+        /// ptHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ptHeader;
+        
+        /// <summary>
         /// resultLabel2 control.
         /// </summary>
         /// <remarks>
@@ -92,6 +110,15 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView resultGrid2;
+        
+        /// <summary>
+        /// slHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label slHeader;
         
         /// <summary>
         /// resultLabel3 control.
