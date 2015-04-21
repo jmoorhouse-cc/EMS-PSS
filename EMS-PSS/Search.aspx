@@ -16,7 +16,7 @@
     </table>
     <table>
         <tr>
-            <asp:GridView ID="searchResultGrid" runat="server" ShowHeader="True" onrowcommand="GridView_RowCommand" OnSelectedIndexChanged="searchResultGrid_SelectedIndexChanged">
+            <asp:GridView ID="searchResultGrid" runat="server" ShowHeader="True" onrowcommand="GridView_RowCommand">
                 <Columns>
                     <asp:TemplateField HeaderText="Actions">
                         <ItemTemplate>

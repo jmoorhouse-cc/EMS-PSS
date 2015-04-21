@@ -21,12 +21,14 @@ namespace EMS_PSS
         bool isFname, isLname, isSin, isDate1, isDate2, isMoney;
         int returnID = 0;
         int selectedEmpType;
-        string conString, securityLevel;
+        string conString, securityLevel, username;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             securityLevel = Session["securitylevel"].ToString();
             conString = Session["conString"].ToString();
+            username = Session["username"].ToString();
+
             if (!IsPostBack)
             {
                 if (securityLevel == "2")
@@ -249,6 +251,12 @@ namespace EMS_PSS
                             success = false;
                         }
                     }
+                    Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "empType", "N/A", type.ToUpper());
+                    Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "companyName", "N/A", cn);
+                    Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "firstName", "N/A", fn);
+                    Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "lastName", "N/A", ln);
+                    Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "socialInsuranceNumber", "N/A", sin);
+                    Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "dateOfBirth", "N/A", dob);
                 }
             }
             catch (Exception ex)
@@ -373,6 +381,11 @@ namespace EMS_PSS
                         parameter.Value = "2007/12/1";
                         */
                         cmd.ExecuteNonQuery();
+
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "empID", "N/A", empId.ToString());
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateOfHire", "N/A", dateOfHire);
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateOfTermination", "N/A", dateOfTermination);
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "salary", "N/A", salary);
                     }
                 }
             }
@@ -498,6 +511,11 @@ namespace EMS_PSS
                         parameter.Value = "2007/12/1";
                         */
                         cmd.ExecuteNonQuery();
+
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "empID", "N/A", empId.ToString());
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateOfHire", "N/A", dateOfHire);
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateOfTermination", "N/A", dateOfTermination);
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "hourlyRate", "N/A", wage);
                     }
                 }
             }
@@ -617,6 +635,12 @@ namespace EMS_PSS
                         cmd.Parameters.AddWithValue("@sy", seasonYear);
                         cmd.Parameters.AddWithValue("@ds", dateStart);
                         cmd.ExecuteNonQuery();
+
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "empID", "N/A", empId.ToString());
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "season", "N/A", season);
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "seasonYear", "N/A", seasonYear);
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateStart", "N/A", dateStart);
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "piecePay", "N/A", piecePay);
                     }
                 }
             }
@@ -710,6 +734,11 @@ namespace EMS_PSS
                         cmd.Parameters.AddWithValue("@ds", start);
                         cmd.Parameters.AddWithValue("@de", end);
                         cmd.ExecuteNonQuery();
+
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "empID", "N/A", empId.ToString());
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateStart", "N/A", start);
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateStop", "N/A", end);
+                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "fixedCtAmt", "N/A", amt);
                     }
                 }
             }
