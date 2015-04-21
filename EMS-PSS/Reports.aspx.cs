@@ -23,6 +23,17 @@ namespace EMS_PSS
             userName = Session["username"].ToString();
             conString = Session["conString"].ToString();
 
+            ftHeader.Visible = false;
+            ptHeader.Visible = false;
+            slHeader.Visible = false;
+            resultGrid1.Visible = false;
+            resultGrid2.Visible = false;
+            resultGrid3.Visible = false;
+            resultLabel1.Visible = false;
+            resultLabel2.Visible = false;
+            resultLabel3.Visible = false;
+
+
             if (!IsPostBack)
             {
                 rblReports.SelectedIndex = 0;
@@ -98,18 +109,27 @@ namespace EMS_PSS
 
             if (whichReport == "seniority")
             {
+                resultGrid2.Visible = false;
+                resultGrid3.Visible = false;
+                resultLabel1.Visible = false;
+                resultLabel2.Visible = false;
+                resultLabel3.Visible = false;
+                ftHeader.Visible = false;
+                ptHeader.Visible = false;
+                slHeader.Visible = false;
                 cmdString = "select * from dbo.SeniorityReport('" + ftCompany.SelectedValue + "')";
                 FillGrid(cmdString, ref resultGrid1);
-                resultGrid2.Visible = true;
-                resultGrid3.Visible = true;
             }
             else if (whichReport == "whw")
             {
+                resultGrid2.Visible = true;
+                resultGrid3.Visible = true;
+                ftHeader.Visible = true;
+                ptHeader.Visible = true;
+                slHeader.Visible = true;
                 cmdString = "select * from dbo.WeeklyHoursReport_FT('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
                 cmdString2 = "select * from dbo.WeeklyHoursReport_PT('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
                 cmdString3 = "select * from dbo.WeeklyHoursReport_SL('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
-                resultGrid2.Visible = true;
-                resultGrid3.Visible = true;
                 FillGrid(cmdString, ref resultGrid1);
                 FillGrid(cmdString2, ref resultGrid2);
                 FillGrid(cmdString3, ref resultGrid3);
@@ -117,6 +137,11 @@ namespace EMS_PSS
             }
             else if (whichReport == "payroll")
             {
+                resultGrid2.Visible = true;
+                resultGrid3.Visible = true;
+                ftHeader.Visible = true;
+                ptHeader.Visible = true;
+                slHeader.Visible = true;
                 cmdString = "select * from dbo.PayrollReport_FT('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
                 cmdString2 = "select * from dbo.PayrollReport_PT('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
                 cmdString3 = "select * from dbo.PayrollReport_SL('" + ftCompany.SelectedValue + "', '" + specifiedWeek.Text + "')";
@@ -173,13 +198,14 @@ namespace EMS_PSS
             dataGrid.DataSource = dt;
             dataGrid.DataBind();
 
-            if (dt.Rows.Count <= 1)
+            if (dt.Rows.Count < 1)
             {
                 if (dataGrid.ID == "resultGrid1")
                 {
                     resultLabel1.Visible = true;
                     resultLabel1.Text = "No Result to Display";
                     dataGrid.Visible = false;
+                    ftHeader.Visible = false;
                 }
                 else if (dataGrid.ID == "resultGrid2")
                 {
@@ -199,19 +225,16 @@ namespace EMS_PSS
                 if (dataGrid.ID == "resultGrid1")
                 {
                     resultLabel1.Visible = false;
-                    resultLabel1.Text = "No Result to Display";
                     dataGrid.Visible = true;
                 }
                 else if (dataGrid.ID == "resultGrid2")
                 {
                     resultLabel2.Visible = false;
-                    resultLabel2.Text = "No Result to Display";
                     dataGrid.Visible = true;
                 }
                 else if (dataGrid.ID == "resultGrid3")
                 {
                     resultLabel3.Visible = false;
-                    resultLabel3.Text = "No Result to Display";
                     dataGrid.Visible = true;
                 }
             }

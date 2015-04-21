@@ -29,6 +29,7 @@
                     <asp:Button ID="btnReport" runat="server" Text="Run Report" OnClick="btnReport_Click" />
                 </td>
             </tr>
+            <tr><td><asp:PlaceHolder ID="ftHeader" runat="server">Full-Time Employee</asp:PlaceHolder></td></tr>
             <tr>
                 <td>
                     <asp:Label ID="resultLabel1" runat="server" Text="Label" Visible="false"></asp:Label>
@@ -37,6 +38,12 @@
             <tr>
                 <td>
                     <asp:GridView ID="resultGrid1" runat="server" ShowHeader="True" Visible="False" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <asp:Label ID="ptHeader" runat="server">Part-time Employee</asp:Label>
                 </td>
             </tr>
             <tr>
@@ -49,9 +56,11 @@
                     <asp:GridView ID="resultGrid2" runat="server" ShowHeader="True" Visible="False" />
                 </td>
             </tr>
+
+            <tr><td><asp:Label ID="slHeader" runat="server">Seasonal Employee</asp:Label></td></tr>
             <tr>
                 <td>
-                    <asp:Label ID="resultLabel3" runat="server" Text="Label" Visible="false"></asp:Label>
+                    <asp:Label ID="resultLabel3" runat="server" Visible="false"></asp:Label>
                 </td>
             </tr>
             <tr>
