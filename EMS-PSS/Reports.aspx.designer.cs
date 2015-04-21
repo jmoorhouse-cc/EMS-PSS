@@ -94,6 +94,24 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.GridView GridView2;
         
         /// <summary>
+        /// genDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label genDate;
+        
+        /// <summary>
+        /// runUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label runUser;
+        
+        /// <summary>
         /// divReport control.
         /// </summary>
         /// <remarks>

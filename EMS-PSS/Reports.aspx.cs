@@ -133,8 +133,10 @@ namespace EMS_PSS
             {
                 cmdString = "select * from dbo.SeniorityReport('" + ftCompany.SelectedValue + "')";
             }
-
-            
+            genDate.Text = "Date Generated: " + DateTime.Now.ToString();
+            runUser.Text = "Run By: " + userName;
+            genDate.Visible = true;
+            genDate.Visible = true;
         }
 
         protected void rblReports_SelectedIndexChanged(object sender, EventArgs e)
