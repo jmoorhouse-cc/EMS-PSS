@@ -257,10 +257,10 @@ namespace EMS_PSS
                                 success = false;
                             }
                         }
-                        Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "empType", "N/A", type.ToUpper());
+                        sup.CreateAudit(conString, username, returnID.ToString(), "empType", "N/A", type.ToUpper());
                         if (cn != "")
                         {
-                            Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "companyName", "N/A", cn);
+                            sup.CreateAudit(conString, username, returnID.ToString(), "companyName", "N/A", cn);
                         }
                         sup.CreateAudit(conString, username, returnID.ToString(), "firstName", "N/A", fn);
                         sup.CreateAudit(conString, username, returnID.ToString(), "lastName", "N/A", ln);
