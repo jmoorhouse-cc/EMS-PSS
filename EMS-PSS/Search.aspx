@@ -16,7 +16,7 @@
     </table>
     <table>
         <tr>
-            <asp:GridView ID="searchResultGrid" runat="server" ShowHeader="True" onrowcommand="GridView_RowCommand">
+            <asp:GridView ID="searchResultGrid" runat="server" ShowHeader="True" onrowcommand="GridView_RowCommand" OnSelectedIndexChanged="searchResultGrid_SelectedIndexChanged">
                 <Columns>
                     <asp:TemplateField HeaderText="Actions">
                         <ItemTemplate>
@@ -30,8 +30,6 @@
     </table>
     <asp:Label ID="selectResultLabel" runat="server" Text="" ForeColor="Red" ></asp:Label>
     <table>
-        <tr>
             <asp:GridView ID="searchFullResultGrid" runat="server" ShowHeader="True" onrowcommand="GridView_RowCommand" />
-        </tr>
-    </table>
+        </table>
 </asp:Content>
