@@ -58,40 +58,58 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.Button btnReport;
         
         /// <summary>
-        /// selectResultLabel control.
+        /// resultLabel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label selectResultLabel;
+        protected global::System.Web.UI.WebControls.Label resultLabel1;
         
         /// <summary>
-        /// searchFullResultGrid control.
+        /// resultGrid1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView searchFullResultGrid;
+        protected global::System.Web.UI.WebControls.GridView resultGrid1;
         
         /// <summary>
-        /// GridView1 control.
+        /// resultLabel2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.Label resultLabel2;
         
         /// <summary>
-        /// GridView2 control.
+        /// resultGrid2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView2;
+        protected global::System.Web.UI.WebControls.GridView resultGrid2;
+        
+        /// <summary>
+        /// resultLabel3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label resultLabel3;
+        
+        /// <summary>
+        /// resultGrid3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView resultGrid3;
         
         /// <summary>
         /// genDate control.

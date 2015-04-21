@@ -471,7 +471,7 @@ namespace EMS_PSS
                 }
                 catch (Exception exce)
                 {
-
+                    
                 }
             }
         }
@@ -483,11 +483,12 @@ namespace EMS_PSS
                 // Retrieve the CommandArgument property
                 int index = Convert.ToInt32(e.CommandArgument); // or convert to other datatype
                 GridViewRow row = searchResultGrid.Rows[index];
-                sin = row.Cells[1].Text;
-                fname = row.Cells[2].Text;
-                lname = row.Cells[3].Text;
-                company = row.Cells[4].Text;
-                type = row.Cells[5].Text;
+                string empId = row.Cells[1].Text;
+                sin = row.Cells[2].Text;
+                fname = row.Cells[3].Text;
+                lname = row.Cells[4].Text;
+                company = row.Cells[5].Text;
+                type = row.Cells[6].Text;
 
                 Session["sin"] = sin;
                 Session["fname"] = fname;
@@ -499,10 +500,7 @@ namespace EMS_PSS
                 SqlCommand cmd = new SqlCommand(getCmdString(type), conn);
                 cmd.CommandType = CommandType.Text;
 
-                cmd.Parameters.Add("@fn", SqlDbType.VarChar).Value = fname;
-                cmd.Parameters.Add("@ln", SqlDbType.VarChar).Value = lname;
-                cmd.Parameters.Add("@sin", SqlDbType.VarChar).Value = sin;
-                cmd.Parameters.Add("@cn", SqlDbType.VarChar).Value = company;
+                cmd.Parameters.Add("@ep", SqlDbType.VarChar).Value = empId;
                 dt2 = new DataTable();
 
                 //ModifyStuff.SelectCommand = cmd.ToString();
@@ -576,42 +574,42 @@ namespace EMS_PSS
                 case "FT":
                     if (securityLevel == "1")
                     {
-                        cmdstring = "SELECT * FROM dbo.A_DisplayFTEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.A_DisplayFTEmp(@ep)";
                     }
                     ///else if user is general
                     else if (securityLevel == "2")
                     {
-                        cmdstring = "SELECT * FROM dbo.G_DisplayFTEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.G_DisplayFTEmp(@ep)";
                     }
                     break;
                 ///case for Partime if user is admin
                 case "PT":
                     if (securityLevel == "1")
                     {
-                        cmdstring = "SELECT * FROM dbo.A_DisplayPTEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.A_DisplayPTEmp(@ep)";
                     }
                     ///else user is general
                     else if (securityLevel == "2")
                     {
-                        cmdstring = "SELECT * FROM dbo.G_DisplayPTEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.G_DisplayPTEmp(@ep)";
                     }
                     break;
                 case "CT":
                     if (securityLevel == "1")
                     {
-                        cmdstring = "SELECT * FROM dbo.A_DisplayCTEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.A_DisplayCTEmp(@ep)";
                     }
                     break;
                 ///Case for seasonal employee if user is admin
                 case "SL":
                     if (securityLevel == "1")
                     {
-                        cmdstring = "SELECT * FROM dbo.A_DisplaySLEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.A_DisplaySLEmp(@ep)";
                     }
                     ///else if user is general
                     else if (securityLevel == "2")
                     {
-                        cmdstring = "SELECT * FROM dbo.G_DisplaySLPTEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.G_DisplaySLPTEmp(@ep)";
                     }
                     break;
             }

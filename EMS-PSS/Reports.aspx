@@ -31,23 +31,33 @@
             </tr>
             <tr>
                 <td>
-                    <asp:Label ID="selectResultLabel" runat="server" Text="Label" Visible="false"></asp:Label>
+                    <asp:Label ID="resultLabel1" runat="server" Text="Label" Visible="false"></asp:Label>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <asp:GridView ID="searchFullResultGrid" runat="server" ShowHeader="True" Visible="False" />
+                    <asp:GridView ID="resultGrid1" runat="server" ShowHeader="True" Visible="False" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    <asp:GridView ID="GridView1" runat="server" ShowHeader="True" Visible="False" />
+                    <asp:Label ID="resultLabel2" runat="server" Text="Label" Visible="false"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:GridView ID="resultGrid2" runat="server" ShowHeader="True" Visible="False" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Label ID="resultLabel3" runat="server" Text="Label" Visible="false"></asp:Label>
                 </td>
             </tr>
             <tr>
                 <td>
 
-                    <asp:GridView ID="GridView2" runat="server" ShowHeader="True" Visible="False" />
+                    <asp:GridView ID="resultGrid3" runat="server" ShowHeader="True" Visible="False" />
                 </td>
             </tr>
             <tr>
