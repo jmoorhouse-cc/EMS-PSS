@@ -89,6 +89,7 @@ namespace EMS_PSS
             }
             //
         }
+
         protected void GridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Select")
@@ -96,20 +97,19 @@ namespace EMS_PSS
                 // Retrieve the CommandArgument property
                 int index = Convert.ToInt32(e.CommandArgument); // or convert to other datatype
                 GridViewRow row = searchResultGrid.Rows[index];
-                string sin = row.Cells[1].Text;
-                string fname = row.Cells[2].Text;
-                string lname = row.Cells[3].Text;
-                string company = row.Cells[4].Text;
-                selectedEmpType = row.Cells[5].Text;
+                string id = row.Cells[1].Text;
+                //string sin = row.Cells[2].Text;
+                //string fname = row.Cells[3].Text;
+                //string lname = row.Cells[4].Text;
+                //string company = row.Cells[5].Text;
+                selectedEmpType = row.Cells[6].Text;
                 
                 SqlConnection conn = new SqlConnection(conString);
                 SqlCommand cmd = new SqlCommand(getCmdString(selectedEmpType), conn);
                 cmd.CommandType = CommandType.Text;
 
-                cmd.Parameters.Add("@fn", SqlDbType.VarChar).Value = fname;
-                cmd.Parameters.Add("@ln", SqlDbType.VarChar).Value = lname;
-                cmd.Parameters.Add("@sin", SqlDbType.VarChar).Value = sin;
-                cmd.Parameters.Add("@cn", SqlDbType.VarChar).Value = company;
+                cmd.Parameters.Add("@eid", SqlDbType.Int).Value = id;
+
                 dt2 = new DataTable();
 
                 try
@@ -150,37 +150,37 @@ namespace EMS_PSS
                 case "FT":
                     if (securityLevel == "1")
                     {
-                        cmdstring = "SELECT * FROM dbo.A_DisplayFTEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.A_DisplayFTEmp(@eid)";
                     }
                     else if (securityLevel == "2")
                     {
-                        cmdstring = "SELECT * FROM dbo.G_DisplayFTEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.G_DisplayFTEmp(@eid)";
                     }
                     break;
                 case "PT":
                     if (securityLevel == "1")
                     {
-                        cmdstring = "SELECT * FROM dbo.A_DisplayPTEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.A_DisplayPTEmp(@eid)";
                     }
                     else if (securityLevel == "2")
                     {
-                        cmdstring = "SELECT * FROM dbo.G_DisplayPTEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.G_DisplayPTEmp(@eid)";
                     }
                     break;
                 case "CT":
                     if (securityLevel == "1")
                     {
-                        cmdstring = "SELECT * FROM dbo.A_DisplayCTEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.A_DisplayCTEmp(@eid)";
                     }
                     break;
                 case "SL":
                     if (securityLevel == "1")
                     {
-                        cmdstring = "SELECT * FROM dbo.A_DisplaySLEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.A_DisplaySLEmp(@eid)";
                     }
                     else if (securityLevel == "2")
                     {
-                        cmdstring = "SELECT * FROM dbo.G_DisplaySLPTEmp(@fn, @ln, @sin, @cn)";
+                        cmdstring = "SELECT * FROM dbo.G_DisplaySLPTEmp(@eid)";
                     }
                     break;
             }

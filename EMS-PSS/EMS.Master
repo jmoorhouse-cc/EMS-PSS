@@ -40,6 +40,7 @@
                             <asp:MenuItem Text="Maintenance">
                                 <asp:MenuItem NavigateUrl="~/Create.aspx" Text="Create Employee" ToolTip="Create" Value="Create" />
                                 <asp:MenuItem NavigateUrl="~/Modify.aspx" Text="Modify Employee" ToolTip="Modify" Value="Modfy" />
+                                <asp:MenuItem NavigateUrl="~/TimeCard.aspx" Text="Time Card Employee" ToolTip="TimeCard" Value="TimeCard" />
                             </asp:MenuItem>
                             <asp:MenuItem NavigateUrl="~/Reports.aspx" Text="Reports" Value="Reports"></asp:MenuItem>
                             <asp:MenuItem Text="Admin">

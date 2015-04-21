@@ -11,17 +11,17 @@ namespace Supporting
         private const int MIN_HOURS = 0;
         private const int MIN_PIECES = 0;
         public int empID;
-        public DateTime? timeCardDate;
+        public DateTime timeCardDate;
         public decimal sunH, monH, tueH, wedH, thuH, friH, satH;
         public decimal sunP, monP, tueP, wedP, thuP, friP, satP;
 
         public TimeCardManager(DateTime dateData)
         {
-            timeCardDate = null;
+            timeCardDate = DateTime.MinValue;
             empID = 0;
             sunH = 0; monH = 0; tueH = 0; wedH = 0; thuH = 0; friH = 0; satH = 0;
             sunP = 0; monP = 0; tueP = 0; wedP = 0; thuP = 0; friP = 0; satP = 0;
-            DateTime firstDay = CalcMonDate(dateData);
+            DateTime firstDay = CalcSunDate(dateData);
         }
         public bool SetHours(string whichDay, decimal hours)
         {
@@ -89,36 +89,44 @@ namespace Supporting
             return validPieces;
         }
 
-        private DateTime CalcMonDate(DateTime dateData)
+        private DateTime CalcSunDate(DateTime dateData)
         {
-            DateTime dateMonday = dateData;
+            DateTime dateSunday = dateData;
 
             switch (dateData.DayOfWeek)
             {
                 case DayOfWeek.Sunday:
-                    dateData = dateMonday.AddDays(-6);
+                    dateData = dateSunday;
                     break;
                 case DayOfWeek.Monday:
-                    dateData = dateMonday = dateData;
+                    dateData = dateSunday.AddDays(-6);
                     break;
                 case DayOfWeek.Tuesday:
-                    dateData = dateMonday.AddDays(-1);
+                    dateData = dateSunday.AddDays(-5);
                     break;
                 case DayOfWeek.Wednesday:
-                    dateData = dateMonday.AddDays(-2);
+                    dateData = dateSunday.AddDays(-4);
                     break;
                 case DayOfWeek.Thursday:
-                    dateData = dateMonday.AddDays(-3);
+                    dateData = dateSunday.AddDays(-3);
                     break;
                 case DayOfWeek.Friday:
-                    dateData = dateMonday.AddDays(-4);
+                    dateData = dateSunday.AddDays(-2);
                     break;
                 case DayOfWeek.Saturday:
-                    dateData = dateMonday.AddDays(-5);
+                    dateData = dateSunday.AddDays(-1);
                     break;
             }
-            return dateMonday;
+            return dateSunday;
         }
 
+        
+
+        public string ToDBString()
+        {
+            string dbString = "'" ;
+
+            return dbString;
+        }
     }
 }
