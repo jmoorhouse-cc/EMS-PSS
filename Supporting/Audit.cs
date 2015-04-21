@@ -46,5 +46,57 @@ namespace Supporting
                 conn.Close();
             } 
         }
+
+        public string GetPreviousValue(string conString, int empID, string column, string empType)
+        {
+            int index = column.IndexOf('=');
+            string fieldValue = column.Substring(0, index);
+            string result;
+
+            // empID, string "test='value'"
+            
+            string table = "";
+            switch (empType)
+            {
+                case "FT":
+                    table = "dbo.tb_FtEmp";
+                    break;
+
+                case "PT":
+                    table = "dbo.tb_PtEmp";
+                    break;
+
+                case "SL":
+                    table = "dbo.tb_SlEmp";
+                    break;
+
+                case "CT":
+                    table = "dbo.tb_CtEmp";
+                    break;
+
+                default:
+                    table = "dbo.tb_Emp";
+                    break;
+            }
+
+            SqlConnection conn = new SqlConnection(conString);
+            SqlCommand cmd = new SqlCommand("SELECT " + fieldValue + " FROM " + table + " WHERE empID= " + empID, conn);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                result = Convert.ToString(cmd.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            } 
+            return result;
+        }
     }
 }
