@@ -55,6 +55,7 @@
             </table>
             </asp:PlaceHolder>
             <asp:PlaceHolder ID="hourInputTable" Visible="false" runat="server">
+            <asp:Button ID="insertBtn" runat="server" Text="Insert Time Card" OnClick="tcInsert_Click" />
             <table style="border-color:gray;">
                 <tr>
                     <td style="width:50px"></td><td style="color:red">SUN</td><td>MON</td><td>TUE</td><td>WED</td><td>THU</td><td>FRI</td><td style="color:blue">SAT</td>
@@ -87,7 +88,7 @@
             </table>
             </asp:PlaceHolder>
         </tr>
-        <tr><asp:Button ID="insertTimeCardBtn" runat="server" Text="Insert Time Card" OnClick="tcInsert_Click" /></tr>
+        
     </table>
 
 </asp:Content>

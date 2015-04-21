@@ -17,11 +17,10 @@ namespace Supporting
 
         public TimeCardManager(DateTime dateData)
         {
-            timeCardDate = DateTime.MinValue;
+            timeCardDate = dateData;
             empID = 0;
             sunH = 0; monH = 0; tueH = 0; wedH = 0; thuH = 0; friH = 0; satH = 0;
             sunP = 0; monP = 0; tueP = 0; wedP = 0; thuP = 0; friP = 0; satP = 0;
-            DateTime firstDay = CalcSunDate(dateData);
         }
         public bool SetHours(string whichDay, decimal hours)
         {
@@ -99,25 +98,25 @@ namespace Supporting
                     dateData = dateSunday;
                     break;
                 case DayOfWeek.Monday:
-                    dateData = dateSunday.AddDays(-6);
+                    dateData = dateSunday.AddDays(6);
                     break;
                 case DayOfWeek.Tuesday:
-                    dateData = dateSunday.AddDays(-5);
+                    dateData = dateSunday.AddDays(5);
                     break;
                 case DayOfWeek.Wednesday:
-                    dateData = dateSunday.AddDays(-4);
+                    dateData = dateSunday.AddDays(4);
                     break;
                 case DayOfWeek.Thursday:
-                    dateData = dateSunday.AddDays(-3);
+                    dateData = dateSunday.AddDays(3);
                     break;
                 case DayOfWeek.Friday:
-                    dateData = dateSunday.AddDays(-2);
+                    dateData = dateSunday.AddDays(2);
                     break;
                 case DayOfWeek.Saturday:
-                    dateData = dateSunday.AddDays(-1);
+                    dateData = dateSunday.AddDays(1);
                     break;
             }
-            return dateSunday;
+            return dateData;
         }
         public DateTime CalcMonDate(DateTime dateData)
         {
@@ -126,30 +125,46 @@ namespace Supporting
             switch (dateData.DayOfWeek)
             {
                 case DayOfWeek.Sunday:
-                    dateData = dateMonday.AddDays(6);
+                    dateData = dateMonday.AddDays(-6);
                     break;
                 case DayOfWeek.Monday:
                     dateData = dateMonday;
                     break;
                 case DayOfWeek.Tuesday:
-                    dateData = dateMonday.AddDays(1);
+                    dateData = dateMonday.AddDays(-1);
                     break;
                 case DayOfWeek.Wednesday:
-                    dateData = dateMonday.AddDays(2);
+                    dateData = dateMonday.AddDays(-2);
                     break;
                 case DayOfWeek.Thursday:
-                    dateData = dateMonday.AddDays(3);
+                    dateData = dateMonday.AddDays(-3);
                     break;
                 case DayOfWeek.Friday:
-                    dateData = dateMonday.AddDays(4);
+                    dateData = dateMonday.AddDays(-4);
                     break;
                 case DayOfWeek.Saturday:
-                    dateData = dateMonday.AddDays(5);
+                    dateData = dateMonday.AddDays(-5);
                     break;
             }
             return dateMonday;
         }
-        
+        public string ToDBCheckDupString()
+        {
+            return "SELECT COUNT(*) FROM tb_TimeCard WHERE empID = " + empID + " AND dateWeekStart= \'" + timeCardDate.ToString("yyyyMMdd") + "\';";
+        }
+        public string ToDBUpdateString(string type)
+        {
+            if(type == "SL")
+            {
+                return "UPDATE tb_TimeCard SET hoursSun=" + sunH + ", hoursMon=" + monH + ", hoursTue=" + tueH + ", hoursWed=" + wedH + ", hoursThu=" + thuH + ", hoursFri=" + friH + ", hoursSat=" + satH
+                    + "piecesSun=" + sunP + "piecesMon=" + monP + "piecesTue=" + tueP + "piecesWed=" + wedP + "piecesThu=" + thuP + "piecesFri=" + friP + "piecesSat=" + satP
+                    + " WHERE empID = " + empID + " AND dateWeekStart= \'" + timeCardDate.ToString("yyyyMMdd") + "\';";
+            }
+            else
+            {
+                return "UPDATE tb_TimeCard SET hoursSun="+sunH+", hoursMon="+monH+", hoursTue="+tueH+", hoursWed="+wedH+", hoursThu="+thuH+", hoursFri="+friH+", hoursSat="+satH+" WHERE empID = " + empID + " AND dateWeekStart= \'" + timeCardDate.ToString("yyyyMMdd") + "\';";
+            }
+        }
 
         public string ToDBAddString(string type)
         {
@@ -157,14 +172,14 @@ namespace Supporting
             {
                 return "INSERT INTO tb_TimeCard(empID, dateWeekStart, hoursSun, hoursMon, hoursTue, hoursWed, hoursThu, hoursFri, hoursSat, "
                                   + "piecesSun, piecesMon, piecesTue, piecesWed, piecesThu, piecesFri, piecesSat) values "
-                        + "(" + empID + ", " + timeCardDate.ToString("yyyyMMdd") + ", " + sunH + ", " + monH + ", " + tueH + ", "
+                        + "(" + empID + ", \'" + timeCardDate.ToString("yyyyMMdd") + "\', " + sunH + ", " + monH + ", " + tueH + ", "
                         + wedH + ", " + thuH + ", " + friH + ", " + satH + ", " + sunP + ", " + monP + ", " + tueP + ", "
                         + wedP + ", " + thuP + ", " + friP + ", " + satP + ");";
             }
             else
             {
                 return "INSERT INTO tb_TimeCard(empID, dateWeekStart, hoursSun, hoursMon, hoursTue, hoursWed, hoursThu, hoursFri, hoursSat) values "
-                + "(" + empID + ", " + timeCardDate.ToString("yyyyMMdd") + ", " + sunH + ", " + monH + ", " + tueH + ", "
+                + "(" + empID + ", \'" + timeCardDate.ToString("yyyyMMdd") + "\', " + sunH + ", " + monH + ", " + tueH + ", "
                 + wedH + ", " + thuH + ", " + friH + ", " + satH + ");";
             }
         }
