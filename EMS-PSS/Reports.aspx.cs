@@ -23,15 +23,6 @@ namespace EMS_PSS
             userName = Session["username"].ToString();
             conString = Session["conString"].ToString();
 
-            ftHeader.Visible = false;
-            ptHeader.Visible = false;
-            slHeader.Visible = false;
-            resultGrid1.Visible = false;
-            resultGrid2.Visible = false;
-            resultGrid3.Visible = false;
-            resultLabel1.Visible = false;
-            resultLabel2.Visible = false;
-            resultLabel3.Visible = false;
 
 
             if (!IsPostBack)
@@ -50,26 +41,38 @@ namespace EMS_PSS
 
         protected void btnReport_Click(object sender, EventArgs e)
         {
-                
+            dateError.Text = "";
+            dateError.Visible = false;
             if (rblReports.SelectedItem.Value == "seniority")
             {
                 RunReport("seniority");
-            }
-            else if (rblReports.SelectedItem.Value == "whw")
-            {
-                RunReport("whw");
-            }
-            else if (rblReports.SelectedItem.Value == "payroll")
-            {
-                RunReport("payroll");
             }
             else if (rblReports.SelectedItem.Value == "active")
             {
                 RunReport("active");
             }
-            else  if (rblReports.SelectedItem.Value == "inactive")
+            else if (rblReports.SelectedItem.Value == "inactive")
             {
                 RunReport("inactive");
+            }
+            else if(rblReports.SelectedItem.Value == "whw" ||rblReports.SelectedItem.Value == "payroll")
+            {
+                DateTime tempdate = new DateTime();
+                if(DateTime.TryParse(specifiedWeek.Text, out tempdate))
+                {
+                    if (rblReports.SelectedItem.Value == "whw")
+                    {
+                        RunReport("whw");
+                    }
+                    else if (rblReports.SelectedItem.Value == "payroll")
+                    {
+                        RunReport("payroll");
+                    }
+                }
+                else
+                {
+                    dateError.Text = "Invalid Date Input; Operation Aborted";
+                }
             }
         }
 
@@ -165,12 +168,15 @@ namespace EMS_PSS
 
         protected void rblReports_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             if (rblReports.SelectedValue == "whw" || rblReports.SelectedValue == "payroll")
             {
+                datein.Visible = true;
                 specifiedWeek.Visible = true;
             }
             else
             {
+                datein.Visible = false;
                 specifiedWeek.Visible = false;
             }
         }
@@ -204,20 +210,21 @@ namespace EMS_PSS
                 {
                     resultLabel1.Visible = true;
                     resultLabel1.Text = "No Result to Display";
-                    dataGrid.Visible = false;
+                    resultGrid1.Visible = false;
                     ftHeader.Visible = false;
                 }
                 else if (dataGrid.ID == "resultGrid2")
                 {
+                    ftHeader.Visible = true;
                     resultLabel2.Visible = true;
                     resultLabel2.Text = "No Result to Display";
-                    dataGrid.Visible = false;
+                    resultGrid2.Visible = false;
                 }
                 else if (dataGrid.ID == "resultGrid3")
                 {
                     resultLabel3.Visible = true;
                     resultLabel3.Text = "No Result to Display";
-                    dataGrid.Visible = false;
+                    resultGrid3.Visible = false;
                 }
             }
             else
@@ -225,17 +232,17 @@ namespace EMS_PSS
                 if (dataGrid.ID == "resultGrid1")
                 {
                     resultLabel1.Visible = false;
-                    dataGrid.Visible = true;
+                    resultGrid1.Visible = true;
                 }
                 else if (dataGrid.ID == "resultGrid2")
                 {
                     resultLabel2.Visible = false;
-                    dataGrid.Visible = true;
+                    resultGrid2.Visible = true;
                 }
                 else if (dataGrid.ID == "resultGrid3")
                 {
                     resultLabel3.Visible = false;
-                    dataGrid.Visible = true;
+                    resultGrid3.Visible = true;
                 }
             }
         }
