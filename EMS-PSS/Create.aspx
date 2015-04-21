@@ -21,27 +21,35 @@
                     <table>
                         <tr><td>First Name: </td><td><asp:TextBox ID="ftfName" runat="server"/></td>
                             <td><asp:Label ID="ftfNameError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>Last Name: </td><td><asp:TextBox ID="ftlName" runat="server"/></td>
                             <td><asp:Label ID="ftlNameError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>SIN: </td><td><asp:TextBox ID="ftSin" runat="server"/></td>
                             <td><asp:Label ID="ftSinError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>Date of Birth: </td><td><asp:TextBox ID="ftDOB" runat="server"/></td>
                             <td><asp:Label ID="ftDOBError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>Works at: </td><td><asp:DropDownList ID="ftCompany" runat="server"/></td>
                             <td><asp:Label ID="ftCompanyError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>Date of Hire: </td><td><asp:TextBox ID="ftDateHire" runat="server"/></td>
                             <td><asp:Label ID="ftDateHireError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>Date of Termination: </td><td><asp:TextBox ID="ftDateTerm" runat="server"/></td>
                             <td><asp:Label ID="ftDateTermError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td>Reason For Leaving: </td><td><asp:TextBox ID ="ftReason" runat="server" /></td>
                         </tr>
                         <tr><td>Salary: </td><td><asp:TextBox ID="ftSalary" runat="server"/></td>
                             <td><asp:Label ID="ftSalaryError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                     </table>
                 </div>
@@ -50,27 +58,35 @@
                     <table>
                         <tr><td>First Name: </td><td><asp:TextBox ID="ptfName" runat="server"></asp:TextBox></td>
                             <td><asp:Label ID="ptfNameError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>Last Name: </td><td><asp:TextBox ID="ptlName" runat="server"></asp:TextBox></td>
                             <td><asp:Label ID="ptlNameError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>SIN: </td><td><asp:TextBox ID="ptSin" runat="server"/></td>
                             <td><asp:Label ID="ptSinError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>Date of Birth: </td><td><asp:TextBox ID="ptDOB" runat="server"/></td>
                             <td><asp:Label ID="ptDOBError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                             </tr>
                         <tr><td>Date of Hire: </td><td><asp:TextBox ID="ptDateHire" runat="server"/></td>
                             <td><asp:Label ID="ptDateHireError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>Works at: </td><td><asp:DropDownList ID="ptCompany" runat="server"/></td>
                             <td><asp:Label ID="ptCompanyError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                             </tr>
                         <tr><td>Date of Termination: </td><td><asp:TextBox ID="ptDateTerm" runat="server"/></td>
+                            <td>Reason For Leaving: </td><td><asp:TextBox ID ="ptReason" runat="server" /></td>
                             <td><asp:Label ID="ptDateTermError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
                         <tr><td>Hourly Rate: </td><td><asp:TextBox ID="ptWage" runat="server"/></td>
                             <td><asp:Label ID="ptWageError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                     </table>
                 </div>
@@ -111,6 +127,10 @@
                             <td><asp:Label ID="slYearError" ForeColor="Red" runat="server"></asp:Label></td>
                             
                         </tr>
+                        <tr>
+                            <td>Reason For Leaving: </td>
+                            <td><asp:TextBox ID="slReason" runat="server" /></td>
+                        </tr>
                         <tr><td>Piece Pay: </td><td><asp:TextBox ID="slPcPay" runat="server"/></td>
                             <td><asp:Label ID="slPcPayError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
@@ -121,24 +141,31 @@
                     <table>
                         <tr><td>Contract Company Name: </td><td><asp:TextBox ID="ctName" runat="server"/></td>
                             <td><asp:Label ID="ctNameError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>BIN: </td><td><asp:TextBox ID="ctBin" runat="server"/></td>
                             <td><asp:Label ID="ctBinError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>Works at: </td><td><asp:DropDownList ID="ctCompany" runat="server"/></td>
                             <td><asp:Label ID="ctCompanyError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                             </tr>
                         <tr><td>Date of incorporation: </td><td><asp:TextBox ID="ctDOI" runat="server"/></td>
                            <td><asp:Label ID="ctDOIError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>Date Start: </td><td><asp:TextBox ID="ctStart" runat="server"/></td>
                             <td><asp:Label ID="ctStartError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                         <tr><td>Date End: </td><td><asp:TextBox ID="ctEnd" runat="server"/></td>
                             <td><asp:Label ID="ctEndError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td>Reason For Leaving: </td><td><asp:TextBox ID ="ctReason" runat="server" /></td>
                         </tr>
                         <tr><td>Contract Amount: </td><td><asp:TextBox ID="ctAmt" runat="server"/></td>
                             <td><asp:Label ID="ctAmtError" ForeColor="Red" runat="server"></asp:Label></td>
+                            <td></td>
                         </tr>
                     </table>
                 </div>

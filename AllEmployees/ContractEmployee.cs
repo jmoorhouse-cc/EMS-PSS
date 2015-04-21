@@ -405,10 +405,7 @@ namespace AllEmployees
             {
                 output += "\nInvalid First Name:\t\"" + firstName + "\"";
             }
-            if (base.validateLastName() == false)
-            {
-                output += "\nInvalid Last Name:\t\"" + lastName + "\"";
-            }
+            //
             if (base.validateSIN() == false || validateBusinessNumber() == false)
             {
                 output += "\nInvalid SIN:\t\"" + socialInsuranceNumber + "\"";

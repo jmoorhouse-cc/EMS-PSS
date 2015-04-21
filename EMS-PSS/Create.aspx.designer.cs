@@ -166,6 +166,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.Label ftDateTermError;
         
         /// <summary>
+        /// ftReason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ftReason;
+        
+        /// <summary>
         /// ftSalary control.
         /// </summary>
         /// <remarks>
@@ -308,6 +317,15 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ptDateTerm;
+        
+        /// <summary>
+        /// ptReason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ptReason;
         
         /// <summary>
         /// ptDateTermError control.
@@ -490,6 +508,15 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.Label slYearError;
         
         /// <summary>
+        /// slReason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox slReason;
+        
+        /// <summary>
         /// slPcPay control.
         /// </summary>
         /// <remarks>
@@ -623,6 +650,15 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ctEndError;
+        
+        /// <summary>
+        /// ctReason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ctReason;
         
         /// <summary>
         /// ctAmt control.

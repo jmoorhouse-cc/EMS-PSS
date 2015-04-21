@@ -62,6 +62,7 @@ namespace EMS_PSS
             // add user
             SqlConnection conn = new SqlConnection(conString);
             int queryStatus = 0;
+            cName.Replace("'", "''");
             string cmdstring = 
             "INSERT INTO tb_Company VALUES ('" + cName + "');";
 

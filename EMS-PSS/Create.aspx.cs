@@ -22,6 +22,7 @@ namespace EMS_PSS
         int returnID = 0;
         int selectedEmpType;
         string conString, securityLevel, username;
+        Supporting.Audit sup = new Supporting.Audit();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -261,10 +262,10 @@ namespace EMS_PSS
                         {
                             Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "companyName", "N/A", cn);
                         }
-                        Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "firstName", "N/A", fn);
-                        Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "lastName", "N/A", ln);
-                        Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "socialInsuranceNumber", "N/A", sin);
-                        Supporting.Audit.CreateAudit(conString, username, returnID.ToString(), "dateOfBirth", "N/A", dob);
+                        sup.CreateAudit(conString, username, returnID.ToString(), "firstName", "N/A", fn);
+                        sup.CreateAudit(conString, username, returnID.ToString(), "lastName", "N/A", ln);
+                        sup.CreateAudit(conString, username, returnID.ToString(), "socialInsuranceNumber", "N/A", sin);
+                        sup.CreateAudit(conString, username, returnID.ToString(), "dateOfBirth", "N/A", dob);
                     }
                 }
                 catch (Exception ex)
@@ -314,7 +315,7 @@ namespace EMS_PSS
                 ftDateHireError.Text += "<b>Date Of Birth</b> should have valid date format";
                 isAllValid = false;
             }
-            if (!ft.SetDateOfTermination(ftDateTerm.Text.Replace(" ", "")) && ftDateTerm.Text != "")
+            if ((!ft.SetDateOfTermination(ftDateTerm.Text.Replace(" ", "")) && ftDateTerm.Text != "") || (ftReason.Text == "" && ftDateTerm.Text != ""))
             {
                 ftDateTermError.Text += "<b>Date Of Termination</b> should have valid date format";
                 isAllValid = false;
@@ -330,6 +331,10 @@ namespace EMS_PSS
                 if (ftDateHire.Text != "" && ftSalary.Text != "" && ftDOB.Text != "" && ftSin.Text != "")
                 {
                     activity = "1";
+                    if(ftReason.Text != "")
+                    {
+                        activity = "2";
+                    }
                 }
                 if (addEmpDB("FT", ftCompany.Text, ftfName.Text, ftlName.Text, ftSin.Text, ftDOB.Text, activity))
                 {
@@ -383,6 +388,7 @@ namespace EMS_PSS
                         }
                         //cmd.Parameters.AddWithValue("@id", empId);
                         cmd.Parameters.AddWithValue("@dh", dateOfHire);
+                        cmd.Parameters.AddWithValue("@rl", ftReason);
                         //cmd.Parameters.AddWithValue("@s", salary);
                         /*
                         SqlParameter parameter = new SqlParameter();
@@ -392,10 +398,10 @@ namespace EMS_PSS
                         */
                         cmd.ExecuteNonQuery();
 
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "empID", "N/A", empId.ToString());
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateOfHire", "N/A", dateOfHire);
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateOfTermination", "N/A", dateOfTermination);
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "salary", "N/A", salary);
+                        sup.CreateAudit(conString, username, empId.ToString(), "empID", "N/A", empId.ToString());
+                        sup.CreateAudit(conString, username, empId.ToString(), "dateOfHire", "N/A", dateOfHire);
+                        sup.CreateAudit(conString, username, empId.ToString(), "dateOfTermination", "N/A", dateOfTermination);
+                        sup.CreateAudit(conString, username, empId.ToString(), "salary", "N/A", salary);
                     }
                 }
             }
@@ -443,9 +449,9 @@ namespace EMS_PSS
                 ptDateHireError.Text += "<b>Date Of Hire</b> should have valid date format";
                 isAllValid = false;
             }
-            if (!pt.SetDateOfTermination(ptDateTerm.Text.Replace(" ", "")) && ptDateTerm.Text != "")
+            if ((!pt.SetDateOfTermination(ptDateTerm.Text.Replace(" ", "")) && ptDateTerm.Text != "") || (ptReason.Text == "" && ptDateTerm.Text != ""))
             {
-                ptDateTermError.Text += "<b>Date Of Termination</b> should have valid date format";
+                ptDateTermError.Text += "<b>Date Of Termination</b> should have valid date format and needs Reason for leaving";
                 isAllValid = false;
             }
             if (!pt.SetHourlyRate(ptWage.Text.Replace(" ", "")) && ptWage.Text != "")
@@ -459,6 +465,10 @@ namespace EMS_PSS
                 if (ptDateHire.Text != "" && ptWage.Text != "" && ptDOB.Text != "" && ptSin.Text != "")
                 {
                     activity = "1";
+                    if(ptReason.Text != "")
+                    {
+                        activity = "2";
+                    }
                 }
                 if (addEmpDB("PT", ptCompany.Text, ptfName.Text, ptlName.Text, ptSin.Text, ptDOB.Text, activity))
                 {
@@ -484,15 +494,15 @@ namespace EMS_PSS
                             if (wage != "")
                             {
                                 cmd.CommandText =
-                                    "INSERT INTO tb_ptEmp (empID, dateOfHire, dateOfTermination, hourlyRate)"
-                                     + "Values (" + empId + ", @dh, @dt, " + wage + ")";
+                                    "INSERT INTO tb_ptEmp (empID, dateOfHire, dateOfTermination, reasonForLeaving, hourlyRate)"
+                                     + "Values (" + empId + ", @dh, @dt, @rl, " + wage + ")";
 
                             }
                             else
                             {
                                 cmd.CommandText =
-                                    "INSERT INTO tb_ptEmp (empID, dateOfHire, dateOfTermination)"
-                                     + "Values (" + empId + ", @dh, @dt" + ")";
+                                    "INSERT INTO tb_ptEmp (empID, dateOfHire, dateOfTermination, reasonForLeaving)"
+                                     + "Values (" + empId + ", @dh, @dt, @rl" + ")";
                             }
                             cmd.Parameters.AddWithValue("@dt", dateOfTermination);
                         }
@@ -501,18 +511,19 @@ namespace EMS_PSS
                             if (wage != "")
                             {
                                 cmd.CommandText =
-                                    "INSERT INTO tb_ptEmp (empID, dateOfHire, hourlyRate)"
-                                     + "Values (" + empId + ", @dh, " + wage + ")";
+                                    "INSERT INTO tb_ptEmp (empID, dateOfHire, reasonForLeaving, hourlyRate)"
+                                     + "Values (" + empId + ", @dh, @rl, " + wage + ")";
                             }
                             else
                             {
                                 cmd.CommandText =
-                                    "INSERT INTO tb_ptEmp (empID, dateOfHire)"
-                                     + "Values (" + empId + ", @dh" + ")";
+                                    "INSERT INTO tb_ptEmp (empID, dateOfHire, reasonForLeaving)"
+                                     + "Values (" + empId + ", @dh, @rl" + ")";
                             }
                         }
                         //cmd.Parameters.AddWithValue("@id", empId);
                         cmd.Parameters.AddWithValue("@dh", dateOfHire);
+                        cmd.Parameters.AddWithValue("@rl", ptReason.Text);
                         //cmd.Parameters.AddWithValue("@s", salary);
                         /*
                         SqlParameter parameter = new SqlParameter();
@@ -522,10 +533,10 @@ namespace EMS_PSS
                         */
                         cmd.ExecuteNonQuery();
 
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "empID", "N/A", empId.ToString());
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateOfHire", "N/A", dateOfHire);
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateOfTermination", "N/A", dateOfTermination);
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "hourlyRate", "N/A", wage);
+                        sup.CreateAudit(conString, username, empId.ToString(), "empID", "N/A", empId.ToString());
+                        sup.CreateAudit(conString, username, empId.ToString(), "dateOfHire", "N/A", dateOfHire);
+                        sup.CreateAudit(conString, username, empId.ToString(), "dateOfTermination", "N/A", dateOfTermination);
+                        sup.CreateAudit(conString, username, empId.ToString(), "hourlyRate", "N/A", wage);
                     }
                 }
             }
@@ -590,6 +601,10 @@ namespace EMS_PSS
                 if (slSeason.Text != "" && slPcPay.Text != "" && slDOB.Text != "" && slSin.Text != "" && slYear.Text != "")
                 {
                     activity = "1";
+                    if(slReason.Text != "")
+                    {
+                        activity = "2";
+                    }
                 }
                 if (addEmpDB("SL", slCompany.Text, slfName.Text, sllName.Text, slSin.Text, slDOB.Text, activity))
                 {
@@ -615,15 +630,15 @@ namespace EMS_PSS
                             if (piecePay != "")
                             {
                                 cmd.CommandText =
-                                    "INSERT INTO tb_slEmp (empID, season, seasonYear, dateStart, piecePay)"
-                                     + "Values (" + empId + ", @sn, @sy, @ds, " + piecePay + ")";
+                                    "INSERT INTO tb_slEmp (empID, season, seasonYear, dateStart, reasonForLeaving, piecePay)"
+                                     + "Values (" + empId + ", @sn, @sy, @ds, @rl, " + piecePay + ")";
                                 //cmd.Parameters.AddWithValue("@sn", piecePay);
                             }
                             else
                             {
                                 cmd.CommandText =
-                                    "INSERT INTO tb_slEmp (empID, season, seasonYear, dateStart)"
-                                     + "Values (" + empId + ", @sn, @sy, @ds" + ")";
+                                    "INSERT INTO tb_slEmp (empID, season, seasonYear, dateStart, reasonForLeaving)"
+                                     + "Values (" + empId + ", @sn, @sy, @ds, @rl" + ")";
                             }
                             cmd.Parameters.AddWithValue("@sn", season);
                         }
@@ -632,25 +647,26 @@ namespace EMS_PSS
                             if (piecePay != "")
                             {
                                 cmd.CommandText =
-                                    "INSERT INTO tb_slEmp (empID, seasonYear, dateStart, piecePay)"
-                                     + "Values (" + empId + ", @sy, @ds, " + piecePay + ")";
+                                    "INSERT INTO tb_slEmp (empID, seasonYear, dateStart, reasonForLeaving, piecePay)"
+                                     + "Values (" + empId + ", @sy, @ds, @rl, " + piecePay + ")";
                             }
                             else
                             {
                                 cmd.CommandText =
-                                    "INSERT INTO tb_slEmp (empID, seasonYear, dateStart)"
-                                     + "Values (" + empId + ", @sy, @ds" + ")";
+                                    "INSERT INTO tb_slEmp (empID, seasonYear, dateStart, reasonForLeaving)"
+                                     + "Values (" + empId + ", @sy, @ds, @rl" + ")";
                             }
                         }
                         cmd.Parameters.AddWithValue("@sy", seasonYear);
                         cmd.Parameters.AddWithValue("@ds", dateStart);
+                        cmd.Parameters.AddWithValue("@rl", slReason);
                         cmd.ExecuteNonQuery();
 
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "empID", "N/A", empId.ToString());
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "season", "N/A", season);
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "seasonYear", "N/A", seasonYear);
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateStart", "N/A", dateStart);
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "piecePay", "N/A", piecePay);
+                        sup.CreateAudit(conString, username, empId.ToString(), "empID", "N/A", empId.ToString());
+                        sup.CreateAudit(conString, username, empId.ToString(), "season", "N/A", season);
+                        sup.CreateAudit(conString, username, empId.ToString(), "seasonYear", "N/A", seasonYear);
+                        sup.CreateAudit(conString, username, empId.ToString(), "dateStart", "N/A", dateStart);
+                        sup.CreateAudit(conString, username, empId.ToString(), "piecePay", "N/A", piecePay);
                     }
                 }
             }
@@ -693,9 +709,9 @@ namespace EMS_PSS
                 ctStartError.Text += "<b>Contract Start Date</b> must be valid. It should not be possible to get this error. Look at you, you little hacker";
                 isAllValid = false;
             }
-            if (!ct.SetContractEndDate(ctEnd.Text.Replace(" ", "")) && ctEnd.Text != "")
+            if ((!ct.SetContractEndDate(ctEnd.Text.Replace(" ", "")) && ctEnd.Text != "") || (ctReason.Text == "" && ctEnd.Text != ""))
             {
-                ctEndError.Text += "<b>Contract End Date</b> should have valid date format";
+                ctEndError.Text += "<b>Contract End Date</b> should have valid date format and needs Reason for leaving";
                 isAllValid = false;
             }
             if (!ct.SetFixedContractAmt(ctAmt.Text.Replace(" ", "")) && ctAmt.Text != "")
@@ -709,6 +725,10 @@ namespace EMS_PSS
                 if (ctBin.Text != "" && ctStart.Text != "" && ctEnd.Text != "" && ctAmt.Text != "")
                 {
                     activity = "1";
+                    if(ctReason.Text != "")
+                    {
+                        activity = "2";
+                    }
                 }
                 if (addEmpDB("SL", ctCompany.Text, "", ctName.Text, ctBin.Text, ctDOI.Text, activity))
                 {
@@ -732,23 +752,24 @@ namespace EMS_PSS
                         if (amt != "")
                         {
                             cmd.CommandText =
-                                    "INSERT INTO tb_ctEmp (empID, dateStart, dateStop, fixedCtAmt)"
-                                     + "Values (" + empId + ", @ds, @de, " + amt + ")";
+                                    "INSERT INTO tb_ctEmp (empID, dateStart, dateStop, reasonForLeaving, fixedCtAmt)"
+                                     + "Values (" + empId + ", @ds, @de, @rl, " + amt + ")";
                         }
                         else
                         {
                             cmd.CommandText =
-                                    "INSERT INTO tb_ctEmp (empID, dateStart, dateStop)"
-                                     + "Values (" + empId + ", @ds, @de" + ")";
+                                    "INSERT INTO tb_ctEmp (empID, dateStart, dateStop, reasonForLeaving)"
+                                     + "Values (" + empId + ", @ds, @de, @rl" + ")";
                         }
                         cmd.Parameters.AddWithValue("@ds", start);
                         cmd.Parameters.AddWithValue("@de", end);
+                        cmd.Parameters.AddWithValue("@rl", ctReason.Text);
                         cmd.ExecuteNonQuery();
 
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "empID", "N/A", empId.ToString());
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateStart", "N/A", start);
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "dateStop", "N/A", end);
-                        Supporting.Audit.CreateAudit(conString, username, empId.ToString(), "fixedCtAmt", "N/A", amt);
+                        sup.CreateAudit(conString, username, empId.ToString(), "empID", "N/A", empId.ToString());
+                        sup.CreateAudit(conString, username, empId.ToString(), "dateStart", "N/A", start);
+                        sup.CreateAudit(conString, username, empId.ToString(), "dateStop", "N/A", end);
+                        sup.CreateAudit(conString, username, empId.ToString(), "fixedCtAmt", "N/A", amt);
                     }
                 }
             }

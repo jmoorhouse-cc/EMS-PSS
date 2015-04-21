@@ -47,7 +47,7 @@ namespace Supporting
 
             foreach (char c in inName)
             {
-                if(char.IsPunctuation(c) && c!= '-' && c!= '\'')
+                if (char.IsPunctuation(c) && c != '-' && c != '\'' && c != ' ')
                 {
                     errorMsg = "Cannot contain punctuation other than \"'\" or \"=\"";
                     returnVal = false;
