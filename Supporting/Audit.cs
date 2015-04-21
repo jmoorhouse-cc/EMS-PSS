@@ -19,7 +19,7 @@ namespace Supporting
             SqlDateTime sqlTime = (SqlDateTime)DateTime.Now;
 
             SqlConnection conn = new SqlConnection(conString);
-            SqlCommand cmd = new SqlCommand("INSERT INTO dbo.tb_Audit VALUES (@userName, @timechanged, @empID, @oldEntry, @newEntry)", conn);
+            SqlCommand cmd = new SqlCommand("INSERT INTO dbo.tb_Audit VALUES (@userName, @timechanged, @empID, @fieldChanged, @oldEntry, @newEntry)", conn);
 
             SqlParameter parameter = new SqlParameter();
             parameter.ParameterName = "@timechanged";
@@ -29,6 +29,7 @@ namespace Supporting
             cmd.Parameters.AddWithValue("@userName", userName);
             cmd.Parameters.Add(parameter);
             cmd.Parameters.AddWithValue("@empID", empID);
+            cmd.Parameters.AddWithValue("@fieldChanged", changedElement);
             cmd.Parameters.AddWithValue("@oldEntry", oldVal);
             cmd.Parameters.AddWithValue("@newEntry", newVal);
             try
