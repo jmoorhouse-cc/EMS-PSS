@@ -16,11 +16,12 @@ namespace EMS_PSS
         string securityLevel;
         string userName;
         string conString;
-        DataTable dt, dt2;
-        string selectedEmpType;
-        string selectedEmpId;
+        static DataTable dt, dt2;
+        static string selectedEmpType;
+        static string selectedEmpId;
         TimeCardManager tcm;
         static DateTime maxDate, minDate;
+        static GridView searchFullResult, searchResult;
         protected void Page_Load(object sender, EventArgs e)
         {
             securityLevel = Session["securitylevel"].ToString();
@@ -28,6 +29,8 @@ namespace EMS_PSS
             conString = Session["conString"].ToString();
             searchFullResultGrid.Visible = false;
             hideTimeCardField();
+            searchResult = new GridView();
+            searchFullResult = new GridView();
         }
 
         protected void searchSubmit_Click(object sender, EventArgs e)
@@ -66,10 +69,10 @@ namespace EMS_PSS
                 conn.Close();
             }
             searchResultGrid.Visible = true;
-            searchFullResultGrid.Visible = false;
             searchResultGrid.DataSource = dt;
             searchResultGrid.DataBind();
-
+            searchResult.DataSource = dt;
+            searchResult.DataBind();
             if (dt.Rows.Count == 0)
             {
                 selectResultLabel.Text = "No Result to Display";
@@ -99,13 +102,14 @@ namespace EMS_PSS
         }
         protected void tcInsert_Click(object sender, EventArgs e)
         {
+            showTimeCardField();
             errorMsg.Text = "";
             DateTime temp = new DateTime();
             DateTime? test = new DateTime();
             test = ReturnDateIfValid(tcWeekDate.Text);
             if (test == null)
             {
-                errorMsg.Text = "Invalid date or format";
+                errorMsg.Text = "<b>Invalid date or format</b>";
             }
             else
             {
@@ -113,48 +117,74 @@ namespace EMS_PSS
                 tcm = new TimeCardManager(temp);
                 if (minDate > tcm.CalcMonDate(temp) || maxDate < tcm.CalcSunDate(temp))
                 {
-                    errorMsg.Text = "Input Date Out Of Range: Valid Between " + minDate.ToString("yyyy-MM-dd") + " and " + maxDate.ToString("yyyy-MM-dd");
-                    showTimeCardField();
-                    return;
-                }
-                tcm.empID = Convert.ToInt32(selectedEmpId);
-                int numErrors = setTimeCardManager();
-                if (numErrors > 0)
-                {
-                    errorMsg.Text = numErrors + " Invalid Hour/Piece Entry(s) found. Try again.";
-                    showTimeCardField();
-                    return;
+                    errorMsg.Text = "<b>Input Date Out Of Range</b>: Valid Between " + minDate.ToString("yyyy-MM-dd") + " and " + maxDate.ToString("yyyy-MM-dd");
+
                 }
                 else
                 {
-                    int rowsReturned;
-                    bool success = false;
-                    try
+                    DateTime dt = tcm.CalcSunDate(temp);
+                    tcm.timeCardDate = dt;
+                    tcm.empID = Convert.ToInt32(selectedEmpId);
+                    int numErrors = setTimeCardManager();
+                    if (numErrors > 0)
                     {
-                        using (SqlConnection conn = new SqlConnection(conString))
+                        showTimeCardField();
+                        errorMsg.Text = numErrors + "<b>Invalid Hour/Piece Entry(s) found.</b> Try again.";
+                    }
+                    else
+                    {
+                        int rowsReturned;
+                        bool success = false;
+                        try
                         {
-                            conn.Open();
-                            using (SqlCommand cmd = new SqlCommand())
+                            using (SqlConnection conn = new SqlConnection(conString))
                             {
-                                cmd.Connection = conn;
-                                cmd.CommandType = CommandType.Text;
-                                cmd.CommandText = tcm.ToDBAddString(selectedEmpType);
+                                conn.Open();
+                                using (SqlCommand cmd = new SqlCommand())
+                                {
+                                    cmd.Connection = conn;
+                                    cmd.CommandType = CommandType.Text;
 
-                                rowsReturned = (Int32)cmd.ExecuteScalar();
-                                if (rowsReturned == -1)
-                                {
-                                    errorMsg.Text = ("Time Card Entry Has Not Been Added");
-                                }
-                                else
-                                {
-                                    errorMsg.Text = ("Time Card Entry Has Been Added Successfully");
+                                    cmd.CommandText = tcm.ToDBCheckDupString();
+                                    rowsReturned = (int)cmd.ExecuteScalar();
+                                    if (rowsReturned != 0)
+                                    {
+                                        errorMsg.Text = ("Duplicate Time Card Entry Exists; Attempt To Updated; ");
+                                        cmd.CommandText = tcm.ToDBUpdateString(selectedEmpType);
+                                        rowsReturned = cmd.ExecuteNonQuery();
+                                        if (rowsReturned != 1)
+                                        {
+                                            errorMsg.Text += ("<b>Time Card Entry Has Not Been Updated</b>");
+                                        }
+                                        else
+                                        {
+                                            errorMsg.Text += ("<b>Time Card Entry Has Been Updated Successfully</b>");
+                                            insertBtn.Visible = false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        cmd.CommandText = tcm.ToDBAddString(selectedEmpType);
+
+                                        rowsReturned = cmd.ExecuteNonQuery();
+                                        if (rowsReturned != 1)
+                                        {
+                                            errorMsg.Text = ("<b>Time Card Entry Has Not Been Added</b>");
+                                        }
+                                        else
+                                        {
+                                            errorMsg.Text = ("<b>Time Card Entry Has Been Added Successfully</b>");
+                                            insertBtn.Visible = false;
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
-                    catch
-                    {
-                        errorMsg.Text = ("Time Card Entry Has Failed");
+                        catch
+                        {
+                            errorMsg.Text = ("<b>Time Card Entry Has Failed");
+                            hideTimeCardField();
+                        }
                     }
                 }
             }
@@ -223,14 +253,15 @@ namespace EMS_PSS
                 else selectResultLabel.Text = "";
 
                 searchFullResultGrid.DataSource = dt2;
+                searchFullResult.DataSource = dt2;
                 searchFullResultGrid.DataBind();
+                searchFullResult.DataBind();
                 searchResultGrid.Visible = false;
                 searchFullResultGrid.Visible = true;
                 showTimeCardField();
 
                 GridViewRow row2 = searchFullResultGrid.Rows[0];
                 
-                selectedEmpId = row2.Cells[1].Text;
                 if(selectedEmpType == "FT" || selectedEmpType == "PT")
                 {
                     string startDate = row2.Cells[5].Text.Replace(" 12:00:00 AM", "");
@@ -267,8 +298,8 @@ namespace EMS_PSS
                     minDate = Convert.ToDateTime(year+start);
                     maxDate = Convert.ToDateTime(year+end);
                 }
-                
-                
+
+                searchFullResultGrid.Visible = true;
             }
         }
         private string getCmdString(string type)
