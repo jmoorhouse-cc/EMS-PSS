@@ -60,6 +60,7 @@
     <Content Include="Audit.aspx" />
     <Content Include="Create.aspx" />
     <Content Include="EMS.Master" />
+    <None Include="Properties\PublishProfiles\EMS-PSS.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
