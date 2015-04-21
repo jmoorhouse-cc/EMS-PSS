@@ -95,10 +95,10 @@ namespace EMS_PSS
 
                         var reader = cmd.ExecuteReader();
 
-                        ctName.DataSource = reader;
-                        ctName.DataValueField = "companyName";
-                        ctName.DataTextField = "companyName";
-                        ctName.DataBind();
+                        ctCompany.DataSource = reader;
+                        ctCompany.DataValueField = "companyName";
+                        ctCompany.DataTextField = "companyName";
+                        ctCompany.DataBind();
                         cmd.Dispose();
                         reader.Close();
                     }
@@ -206,7 +206,7 @@ namespace EMS_PSS
             }
             else if (this.RadioButtonList1.SelectedValue == "contract")
             {
-
+                addctEmp();
             }
         }
 
@@ -616,6 +616,99 @@ namespace EMS_PSS
                         }
                         cmd.Parameters.AddWithValue("@sy", seasonYear);
                         cmd.Parameters.AddWithValue("@ds", dateStart);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //success = false;
+            }
+        }
+
+        public void addctEmp()
+        {
+            ContractEmployee ct = new ContractEmployee();
+            bool isAllValid = true;
+
+            ctNameError.Text = "";
+            //ctlNameError.Text = "";
+            ctBinError.Text = "";
+            ctDOIError.Text = "";
+            ctStartError.Text = "";
+            ctEndError.Text = "";
+            ctAmtError.Text = "";
+
+            if (!ct.SetLastName(ctName.Text) || ctName.Text == "")
+            {
+                ctNameError.Text += "<b>Company Name</b> can only contain the following characters: [A-Za-z. -]\n";
+                isAllValid = false;
+            }
+            if (!ct.SetSIN(ctBin.Text.Replace(" ", "")))
+            {
+                ctBinError.Text += "<b>BIN</b> should be 9-digit number";
+                isAllValid = false;
+            }
+            if (!ct.SetDOB(ctDOI.Text.Replace(" ", "")))
+            {
+                ctDOIError.Text += "<b>Date Of Incorporation</b> should have valid date format";
+                isAllValid = false;
+            }
+            if (!ct.SetContractStartDate(ctStart.Text.Replace(" ", "")) && ctStart.Text != "")
+            {
+                ctStartError.Text += "<b>Contract Start Date</b> must be valid. It should not be possible to get this error. Look at you, you little hacker";
+                isAllValid = false;
+            }
+            if (!ct.SetContractEndDate(ctEnd.Text.Replace(" ", "")))
+            {
+                ctEndError.Text += "<b>Contract End Date</b> should have valid date format";
+                isAllValid = false;
+            }
+            if (!ct.SetFixedContractAmt(ctAmt.Text.Replace(" ", "")) && ctAmt.Text != "")
+            {
+                ctAmtError.Text += "<b>Contract Amount</b> should be a number higher than 0";
+                isAllValid = false;
+            }
+            if (isAllValid)
+            {
+                string activity = "0";
+                if (ctBin.Text != "" && ctStart.Text != "" && ctEnd.Text != "" && ctAmt.Text != "")
+                {
+                    activity = "1";
+                }
+                if (addEmpDB("SL", ctCompany.Text, "", ctName.Text, ctBin.Text, ctDOI.Text, activity))
+                {
+                    addCtEmpDB(returnID, ctStart.Text, ctEnd.Text, ctAmt.Text);
+                    sucessLbl.Text = ctName.Text + " Has been succesfully added";
+                }
+            }
+        }
+
+        private void addCtEmpDB(int empId, string start, string end, string amt)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(conString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandType = CommandType.Text;
+                        if (amt != "")
+                        {
+                            cmd.CommandText =
+                                    "INSERT INTO tb_ctEmp (empID, dateStart, dateStop, fixedCtAmt)"
+                                     + "Values (" + empId + ", @ds, @de, " + amt + ")";
+                        }
+                        else
+                        {
+                            cmd.CommandText =
+                                    "INSERT INTO tb_ctEmp (empID, dateStart, dateStop)"
+                                     + "Values (" + empId + ", @ds, @de" + ")";
+                        }
+                        cmd.Parameters.AddWithValue("@ds", start);
+                        cmd.Parameters.AddWithValue("@de", end);
                         cmd.ExecuteNonQuery();
                     }
                 }

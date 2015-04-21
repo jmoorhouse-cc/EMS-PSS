@@ -118,12 +118,17 @@
 
                 <div id="contractInput" runat="server" visible="false">
                     <table>
-                        <tr><td>Contract Company Name: </td><td><asp:DropDownList ID="ctName" runat="server"/></td>
+                        <tr><td>Contract Company Name: </td><td><asp:TextBox ID="ctName" runat="server"/></td>
                             <td><asp:Label ID="ctNameError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
                         <tr><td>BIN: </td><td><asp:TextBox ID="ctBin" runat="server"/></td>
                             <td><asp:Label ID="ctBinError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
+                        <tr><td>Works at: </td><td><asp:DropDownList ID="ctCompany" runat="server"/></td>
+                            <td><asp:Label ID="ctCompanyError" ForeColor="Red" runat="server"></asp:Label></td>
+                            </tr>
+                        <tr><td>Date of incorporation: </td><td><asp:TextBox ID="ctDOI" runat="server"/></td>
+                           <td><asp:Label ID="ctDOIError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
                         <tr><td>Date Start: </td><td><asp:TextBox ID="ctStart" runat="server"/></td>
                             <td><asp:Label ID="ctStartError" ForeColor="Red" runat="server"></asp:Label></td>
