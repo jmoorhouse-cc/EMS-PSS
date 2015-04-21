@@ -28,6 +28,51 @@ namespace EMS_PSS
         DataTable dt, dt2;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack && Session["type"] != null)
+            {
+                if (Session["type"].ToString() != "FT")
+                {
+                    ftfName.Text = "";
+                    ftlName.Text = "";
+                    ftSin.Text = "";
+                    ftDOB.Text = "";
+                    ftDateHire.Text = "";
+                    ftDateTerm.Text = "";
+                    ftSalary.Text = "";
+                }
+
+                if (Session["type"].ToString() != "SL")
+                {
+                    slfName.Text = "";
+                    sllName.Text = "";
+                    slSin.Text = "";
+                    slDOB.Text = "";
+                    sldateStart.Text = "";
+                    slYear.Text = "";
+                    slPcPay.Text = "";
+                }
+
+                if (Session["type"].ToString() != "PT")
+                {
+                    ptfName.Text = "";
+                    ptlName.Text = "";
+                    ptSin.Text = "";
+                    ptDOB.Text = "";
+                    ptDateHire.Text = "";
+                    ptDateTerm.Text = "";
+                    ptWage.Text = "";
+                }
+
+                if (Session["type"].ToString() != "CT")
+                {
+                    ctName.Text = "";
+                    ctBin.Text = "";
+                    ctDOI.Text = "";
+                    ctStart.Text = "";
+                    ctEnd.Text = "";
+                    ctAmt.Text = "";
+                }
+            }
             securityLevel = Session["securitylevel"].ToString();
             userName = Session["username"].ToString();
             conString = Session["conString"].ToString();
@@ -97,15 +142,31 @@ namespace EMS_PSS
             SeasonalEmployee sl = new SeasonalEmployee();
             ContractEmployee ct = new ContractEmployee();
             List<string> normalUpdates = new List<string>();
+            List<string> specificUpdates = new List<string>();
             string updateString = "UPDATE tb_Emp SET";
+            string updateSpecific = "UPDATE tb_";
+            int empID = 0;
+            string empType = Session["type"].ToString();
+            if (empType == "FT")
+            {
+                updateSpecific += "Ft";
+            }
+            else if (empType == "PT")
+            {
+                updateSpecific += "Pt";
+            }
+            else if (empType == "SL")
+            {
+                updateSpecific += "Sl";
+            }
+            else if (empType == "CT")
+            {
+                updateSpecific += "Ct";
+            }
 
-            string updateFt = "";
-            string updatePt = "";
-            string updateCt = "";
-            string updateSl = "";
+            updateSpecific += "Emp SET ";
 
-
-            string endUpdate = " WHERE socialInsNumber=" + Session["sin"] + " and firstName='" + Session["fname"] +"' and lastName='" + Session["lname"] + "' and companyName='" + Session["company"] + "';";
+            string endUpdate = " OUTPUT INSERTED.empID WHERE socialInsNumber=" + Session["sin"] + " and firstName='" + Session["fname"] + "' and lastName='" + Session["lname"] + "' and companyName='" + Session["company"] + "';";
           //string updateSpecificString = "UPDATE " + 
 
             //for fulltime
@@ -152,6 +213,7 @@ namespace EMS_PSS
                     ftDateHireError.Text += "<b>Date Of Birth</b> should have valid date format";
                     isAllValid = false;
                 }
+                    specificUpdates.Add("dateOfHire='" + ftDateHire.Text + "'");
             }
             if (ftDateTerm.Text != "")
             {
@@ -160,6 +222,7 @@ namespace EMS_PSS
                     ftDateTermError.Text += "<b>Date Of Termination</b> should have valid date format";
                     isAllValid = false;
                 }
+                specificUpdates.Add("dateOfTermination='" + ftDateTerm.Text + "'");
             }
             if (ftSalary.Text != "")
             {
@@ -168,141 +231,248 @@ namespace EMS_PSS
                     ftSalaryError.Text += "<b>Salary</b> should be a number higher than 0";
                     isAllValid = false;
                 }
+                specificUpdates.Add("salary=" + ftSalary.Text + "");
             }
 
-            ////for part time
-            //if (!pt.SetFirstName(ptfName.Text) || ptfName.Text == "")
-            //{
-            //    ptfNameError.Text += "<b>First Name</b> can only contain the following characters: [A-Za-z. -]\n";
-            //    isAllValid = false;
-            //}
-            //if (!pt.SetLastName(ptlName.Text) || ptlName.Text == "")
-            //{
-            //    ptlNameError.Text += "<b>Last Name</b> can only contain the following characters: [A-Za-z. -]\n";
-            //    isAllValid = false;
-            //}
-            //if (!pt.SetSIN(ptSin.Text.Replace(" ", "")))
-            //{
-            //    ptSinError.Text += "<b>SIN</b> should be 9-digit number";
-            //    isAllValid = false;
-            //}
-            //if (!pt.SetDOB(ptDOB.Text.Replace(" ", "")))
-            //{
-            //    ptDOBError.Text += "<b>Date Of Birth</b> should have valid date format";
-            //    isAllValid = false;
-            //}
-            //if (!pt.SetDateOfHire(ptDateHire.Text.Replace(" ", "")))
-            //{
-            //    ptDateHireError.Text += "<b>Date Of Hire</b> should have valid date format";
-            //    isAllValid = false;
-            //}
-            //if (!pt.SetDateOfTermination(ptDateTerm.Text.Replace(" ", "")) && ptDateTerm.Text != "")
-            //{
-            //    ptDateTermError.Text += "<b>Date Of Termination</b> should have valid date format";
-            //    isAllValid = false;
-            //}
-            //if (!pt.SetHourlyRate(ptWage.Text.Replace(" ", "")) && ptWage.Text != "")
-            //{
-            //    ptWageError.Text += "<b>Salary</b> should be a number higher than 0";
-            //    isAllValid = false;
-            //}
-
-            ////for seasonal
-            //if (!sl.SetFirstName(slfName.Text) || slfName.Text == "")
-            //{
-            //    slfNameError.Text += "<b>First Name</b> can only contain the following characters: [A-Za-z. -]\n";
-            //    isAllValid = false;
-            //}
-            //if (!sl.SetLastName(sllName.Text) || sllName.Text == "")
-            //{
-            //    sllNameError.Text += "<b>Last Name</b> can only contain the following characters: [A-Za-z. -]\n";
-            //    isAllValid = false;
-            //}
-            //if (!sl.SetSIN(slSin.Text.Replace(" ", "")))
-            //{
-            //    slSinError.Text += "<b>SIN</b> should be 9-digit number";
-            //    isAllValid = false;
-            //}
-            //if (!sl.SetDOB(slDOB.Text.Replace(" ", "")))
-            //{
-            //    slDOBError.Text += "<b>Date Of Birth</b> should have valid date format";
-            //    isAllValid = false;
-            //}
-            //if (!sl.SetSeason(slSeason.Text.Replace(" ", "")) && slSeason.Text != "")
-            //{
-            //    slSeasonError.Text += "<b>Season</b> must be valid. It should not be possible to get this error. Look at you, you little hacker";
-            //    isAllValid = false;
-            //}
-            //if (!sl.SetPiecePay(slPcPay.Text.Replace(" ", "")) && slPcPay.Text != "")
-            //{
-            //    slPcPayError.Text += "<b>Salary</b> should be a number higher than 0";
-            //    isAllValid = false;
-            //}
-
-            ////for contract
-            //if (!ct.SetLastName(ctName.Text) || ctName.Text == "")
-            //{
-            //    ctNameError.Text += "<b>Company Name</b> can only contain the following characters: [A-Za-z. -]\n";
-            //    isAllValid = false;
-            //}
-            //if (!ct.SetSIN(ctBin.Text.Replace(" ", "")))
-            //{
-            //    ctBinError.Text += "<b>BIN</b> should be 9-digit number";
-            //    isAllValid = false;
-            //}
-            //if (!ct.SetDOB(ctDOI.Text.Replace(" ", "")))
-            //{
-            //    ctDOIError.Text += "<b>Date Of Incorporation</b> should have valid date format";
-            //    isAllValid = false;
-            //}
-            //if (!ct.SetContractStartDate(ctStart.Text.Replace(" ", "")) && ctStart.Text != "")
-            //{
-            //    ctStartError.Text += "<b>Contract Start Date</b> must be valid. It should not be possible to get this error. Look at you, you little hacker";
-            //    isAllValid = false;
-            //}
-            //if (!ct.SetContractEndDate(ctEnd.Text.Replace(" ", "")))
-            //{
-            //    ctEndError.Text += "<b>Contract End Date</b> should have valid date format";
-            //    isAllValid = false;
-            //}
-            //if (!ct.SetFixedContractAmt(ctAmt.Text.Replace(" ", "")) && ctAmt.Text != "")
-            //{
-            //    ctAmtError.Text += "<b>Contract Amount</b> should be a number higher than 0";
-            //    isAllValid = false;
-            //}
-
-            bool first = true;
-            foreach (string s in normalUpdates)
+            //for part time
+            if (ptfName.Text != "")
             {
-                if (first)
+                if (!pt.SetFirstName(ptfName.Text))
                 {
-                    updateString += " " + s;
-                    first = false;
+                    ptfNameError.Text += "<b>First Name</b> can only contain the following characters: [A-Za-z. -]\n";
+                    isAllValid = false;
                 }
-                else
+                normalUpdates.Add("firstName='" + ptfName.Text + "'");
+            }
+            if (ptlName.Text != "")
+            {
+                if (!pt.SetLastName(ptlName.Text) || ptlName.Text == "")
                 {
-                    updateString += ", " + s;
+                    ptlNameError.Text += "<b>Last Name</b> can only contain the following characters: [A-Za-z. -]\n";
+                    isAllValid = false;
                 }
+                normalUpdates.Add("lastName='" + ptlName.Text + "'");
+            }
+            if(ptSin.Text != "")
+            {
+                if (!pt.SetSIN(ptSin.Text.Replace(" ", "")))
+                {
+                    ptSinError.Text += "<b>SIN</b> should be 9-digit number";
+                    isAllValid = false;
+                }
+                normalUpdates.Add("socialInsNumber=" + ptSin.Text);
+            }
+            if (ptDOB.Text != "")
+            {
+                if (!pt.SetDOB(ptDOB.Text.Replace(" ", "")))
+                {
+                    ptDOBError.Text += "<b>Date Of Birth</b> should have valid date format";
+                    isAllValid = false;
+                }
+                normalUpdates.Add("dateOfBirth='" + ptDOB.Text + "'");
+            }
+            if (ptDateHire.Text != "")
+            {
+                if (!pt.SetDateOfHire(ptDateHire.Text.Replace(" ", "")))
+                {
+                    ptDateHireError.Text += "<b>Date Of Hire</b> should have valid date format";
+                    isAllValid = false;
+                }
+                specificUpdates.Add("dateOfHire='" + ptDateHire.Text + "'");
+            }
+            if (ptDateTerm.Text != "")
+            {
+                if (!pt.SetDateOfTermination(ptDateTerm.Text.Replace(" ", "")) && ptDateTerm.Text != "")
+                {
+                    ptDateTermError.Text += "<b>Date Of Termination</b> should have valid date format";
+                    isAllValid = false;
+                }
+                specificUpdates.Add("dateOfTermination='" + ptDateTerm.Text + "'");
+            }
+            if (ptWage.Text != "")
+            {
+                if (!pt.SetHourlyRate(ptWage.Text.Replace(" ", "")) && ptWage.Text != "")
+                {
+                    ptWageError.Text += "<b>Salary</b> should be a number higher than 0";
+                    isAllValid = false;
+                }
+                specificUpdates.Add("hourlyRate='" + ptWage.Text + "'");
             }
 
-            updateString += " " + endUpdate;
-            try
+            //for seasonal
+            if (slfName.Text != "")
             {
-                using (SqlConnection connect = new SqlConnection(conString))
+                if (!sl.SetFirstName(slfName.Text) || slfName.Text == "")
                 {
-                    connect.Open();
-                    using (SqlCommand changeCmd = new SqlCommand())
+                    slfNameError.Text += "<b>First Name</b> can only contain the following characters: [A-Za-z. -]\n";
+                    isAllValid = false;
+                }
+                normalUpdates.Add("firstName='" + slfName.Text + "'");
+            }
+            if (sllName.Text != "")
+            {
+                if (!sl.SetLastName(sllName.Text) || sllName.Text == "")
+                {
+                    sllNameError.Text += "<b>Last Name</b> can only contain the following characters: [A-Za-z. -]\n";
+                    isAllValid = false;
+                }
+                normalUpdates.Add("lastName='" + sllName.Text + "'");
+            }
+            if (slSin.Text != "")
+            {
+                if (!sl.SetSIN(slSin.Text.Replace(" ", "")))
+                {
+                    slSinError.Text += "<b>SIN</b> should be 9-digit number";
+                    isAllValid = false;
+                }
+                normalUpdates.Add("socialInsNumber=" + ftfName.Text);
+            }
+            if (slDOB.Text != "")
+            {
+                if (!sl.SetDOB(slDOB.Text.Replace(" ", "")))
+                {
+                    slDOBError.Text += "<b>Date Of Birth</b> should have valid date format";
+                    isAllValid = false;
+                }
+                normalUpdates.Add("dateOfBirth='" + slDOB.Text + "'");
+            }
+            if (slSeason.Text != "")
+            {
+                if (!sl.SetSeason(slSeason.Text.Replace(" ", "")) && slSeason.Text != "")
+                {
+                    slSeasonError.Text += "<b>Season</b> must be valid. It should not be possible to get this error. Look at you, you little hacker";
+                    isAllValid = false;
+                }
+                specificUpdates.Add("season='" + slSeason.Text + "'");
+            }
+            if (slPcPay.Text != "")
+            {
+                if (!sl.SetPiecePay(slPcPay.Text.Replace(" ", "")) && slPcPay.Text != "")
+                {
+                    slPcPayError.Text += "<b>Salary</b> should be a number higher than 0";
+                    isAllValid = false;
+                }
+                specificUpdates.Add("piecePay='" + slPcPay.Text + "'");
+            }
+
+            //for contract
+            if (ctName.Text != "")
+            {
+                if (!ct.SetLastName(ctName.Text))
+                {
+                    ctNameError.Text += "<b>Company Name</b> can only contain the following characters: [A-Za-z. -]\n";
+                    isAllValid = false;
+                }
+                normalUpdates.Add("lastName='" + ctName.Text + "'");
+            }
+            if (ctBin.Text != "")
+            {
+                if (!ct.SetSIN(ctBin.Text.Replace(" ", "")))
+                {
+                    ctBinError.Text += "<b>BIN</b> should be 9-digit number";
+                    isAllValid = false;
+                }
+                normalUpdates.Add("socialInsNumber='" + ctBin.Text + "'");
+            }
+            if (ctDOI.Text != "")
+            {
+                if (!ct.SetDOB(ctDOI.Text.Replace(" ", "")))
+                {
+                    ctDOIError.Text += "<b>Date Of Incorporation</b> should have valid date format";
+                    isAllValid = false;
+                }
+                normalUpdates.Add("dateOfBirth='" + ctDOI.Text + "'");
+            }
+            if (ctStart.Text != "")
+            {
+                if (!ct.SetContractStartDate(ctStart.Text.Replace(" ", "")))
+                {
+                    ctStartError.Text += "<b>Contract Start Date</b> must be valid. It should not be possible to get this error. Look at you, you little hacker";
+                    isAllValid = false;
+                }
+                specificUpdates.Add("dateStart='" + ctStart.Text + "'");
+            }
+            if (ctEnd.Text != "")
+            {
+                if (!ct.SetContractEndDate(ctEnd.Text.Replace(" ", "")))
+                {
+                    ctEndError.Text += "<b>Contract End Date</b> should have valid date format";
+                    isAllValid = false;
+                }
+                specificUpdates.Add("dateStop='" + ctEnd.Text + "'");
+            }
+            if (ctAmt.Text != "")
+            {
+                if (!ct.SetFixedContractAmt(ctAmt.Text.Replace(" ", "")))
+                {
+                    ctAmtError.Text += "<b>Contract Amount</b> should be a number higher than 0";
+                    isAllValid = false;
+                }
+                specificUpdates.Add("fixedCtAmt='" + ctAmt.Text + "'");
+            }
+            if (isAllValid)
+            {
+                bool first = true;
+                if (normalUpdates.Count < 1)
+                {
+                    normalUpdates.Add("firstName='" + Session["fname"] + "'");
+                }
+                foreach (string s in normalUpdates)
+                {
+                    if (first)
                     {
-                        changeCmd.Connection = connect;
-                        changeCmd.CommandType = CommandType.Text;
-                        changeCmd.CommandText = updateString;
-                        changeCmd.ExecuteNonQuery();
+                        updateString += " " + s;
+                        first = false;
+                    }
+                    else
+                    {
+                        updateString += ", " + s;
                     }
                 }
-            }
-            catch (Exception exce)
-            {
+                updateString += endUpdate;
+                first = true;
+                foreach (string s in specificUpdates)
+                {
+                    if (first)
+                    {
+                        updateSpecific += " " + s;
+                        first = false;
+                    }
+                    else
+                    {
+                        updateSpecific += ", " + s;
+                    }
+                }
+                
+                
+                try
+                {
+                    using (SqlConnection connect = new SqlConnection(conString))
+                    {
+                        connect.Open();
+                        using (SqlCommand changeCmd = new SqlCommand())
+                        {
+                            changeCmd.Connection = connect;
+                            changeCmd.CommandType = CommandType.Text;
+                            changeCmd.CommandText = updateString;
+                            empID = (Int32)changeCmd.ExecuteScalar();
+                            changeCmd.Dispose();
+                        }
+                        updateSpecific += " WHERE empID=" + empID;
+                        using (SqlCommand changeCmd = new SqlCommand())
+                        {
+                            changeCmd.Connection = connect;
+                            changeCmd.CommandType = CommandType.Text;
+                            changeCmd.CommandText = updateSpecific;
+                            changeCmd.ExecuteNonQuery();
+                            changeCmd.Dispose();
+                        }
+                    }
+                }
+                catch (Exception exce)
+                {
 
+                }
             }
         }
 
@@ -323,6 +493,7 @@ namespace EMS_PSS
                 Session["fname"] = fname;
                 Session["lname"] = lname;
                 Session["company"] = company;
+                Session["type"] = type;
 
                 SqlConnection conn = new SqlConnection(conString);
                 SqlCommand cmd = new SqlCommand(getCmdString(type), conn);
@@ -370,141 +541,25 @@ namespace EMS_PSS
                 {
                     fulltimeInput.Visible = true;
 
-                    try
-                    {
-                        using (var con = new System.Data.SqlClient.SqlConnection(conString))
-                        {
-                            using (var newCmd = new System.Data.SqlClient.SqlCommand("SELECT * FROM tb_Company", con))
-                            {
-                                try
-                                {
-                                    con.Open();
-                                }
-                                catch (Exception ex)
-                                {
-                                    //lblErrorMsg.Text = e.Message;
-                                }
-
-                                var reader = newCmd.ExecuteReader();
-
-                                ftCompany.DataSource = reader;
-                                ftCompany.DataValueField = "companyName";
-                                ftCompany.DataTextField = "companyName";
-                                ftCompany.DataBind();
-                                newCmd.Dispose();
-                                reader.Close();
-                            }
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-
-                    }
+                   
                 }
                 else if(type == "PT")
                 {
                     parttimeInput.Visible = true;
 
-                    try
-                    {
-                        using (var con = new System.Data.SqlClient.SqlConnection(conString))
-                        {
-                            using (var newCmd = new System.Data.SqlClient.SqlCommand("SELECT * FROM tb_Company", con))
-                            {
-                                try
-                                {
-                                    con.Open();
-                                }
-                                catch (Exception ex)
-                                {
-                                    //lblErrorMsg.Text = e.Message;
-                                }
-
-                                var reader = newCmd.ExecuteReader();
-
-                                ptCompany.DataSource = reader;
-                                ptCompany.DataValueField = "companyName";
-                                ptCompany.DataTextField = "companyName";
-                                ptCompany.DataBind();
-                                newCmd.Dispose();
-                                reader.Close();
-                            }
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-
-                    }
+                  
                 }
                 else if(type == "CT")
                 {
                     contractInput.Visible = true;
 
-                    try
-                    {
-                        using (var con = new System.Data.SqlClient.SqlConnection(conString))
-                        {
-                            using (var newCmd = new System.Data.SqlClient.SqlCommand("SELECT * FROM tb_Company", con))
-                            {
-                                try
-                                {
-                                    con.Open();
-                                }
-                                catch (Exception ex)
-                                {
-                                    //lblErrorMsg.Text = e.Message;
-                                }
-
-                                var reader = newCmd.ExecuteReader();
-
-                                ctCompany.DataSource = reader;
-                                ctCompany.DataValueField = "companyName";
-                                ctCompany.DataTextField = "companyName";
-                                ctCompany.DataBind();
-                                newCmd.Dispose();
-                                reader.Close();
-                            }
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-
-                    }
+                    
                 }
                 else if(type == "SL")
                 {
                     seasonalInput.Visible = true;
 
-                    try
-                    {
-                        using (var con = new System.Data.SqlClient.SqlConnection(conString))
-                        {
-                            using (var newCmd = new System.Data.SqlClient.SqlCommand("SELECT * FROM tb_Company", con))
-                            {
-                                try
-                                {
-                                    con.Open();
-                                }
-                                catch (Exception ex)
-                                {
-                                    //lblErrorMsg.Text = e.Message;
-                                }
-
-                                var reader = newCmd.ExecuteReader();
-
-                                slCompany.DataSource = reader;
-                                slCompany.DataValueField = "companyName";
-                                slCompany.DataTextField = "companyName";
-                                slCompany.DataBind();
-                                newCmd.Dispose();
-                                reader.Close();
-                            }
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-
-                    }
+                    
                 }
                 btnModify.Visible = true;
             }

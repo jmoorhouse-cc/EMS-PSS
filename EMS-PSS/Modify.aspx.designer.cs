@@ -157,24 +157,6 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.Label ftDOBError;
         
         /// <summary>
-        /// ftCompany control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ftCompany;
-        
-        /// <summary>
-        /// ftCompanyError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ftCompanyError;
-        
-        /// <summary>
         /// ftDateHire control.
         /// </summary>
         /// <remarks>
@@ -328,24 +310,6 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.Label ptDateHireError;
         
         /// <summary>
-        /// ptCompany control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ptCompany;
-        
-        /// <summary>
-        /// ptCompanyError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ptCompanyError;
-        
-        /// <summary>
         /// ptDateTerm control.
         /// </summary>
         /// <remarks>
@@ -481,24 +445,6 @@ namespace EMS_PSS {
         protected global::System.Web.UI.WebControls.Label slSeasonError;
         
         /// <summary>
-        /// slCompany control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList slCompany;
-        
-        /// <summary>
-        /// slCompanyError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label slCompanyError;
-        
-        /// <summary>
         /// sldateStart control.
         /// </summary>
         /// <remarks>
@@ -596,24 +542,6 @@ namespace EMS_PSS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ctBinError;
-        
-        /// <summary>
-        /// ctCompany control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ctCompany;
-        
-        /// <summary>
-        /// ctCompanyError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ctCompanyError;
         
         /// <summary>
         /// ctDOI control.

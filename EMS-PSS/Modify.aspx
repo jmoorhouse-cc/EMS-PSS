@@ -51,9 +51,7 @@
                         <tr><td>Date of Birth: </td><td><asp:TextBox ID="ftDOB" runat="server"/></td>
                             <td><asp:Label ID="ftDOBError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
-                        <tr><td>Works at: </td><td><asp:DropDownList ID="ftCompany" runat="server"/></td>
-                            <td><asp:Label ID="ftCompanyError" ForeColor="Red" runat="server"></asp:Label></td>
-                        </tr>
+                        
                         <tr><td>Date of Hire: </td><td><asp:TextBox ID="ftDateHire" runat="server"/></td>
                             <td><asp:Label ID="ftDateHireError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
@@ -83,9 +81,7 @@
                         <tr><td>Date of Hire: </td><td><asp:TextBox ID="ptDateHire" runat="server"/></td>
                             <td><asp:Label ID="ptDateHireError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
-                        <tr><td>Works at: </td><td><asp:DropDownList ID="ptCompany" runat="server"/></td>
-                            <td><asp:Label ID="ptCompanyError" ForeColor="Red" runat="server"></asp:Label></td>
-                            </tr>
+                        
                         <tr><td>Date of Termination: </td><td><asp:TextBox ID="ptDateTerm" runat="server"/></td>
                             <td><asp:Label ID="ptDateTermError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
@@ -119,9 +115,7 @@
                             <td><asp:Label ID="slSeasonError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
                             
-                        <tr><td>Works at: </td><td><asp:DropDownList ID="slCompany" runat="server"/></td>
-                            <td><asp:Label ID="slCompanyError" ForeColor="Red" runat="server"></asp:Label></td>
-                            </tr>
+                        
                         <tr><td>Date Start: </td><td><asp:TextBox ID="sldateStart" runat="server"/></td>
                             <td><asp:Label ID="slDateStartError" ForeColor="Red" runat="server"></asp:Label></td>
                             
@@ -144,9 +138,7 @@
                         <tr><td>BIN: </td><td><asp:TextBox ID="ctBin" runat="server"/></td>
                             <td><asp:Label ID="ctBinError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
-                        <tr><td>Works at: </td><td><asp:DropDownList ID="ctCompany" runat="server"/></td>
-                            <td><asp:Label ID="ctCompanyError" ForeColor="Red" runat="server"></asp:Label></td>
-                            </tr>
+                        
                         <tr><td>Date of incorporation: </td><td><asp:TextBox ID="ctDOI" runat="server"/></td>
                            <td><asp:Label ID="ctDOIError" ForeColor="Red" runat="server"></asp:Label></td>
                         </tr>
