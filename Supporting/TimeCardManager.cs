@@ -56,7 +56,7 @@ namespace Supporting
             return validHour;
         }
 
-        public bool SetPieces(string whichDay, int pieces)
+        public bool SetPieces(string whichDay, decimal pieces)
         {
             bool validPieces = (pieces > MIN_PIECES);
             if (validPieces)
@@ -89,7 +89,7 @@ namespace Supporting
             return validPieces;
         }
 
-        private DateTime CalcSunDate(DateTime dateData)
+        public DateTime CalcSunDate(DateTime dateData)
         {
             DateTime dateSunday = dateData;
 
@@ -119,14 +119,54 @@ namespace Supporting
             }
             return dateSunday;
         }
+        public DateTime CalcMonDate(DateTime dateData)
+        {
+            DateTime dateMonday = dateData;
 
+            switch (dateData.DayOfWeek)
+            {
+                case DayOfWeek.Sunday:
+                    dateData = dateMonday.AddDays(6);
+                    break;
+                case DayOfWeek.Monday:
+                    dateData = dateMonday;
+                    break;
+                case DayOfWeek.Tuesday:
+                    dateData = dateMonday.AddDays(1);
+                    break;
+                case DayOfWeek.Wednesday:
+                    dateData = dateMonday.AddDays(2);
+                    break;
+                case DayOfWeek.Thursday:
+                    dateData = dateMonday.AddDays(3);
+                    break;
+                case DayOfWeek.Friday:
+                    dateData = dateMonday.AddDays(4);
+                    break;
+                case DayOfWeek.Saturday:
+                    dateData = dateMonday.AddDays(5);
+                    break;
+            }
+            return dateMonday;
+        }
         
 
-        public string ToDBString()
+        public string ToDBAddString(string type)
         {
-            string dbString = "'" ;
-
-            return dbString;
+            if (type == "SL")
+            {
+                return "INSERT INTO tb_TimeCard(empID, dateWeekStart, hoursSun, hoursMon, hoursTue, hoursWed, hoursThu, hoursFri, hoursSat, "
+                                  + "piecesSun, piecesMon, piecesTue, piecesWed, piecesThu, piecesFri, piecesSat) values "
+                        + "(" + empID + ", " + timeCardDate.ToString("yyyyMMdd") + ", " + sunH + ", " + monH + ", " + tueH + ", "
+                        + wedH + ", " + thuH + ", " + friH + ", " + satH + ", " + sunP + ", " + monP + ", " + tueP + ", "
+                        + wedP + ", " + thuP + ", " + friP + ", " + satP + ");";
+            }
+            else
+            {
+                return "INSERT INTO tb_TimeCard(empID, dateWeekStart, hoursSun, hoursMon, hoursTue, hoursWed, hoursThu, hoursFri, hoursSat) values "
+                + "(" + empID + ", " + timeCardDate.ToString("yyyyMMdd") + ", " + sunH + ", " + monH + ", " + tueH + ", "
+                + wedH + ", " + thuH + ", " + friH + ", " + satH + ");";
+            }
         }
     }
 }

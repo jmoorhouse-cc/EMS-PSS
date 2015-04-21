@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data;              // To connect to MSSql Server
 using System.Data.SqlClient;
 using Supporting;
+using System.Globalization;
 
 namespace EMS_PSS
 {
@@ -17,6 +18,9 @@ namespace EMS_PSS
         string conString;
         DataTable dt, dt2;
         string selectedEmpType;
+        string selectedEmpId;
+        TimeCardManager tcm;
+        static DateTime maxDate, minDate;
         protected void Page_Load(object sender, EventArgs e)
         {
             securityLevel = Session["securitylevel"].ToString();
@@ -73,23 +77,112 @@ namespace EMS_PSS
             }
             else selectResultLabel.Text = "";
         }
+        public DateTime? ReturnDateIfValid(String dateStr)
+        {
+            DateTime date = DateTime.MinValue;
+            DateTime? dateNull = null;
+            var formats = new[] {   "dd-MM-yyyy", "d-MM-yyyy", "dd-M-yyyy", "d-M-yyyy",
+                                    "yyyy-MM-dd", "yyyy-MM-d", "yyyy-M-dd", "yyyy-M-d", 
+                                    "dd/MM/yyyy", "d/MM/yyyy", "dd/M/yyyy", "d/M/yyyy",
+                                    "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d"};
+            dateStr = dateStr.Trim();
+            dateStr = dateStr.Replace(" ", "");
+            if (DateTime.TryParseExact(dateStr, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+            {
+                return date;
+            }
+            else
+            {
+                return dateNull;
+            }
 
+        }
         protected void tcInsert_Click(object sender, EventArgs e)
         {
+            errorMsg.Text = "";
             DateTime temp = new DateTime();
-            TimeCardManager tcm;
-            try
-            {
-                temp = Convert.ToDateTime(tcWeekDate.Text);
-                tcm = new TimeCardManager(temp);
-            }
-            catch
+            DateTime? test = new DateTime();
+            test = ReturnDateIfValid(tcWeekDate.Text);
+            if (test == null)
             {
                 errorMsg.Text = "Invalid date or format";
             }
-            //
-        }
+            else
+            {
+                temp = Convert.ToDateTime(test.ToString());
+                tcm = new TimeCardManager(temp);
+                if (minDate > tcm.CalcMonDate(temp) || maxDate < tcm.CalcSunDate(temp))
+                {
+                    errorMsg.Text = "Input Date Out Of Range: Valid Between " + minDate.ToString("yyyy-MM-dd") + " and " + maxDate.ToString("yyyy-MM-dd");
+                    showTimeCardField();
+                    return;
+                }
+                tcm.empID = Convert.ToInt32(selectedEmpId);
+                int numErrors = setTimeCardManager();
+                if (numErrors > 0)
+                {
+                    errorMsg.Text = numErrors + " Invalid Hour/Piece Entry(s) found. Try again.";
+                    showTimeCardField();
+                    return;
+                }
+                else
+                {
+                    int rowsReturned;
+                    bool success = false;
+                    try
+                    {
+                        using (SqlConnection conn = new SqlConnection(conString))
+                        {
+                            conn.Open();
+                            using (SqlCommand cmd = new SqlCommand())
+                            {
+                                cmd.Connection = conn;
+                                cmd.CommandType = CommandType.Text;
+                                cmd.CommandText = tcm.ToDBAddString(selectedEmpType);
 
+                                rowsReturned = (Int32)cmd.ExecuteScalar();
+                                if (rowsReturned == -1)
+                                {
+                                    errorMsg.Text = ("Time Card Entry Has Not Been Added");
+                                }
+                                else
+                                {
+                                    errorMsg.Text = ("Time Card Entry Has Been Added Successfully");
+                                }
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        errorMsg.Text = ("Time Card Entry Has Failed");
+                    }
+                }
+            }
+        }
+        
+        private int setTimeCardManager()
+        {
+            Decimal temp = 0;
+            int invalidEntry = 0;
+            if (Decimal.TryParse(sunHInput.Text, out temp)) { if (!tcm.SetHours("SUN", temp)) invalidEntry++; }
+            if (Decimal.TryParse(monHInput.Text, out temp)) { if (!tcm.SetHours("MON", temp)) invalidEntry++; }
+            if (Decimal.TryParse(tueHInput.Text, out temp)) { if (!tcm.SetHours("TUE", temp)) invalidEntry++; }
+            if (Decimal.TryParse(wedHInput.Text, out temp)) { if (!tcm.SetHours("WED", temp)) invalidEntry++; }
+            if (Decimal.TryParse(thuHInput.Text, out temp)) { if (!tcm.SetHours("THU", temp)) invalidEntry++; }
+            if (Decimal.TryParse(friHInput.Text, out temp)) { if (!tcm.SetHours("FRI", temp)) invalidEntry++; }
+            if (Decimal.TryParse(satHInput.Text, out temp)) { if (!tcm.SetHours("SAT", temp)) invalidEntry++; }
+            if(securityLevel == "1")
+            {
+                if (Decimal.TryParse(sunPInput.Text, out temp)) { if (!tcm.SetPieces("SUN", temp)) invalidEntry++; }
+                if (Decimal.TryParse(monPInput.Text, out temp)) { if (!tcm.SetPieces("MON", temp)) invalidEntry++; }
+                if (Decimal.TryParse(tuePInput.Text, out temp)) { if (!tcm.SetPieces("TUE", temp)) invalidEntry++; }
+                if (Decimal.TryParse(wedPInput.Text, out temp)) { if (!!tcm.SetPieces("WED", temp)) invalidEntry++; }
+                if (Decimal.TryParse(thuPInput.Text, out temp)) { if (!tcm.SetPieces("THU", temp)) invalidEntry++; }
+                if (Decimal.TryParse(friPInput.Text, out temp)) { if (!tcm.SetPieces("FRI", temp)) invalidEntry++; }
+                if (Decimal.TryParse(satPInput.Text, out temp)) { if (!tcm.SetPieces("SAT", temp)) invalidEntry++; }
+            }
+            return invalidEntry;
+        }
         protected void GridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Select")
@@ -97,18 +190,13 @@ namespace EMS_PSS
                 // Retrieve the CommandArgument property
                 int index = Convert.ToInt32(e.CommandArgument); // or convert to other datatype
                 GridViewRow row = searchResultGrid.Rows[index];
-                string id = row.Cells[1].Text;
-                //string sin = row.Cells[2].Text;
-                //string fname = row.Cells[3].Text;
-                //string lname = row.Cells[4].Text;
-                //string company = row.Cells[5].Text;
+                selectedEmpId = row.Cells[1].Text;
                 selectedEmpType = row.Cells[6].Text;
-                
                 SqlConnection conn = new SqlConnection(conString);
                 SqlCommand cmd = new SqlCommand(getCmdString(selectedEmpType), conn);
                 cmd.CommandType = CommandType.Text;
 
-                cmd.Parameters.Add("@eid", SqlDbType.Int).Value = id;
+                cmd.Parameters.Add("@eid", SqlDbType.Int).Value = selectedEmpId;
 
                 dt2 = new DataTable();
 
@@ -140,6 +228,47 @@ namespace EMS_PSS
                 searchFullResultGrid.Visible = true;
                 showTimeCardField();
 
+                GridViewRow row2 = searchFullResultGrid.Rows[0];
+                
+                selectedEmpId = row2.Cells[1].Text;
+                if(selectedEmpType == "FT" || selectedEmpType == "PT")
+                {
+                    string startDate = row2.Cells[5].Text.Replace(" 12:00:00 AM", "");
+                    string endDate = row2.Cells[6].Text.Replace(" 12:00:00 AM", "");
+                    minDate = Convert.ToDateTime(startDate);
+                    maxDate = Convert.ToDateTime(endDate);
+                }
+                else if(selectedEmpType == "SL")
+                {
+                    string season = row2.Cells[5].Text;
+                    string year = row2.Cells[6].Text;
+                    string start="", end="";
+
+                    if(season == "WINTER")
+                    {
+                        start = "-12-01";
+                        end = "-04-30";
+                    }
+                    else if (season == "FALL")
+                    {
+                        start = "-09-01";
+                        end = "-11-30";
+                    }
+                    else if (season == "SUMMER")
+                    {
+                        start = "-07-01";
+                        end = "-08-31";
+                    }
+                    else if (season == "SPRING")
+                    {
+                        start = "-5-01";
+                        end = "-06-30";
+                    }
+                    minDate = Convert.ToDateTime(year+start);
+                    maxDate = Convert.ToDateTime(year+end);
+                }
+                
+                
             }
         }
         private string getCmdString(string type)
@@ -192,12 +321,14 @@ namespace EMS_PSS
             hourInputTable.Visible = true;
             if (selectedEmpType.ToUpper() == "SL") pieceInputTable.Visible = true;
             else pieceInputTable.Visible = false;
+            errorMsg.Text = "";
         }
         private void hideTimeCardField()
         {
             tcDateInputTable.Visible = false;
             hourInputTable.Visible = false;
             pieceInputTable.Visible = false;
+            errorMsg.Text = "";
         }
     }
 }
